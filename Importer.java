@@ -15,7 +15,7 @@ public class Importer
         
         
         
-        return { new Angebot(); new Angebot() };
+        //return { new Angebot(); new Angebot() };
         
     }
 }
