@@ -15,5 +15,4 @@ bluej.teamsettings.ignore7=.*\\\#backup
 bluej.teamsettings.ignore6=.*\\\#
 bluej.teamsettings.git.protocol=https
 bluej.teamsettings.ignore8=\\.DS_Store
-bluej.teamsettings.ignore9=\\.class
 
