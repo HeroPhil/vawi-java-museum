@@ -1,7 +1,7 @@
-.class
-.ctxt
+*.class
+*.ctxt
 team.defs
 bluej.pkh
 backup
-.DS_Store
+*.DS_Store
 
