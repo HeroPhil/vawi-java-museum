@@ -5,16 +5,21 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-abstract public class Main
+public class Main
 {
-    public static void main() {
-        
-        // IMPORT
-        angebote = Importer.importAngebote();
-        // PROCESSING
-        
-        
-        // EXPORT
-        
+    public static void main(String[] args) {
+
+        // String raeumePfad = "input/datensatz.01/raeume.csv";
+        // String angebotePfad = "input/datensatz.01/kunstwerke.csv";
+        String raeumePfad = args[0];
+        String angebotePfad = args[1];
+
+        try {
+            Importer.importRaeume(raeumePfad);
+            Importer.importAngebote(angebotePfad);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
