@@ -12,7 +12,7 @@ public class Planung
     public Raum raeume[];
     public int jahr;
     public int quartal;
-    public Epoche schwerpunkt;
+    public String schwerpunkt;
 
     /**
      * Constructor for objects of class Planung
