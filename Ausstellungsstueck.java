@@ -8,7 +8,7 @@ public abstract class Ausstellungsstueck {
     public String bezeichnung;
     public String kuenstler;
     public String jahr; // just information so can remain as string (data is a mess)
-    public String thema;
+    public Thema thema;
     public int attraktivität;
     public double hoehe;
     public double breite;
@@ -19,7 +19,7 @@ public abstract class Ausstellungsstueck {
     /**
      * Constructor for objects of class Ausstellungsstück
      */
-    public Ausstellungsstueck(String bezeichnung, String kuenstler, String jahr, String thema, int attraktivität,
+    public Ausstellungsstueck(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
             double hoehe, double breite, int eId) {
         this.bezeichnung = bezeichnung;
         this.kuenstler = kuenstler;

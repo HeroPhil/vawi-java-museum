@@ -111,13 +111,15 @@ public class Importer {
 
          Ausstellungsstueck neuesAusstellungsstueck;
 
+         Thema thema = ThemenVerwalter.getInstance().getOrAddThema(zeile[ANGEBOT_THEMA_INDEX]);
+
          switch (zeile[ANGEBOT_ART_INDEX]) {
             case "B":
                neuesAusstellungsstueck = new Bild(
                   zeile[ANGEBOT_BEZEICHNUNG_INDEX],
                   zeile[ANGEBOT_KUENSTLER_INDEX],
                   zeile[ANGEBOT_JAHR_INDEX],
-                  zeile[ANGEBOT_THEMA_INDEX],
+                  thema,
                   Integer.parseInt(zeile[ANGEBOT_ATTRAKTIVITÄT_INDEX]),
                   Integer.parseInt(zeile[ANGEBOT_HOEHE_INDEX]),
                   Integer.parseInt(zeile[ANGEBOT_BREITE_INDEX]),
@@ -133,7 +135,7 @@ public class Importer {
                   zeile[ANGEBOT_BEZEICHNUNG_INDEX],
                   zeile[ANGEBOT_KUENSTLER_INDEX],
                   zeile[ANGEBOT_JAHR_INDEX],
-                  zeile[ANGEBOT_THEMA_INDEX],
+                  thema,
                   Integer.parseInt(zeile[ANGEBOT_ATTRAKTIVITÄT_INDEX]),
                   Integer.parseInt(zeile[ANGEBOT_HOEHE_INDEX]),
                   Integer.parseInt(zeile[ANGEBOT_BREITE_INDEX]),
@@ -147,7 +149,7 @@ public class Importer {
                   zeile[ANGEBOT_BEZEICHNUNG_INDEX],
                   zeile[ANGEBOT_KUENSTLER_INDEX],
                   zeile[ANGEBOT_JAHR_INDEX],
-                  zeile[ANGEBOT_THEMA_INDEX],
+                  thema,
                   Integer.parseInt(zeile[ANGEBOT_ATTRAKTIVITÄT_INDEX]),
                   Integer.parseInt(zeile[ANGEBOT_HOEHE_INDEX]),
                   Integer.parseInt(zeile[ANGEBOT_BREITE_INDEX]),

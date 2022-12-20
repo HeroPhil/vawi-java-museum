@@ -8,12 +8,12 @@ import java.util.ArrayList;
  */
 public class Planung
 {
-    public String thema;
+    public Thema thema;
     public boolean geplant;
 
     public ArrayList<Ausleihe> ausleihen;
     
-    public Planung(String thema) {
+    public Planung(Thema thema) {
         this.thema = thema;
         this.geplant = false;
         this.ausleihen = new ArrayList<Ausleihe>();
