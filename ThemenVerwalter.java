@@ -26,6 +26,10 @@ public class ThemenVerwalter
         themen = new HashSet<Thema>();
     }
 
+    public Thema[] getAllThemen() {
+        return themen.toArray(new Thema[]{});
+    }
+
 
 
     /**

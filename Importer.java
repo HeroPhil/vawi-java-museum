@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Philip
  * @version (a version number or a date)
  */
-public class Importer {
+public abstract class Importer {
    public static final char delimiter = ',';
 
    private static final int ANGEBOT_ID_INDEX = 0;

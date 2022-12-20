@@ -9,14 +9,23 @@ public class Main
 {
     public static void main(String[] args) {
 
-        // String raeumePfad = "input/datensatz.01/raeume.csv";
-        // String angebotePfad = "input/datensatz.01/kunstwerke.csv";
-        String raeumePfad = args[0];
-        String angebotePfad = args[1];
+        // TODO put config somewhere nice
+        String basePfad = args[0];
+
+        String raeumePfad = basePfad + "/input/datensatz_01/raeume.csv";
+        String angebotePfad = basePfad + "/input/datensatz_01/kunstwerke.csv";
+
+        String exportPfad = basePfad + "/output/example.csv";
+        
 
         try {
             Importer.importRaeume(raeumePfad);
             Importer.importAngebote(angebotePfad);
+
+            Planung planung = new Planung(new Thema("Themen werden noch nicht beruecksichtigt"));
+            planung.planungDurchfuehren();
+
+            Exporter.exportExample(planung.getAllAusleihen(), exportPfad);
         } catch (Exception e) {
             e.printStackTrace();
         }

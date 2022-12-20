@@ -11,7 +11,7 @@ public class Planung
     public Thema thema;
     public boolean geplant;
 
-    public ArrayList<Ausleihe> ausleihen;
+    private ArrayList<Ausleihe> ausleihen;
     
     public Planung(Thema thema) {
         this.thema = thema;
