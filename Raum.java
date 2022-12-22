@@ -2,7 +2,7 @@
 /**
  * Model Class for a Raum
  *
- * @author Inken
+ * @author Inken Dierichs
  */
 public class Raum
 {

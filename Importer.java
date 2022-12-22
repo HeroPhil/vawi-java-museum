@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Liest Dateien ein und gibt Zeilen weiter an Verwaltungsklassen
  *
- * @author Philip
+ * @author Philip Herold
  */
 public abstract class Importer {
 

@@ -2,7 +2,7 @@
 /**
  * Model class containing the mapping of an Angebot to a Raum and Position
  *
- * @author Inken
+ * @author Inken Dierichs
  */
 public class Ausleihe
 {

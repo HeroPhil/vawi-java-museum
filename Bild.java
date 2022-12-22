@@ -2,7 +2,7 @@
 /**
  * Write a description of class Bild here.
  *
- * @author Meike
+ * @author Meike Ganzer
  */
 public class Bild extends Ausstellungsstueck
 {

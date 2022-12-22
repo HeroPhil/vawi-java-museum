@@ -1,7 +1,7 @@
 
 /**
  * Model class for a Kunstinstallation
- * @author Meike
+ * @author Meike Ganzer
  */
 public class Kunstinstallation extends Ausstellungsstueck3D
 {

@@ -2,7 +2,7 @@
 /**
  * Write a description of class Ausstellungsstück3D here.
  *
- * @author Meike
+ * @author Meike Ganzer
  */
 public abstract class Ausstellungsstueck3D extends Ausstellungsstueck
 {

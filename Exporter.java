@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * This class is used to export data to multiple different CSV file
  *
- * @author Philip
+ * @author Philip Herold
  */
 public abstract class Exporter
 {

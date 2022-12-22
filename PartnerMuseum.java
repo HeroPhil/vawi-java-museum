@@ -2,7 +2,7 @@
 /**
  * Model class for a PartnerMuseum
  *
- * @author Sven
+ * @author Sven Brüggenbrock
  */
 public class PartnerMuseum
 {

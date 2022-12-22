@@ -2,7 +2,7 @@
 /**
  * Entry point for the application.
  *
- * @author Philip
+ * @author Philip Herold
  */
 public class Main
 {

@@ -2,7 +2,7 @@
 /**
  * Thema Modelclass
  *
- * @author Sven
+ * @author Sven Brüggenbrock
  */
 public class Thema
 {

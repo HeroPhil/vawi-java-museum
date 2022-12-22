@@ -2,7 +2,7 @@
 /**
  * Modelclass Kunstgegenstand - a piece of art
  *
- * @author Meike
+ * @author Meike Ganzer
  */
 public class Kunstgegenstand extends Ausstellungsstueck3D
 {

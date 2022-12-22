@@ -6,7 +6,7 @@ import java.util.Set;
  * VerwalterClass for PartnerMuseums
  * PartnerMuseums are unique by name and address
  *
- * @author Sven
+ * @author Sven Brüggenbrock
  * @version (a version number or a date)
  */
 public class PartnerMuseumsVerwalter

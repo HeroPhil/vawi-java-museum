@@ -2,7 +2,7 @@
  * Abstract class Ausstellungsstück
  * Parent class of Bild and Ausstellungsstück3D
  *
- * @author Meike
+ * @author Meike Ganzer
  */
 public abstract class Ausstellungsstueck {
     /**

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * This VerwalterClass is used to manage all raeume
  *
- * @author Inken
+ * @author Inken Dierichs
  */
 public class RaumVerwalter
 {

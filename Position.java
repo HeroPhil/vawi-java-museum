@@ -6,7 +6,7 @@
  * mitting means the floor
  * the other values refer to the walls (bilder only)
  *
- * @author Inken
+ * @author Inken Dierichs
  * @version (version number or date here)
  */
 public enum Position

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Central class for the planning of the exhibition.
  *
- * @author Philip
+ * @author Philip Herold
  */
 public class Planung
 {

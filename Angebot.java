@@ -2,7 +2,7 @@
  * Model class for an Angebot
  * contains all information about an Angebot
  * references the Ausstellungsstueck and PartnerMuseum
- * @author Meike
+ * @author Meike Ganzer
  */
 public class Angebot {
     /**

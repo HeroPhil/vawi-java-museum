@@ -6,7 +6,7 @@ import java.util.Set;
  * A VerwalterClass for Themen
  * Themen are unique by bezeichnung
  *
- * @author Sven
+ * @author Sven Brüggenbrock
  */
 public class ThemenVerwalter
 {

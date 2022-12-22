@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 /**
  * This VerwalterClass is used to manage all angebote.
  *
- * @author Sven
+ * @author Sven Brüggenbrock
  */
 public class AngebotVerwalter {
     /**
