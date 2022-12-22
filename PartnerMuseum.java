@@ -1,21 +1,35 @@
 
 /**
- * Write a description of class ParnterMuseum here.
+ * Model class for a PartnerMuseum
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Sven
  */
 public class PartnerMuseum
 {
+    
+    /**
+     * the name of the PartnerMuseum
+     */
     public final String name;
+
+    /**
+     * the anschrift of the PartnerMuseum
+     */
     public final String anschrift;
 
     
+    /**
+     * Constructor for objects of class PartnerMuseum
+     */
     public PartnerMuseum(String name, String anschrift) {
         this.name = name;
         this.anschrift = anschrift;
     }
     
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -24,6 +38,10 @@ public class PartnerMuseum
         result = prime * result + ((anschrift == null) ? 0 : anschrift.hashCode());
         return result;
     }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

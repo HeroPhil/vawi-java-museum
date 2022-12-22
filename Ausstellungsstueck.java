@@ -1,17 +1,52 @@
 /**
- * Write a description of class Ausstellungsstück here.
+ * Abstract class Ausstellungsstück
+ * Parent class of Bild and Ausstellungsstück3D
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Meike
  */
 public abstract class Ausstellungsstueck {
+    /**
+     * the bezeichnung of the Ausstellungsstück
+     */
     public final String bezeichnung;
+
+    /**
+     * the kuenstler of the Ausstellungsstück
+     */
     public final String kuenstler;
-    public final String jahr; // just information so can remain as string (data is a mess)
+
+    /**
+     * the jahr of the Ausstellungsstück
+     * just information so can remain as string (data is a mess)
+     */
+    public final String jahr;
+
+    /**
+     * the thema of the Ausstellungsstück
+     */
     public final Thema thema;
+
+    /**
+     * the attraktivität of the Ausstellungsstück
+     * valued betweeen 0 and 100
+     */
     public final int attraktivität;
+
+    /**
+     * the hoehe of the Ausstellungsstück
+     * in cm
+     */
     public final double hoehe;
+
+    /**
+     * the breite of the Ausstellungsstück
+     * in cm
+     */
     public final double breite;
+
+    /**
+     * the external Id of the Ausstellungsstück
+     */
     public final int eId;
 
    

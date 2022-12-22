@@ -1,18 +1,35 @@
 import java.util.ArrayList;
 
 /**
- * Write a description of class Planung here.
+ * Central class for the planning of the exhibition.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Philip
  */
 public class Planung
 {
+    
+    /**
+     * The thema to plan for.
+     */
     public final Thema thema;
+
+    /**
+     * Flag if the planung is already done.
+     */
     public boolean geplant;
 
+    /**
+     * The list of all ausleihen.
+     * This list is only filled if the planung is already done.
+     * Otherwise it is empty.
+     * This represents the result of the planung.
+     */
     private final ArrayList<Ausleihe> ausleihen;
     
+    /**
+     * Constructor
+     * @param thema the thema to plan for
+     */
     public Planung(Thema thema) {
         this.thema = thema;
         this.geplant = false;
@@ -20,6 +37,7 @@ public class Planung
     }
 
     /**
+     * Gibt alle geplanten Ausleihen zurück.
      * @return alle geplanten Ausleihen oder null wenn noch nicht geplant wurde.
      */
     public Ausleihe[] getAllAusleihen() {
@@ -42,7 +60,7 @@ public class Planung
     public void planungDurchfuehren() {
 
         // Beispiele Planung:
-        for (Raum raum : RaumVerwalter.getInstance().getAllRäume()) {
+        for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) {
 
             // Zentrale Fragen:
             // Welches Ausstellungstueck?

@@ -2,14 +2,20 @@
 /**
  * Write a description of class Ausstellungsstück3D here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Meike
  */
 public abstract class Ausstellungsstueck3D extends Ausstellungsstueck
 {
-    final static double MINDEST_ABSTAND = 200;
-
+    /**
+     * the laenge of the Ausstellungsstück3D
+     * in cm
+     */
     public final double laenge;
+
+    /**
+     * the gewicht of the Ausstellungsstück3D
+     * in kg
+     */
     public final double gewicht;
 
     /**

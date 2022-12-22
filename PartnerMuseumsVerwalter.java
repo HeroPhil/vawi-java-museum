@@ -3,15 +3,23 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Write a description of class PartnerMuseumsVerwalter here.
+ * VerwalterClass for PartnerMuseums
+ * PartnerMuseums are unique by name and address
  *
- * @author (your name)
+ * @author Sven
  * @version (a version number or a date)
  */
 public class PartnerMuseumsVerwalter
 {
+
+    /**
+     * the singleton instance
+     */
     private static PartnerMuseumsVerwalter INSTANCE;
     
+    /**
+     * @return the singleton instance
+     */
     public static PartnerMuseumsVerwalter getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new PartnerMuseumsVerwalter();
@@ -20,17 +28,26 @@ public class PartnerMuseumsVerwalter
         return INSTANCE;
     }
 
+    /**
+     * the set of partnerMuseums
+     */
     private final Set<PartnerMuseum> partnerMuseen;
 
+    /**
+     * private constructor to prevent instantiation outside of this class
+     * only the singleton instance can be used
+     */
     private PartnerMuseumsVerwalter() {
         partnerMuseen = new HashSet<PartnerMuseum>();
     }
 
 
     /**
-     * @param name
-     * @param anschrift
-     * @return
+     * get a partnerMuseum by name and address if it exists
+     * otherwise add it to the set and return it
+     * @param name the name of the partnerMuseum
+     * @param anschrift the address of the partnerMuseum
+     * @return the partnerMuseum with the given name and address
      */
     public PartnerMuseum getOrAddPartnerMuseum(String name, String anschrift) {
         PartnerMuseum neuesPartnerMuseum = new PartnerMuseum(name, anschrift);
@@ -45,6 +62,5 @@ public class PartnerMuseumsVerwalter
         }
         // ansonsten gib den neuen eingefuegten Partner zurueck
         return neuesPartnerMuseum;
-
     }
 }

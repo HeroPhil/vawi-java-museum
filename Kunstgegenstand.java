@@ -1,9 +1,8 @@
 
 /**
- * Write a description of class Kunstgegenstand here.
+ * Modelclass Kunstgegenstand - a piece of art
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Meike
  */
 public class Kunstgegenstand extends Ausstellungsstueck3D
 {

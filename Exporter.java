@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Write a description of class Exporter here.
+ * This class is used to export data to multiple different CSV file
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Philip
  */
 public abstract class Exporter
 {
+    /**
+     * Internal Method to write a CSV file
+     * @param pfad String the path to the file
+     * @param zeilen String[][] the lines to write
+     */
     private static void writeFile(String pfad, String[][] zeilen) {
         FileWriter fileWriter = null;
         try {
@@ -49,6 +53,12 @@ public abstract class Exporter
         }
     }
 
+    /**
+     * Export the given Ausleihe[] to a CSV file
+     * this is only an example format
+     * @param ausleihen Ausleihe[] 
+     * @param pfad String
+     */
     static void exportExample(Ausleihe[] ausleihen, String pfad) {
 
         // TODO add sorting comparators to Ausleihe
@@ -75,5 +85,35 @@ public abstract class Exporter
         // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
 
+    }
+
+    /**
+     * Export the given Ausleihe[] to a CSV file
+     * this produces the "Museumsfuehrer" format
+     * @param ausleihen Ausleihe[]
+     * @param pfad String
+     */
+    static void exportMuseumsFuehrer(Ausleihe[] ausleihen, String pfad) {
+        
+    }
+
+    /**
+     * Export the given Ausleihe[] to a CSV file
+     * this produces the "Logistikuebersicht" format
+     * @param ausleihen Ausleihe[]  
+     * @param pfad String
+     */
+    static void exportLogistikUebersicht(Ausleihe[] ausleihen, String pfad) {
+        
+    }
+
+    /**
+     * Export the given Ausleihe[] to a CSV file
+     * this produces the "Ausleihuebersicht" format
+     * @param ausleihen
+     * @param pfad
+     */
+    static void exportAusleihUebersicht(Ausleihe[] ausleihen, String pfad) {
+        
     }
 }

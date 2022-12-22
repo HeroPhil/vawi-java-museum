@@ -1,12 +1,16 @@
 
 /**
- * Write a description of class Kunstinstallation here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Model class for a Kunstinstallation
+ * @author Meike
  */
 public class Kunstinstallation extends Ausstellungsstueck3D
 {
+
+    /**
+     * minimum space between 3D Ausstellungsstücke
+     * in cm
+     */
+    final static double MINDEST_ABSTAND = 200;
 
     /**
      * Constructor for objects of class Kunstinstallation
