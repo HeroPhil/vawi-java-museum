@@ -20,7 +20,7 @@ public class PartnerMuseumsVerwalter
         return INSTANCE;
     }
 
-    private Set<PartnerMuseum> partnerMuseen;
+    private final Set<PartnerMuseum> partnerMuseen;
 
     private PartnerMuseumsVerwalter() {
         partnerMuseen = new HashSet<PartnerMuseum>();

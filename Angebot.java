@@ -5,10 +5,10 @@
  * @version (a version number or a date)
  */
 public class Angebot {
-    public int id;
-    public int kosten;
-    public Ausstellungsstueck ausstellungsstueck;
-    public PartnerMuseum partnerMuseum;
+    public final int id;
+    public final int kosten;
+    public final Ausstellungsstueck ausstellungsstueck;
+    public final PartnerMuseum partnerMuseum;
 
 
 

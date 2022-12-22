@@ -7,7 +7,7 @@
  */
 public class Thema
 {
-   String bezeichnung;
+   public final String bezeichnung;
 
 public Thema(String bezeichnung) {
     this.bezeichnung = bezeichnung;

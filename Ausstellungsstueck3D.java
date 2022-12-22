@@ -9,8 +9,8 @@ public abstract class Ausstellungsstueck3D extends Ausstellungsstueck
 {
     final static double MINDEST_ABSTAND = 200;
 
-    public double laenge;
-    public double gewicht;
+    public final double laenge;
+    public final double gewicht;
 
     /**
      * Constructor for objects of class Ausstellungsstück3D

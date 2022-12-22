@@ -7,9 +7,9 @@
  */
 public class Ausleihe
 {
-    Angebot angebot;
-    Raum raum;
-    Position position;
+    public final Angebot angebot;
+    public final Raum raum;
+    public final Position position;
 
     public Ausleihe(Angebot angebot, Raum raum, Position position) {
         this.angebot = angebot;

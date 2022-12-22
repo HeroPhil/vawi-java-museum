@@ -20,7 +20,7 @@ public class ThemenVerwalter
         return INSTANCE;
     }
 
-    private Set<Thema> themen;
+    private final Set<Thema> themen;
 
     private ThemenVerwalter() {
         themen = new HashSet<Thema>();

@@ -8,10 +8,10 @@ import java.util.ArrayList;
  */
 public class Planung
 {
-    public Thema thema;
+    public final Thema thema;
     public boolean geplant;
 
-    private ArrayList<Ausleihe> ausleihen;
+    private final ArrayList<Ausleihe> ausleihen;
     
     public Planung(Thema thema) {
         this.thema = thema;

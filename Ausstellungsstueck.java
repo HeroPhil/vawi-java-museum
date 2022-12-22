@@ -5,14 +5,14 @@
  * @version (a version number or a date)
  */
 public abstract class Ausstellungsstueck {
-    public String bezeichnung;
-    public String kuenstler;
-    public String jahr; // just information so can remain as string (data is a mess)
-    public Thema thema;
-    public int attraktivität;
-    public double hoehe;
-    public double breite;
-    public int eId;
+    public final String bezeichnung;
+    public final String kuenstler;
+    public final String jahr; // just information so can remain as string (data is a mess)
+    public final Thema thema;
+    public final int attraktivität;
+    public final double hoehe;
+    public final double breite;
+    public final int eId;
 
    
 

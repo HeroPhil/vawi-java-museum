@@ -18,7 +18,7 @@ public class RaumVerwalter
         return INSTANCE;
     }
     
-    private ArrayList<Raum> raeume;
+    private final ArrayList<Raum> raeume;
     
     private RaumVerwalter() {
         raeume = new ArrayList<Raum>();

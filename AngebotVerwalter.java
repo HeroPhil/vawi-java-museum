@@ -18,7 +18,7 @@ public class AngebotVerwalter
         return INSTANCE;
     }
     
-    private ArrayList<Angebot> Angebote;
+    private final ArrayList<Angebot> Angebote;
     
     private AngebotVerwalter() {
         Angebote = new ArrayList<Angebot>();

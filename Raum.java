@@ -7,15 +7,15 @@
  */
 public class Raum
 {
-    final public int id;
-    final public String bezeichnung;
-    final public int laenge;
-    final public int breite;
-    final public int hoehe;
-    final public int tuerNord;
-    final public int tuerOst;
-    final public int tuerSued;
-    final public int tuerWest;
+    public final int id;
+    public final String bezeichnung;
+    public final int laenge;
+    public final int breite;
+    public final int hoehe;
+    public final int tuerNord;
+    public final int tuerOst;
+    public final int tuerSued;
+    public final int tuerWest;
 
     
     

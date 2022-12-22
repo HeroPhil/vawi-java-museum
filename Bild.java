@@ -9,10 +9,10 @@ public class Bild extends Ausstellungsstueck
 {
     final static double MINDEST_ABSTAND = 200;
 
-    public double minTemp;
-    public double minFeuchtigkeit;
-    public double maxTemp;
-    public double maxFeuchtigkeit;
+    public final double minTemp;
+    public final double minFeuchtigkeit;
+    public final double maxTemp;
+    public final double maxFeuchtigkeit;
 
     /**
      * Constructor for objects of class Bild

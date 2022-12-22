@@ -19,13 +19,17 @@ public class Main
         
 
         try {
+            
             Importer.importRaeume(raeumePfad);
             Importer.importAngebote(angebotePfad);
-
+            
+            // Themenauswahl
+            
             Planung planung = new Planung(new Thema("Themen werden noch nicht beruecksichtigt"));
             planung.planungDurchfuehren();
 
             Exporter.exportExample(planung.getAllAusleihen(), exportPfad);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
