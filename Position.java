@@ -13,3 +13,4 @@ public enum Position
     WEST,
     MITTIG
 }
+
