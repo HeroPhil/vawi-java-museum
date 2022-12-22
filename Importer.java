@@ -8,11 +8,17 @@ import java.util.ArrayList;
  * Liest Dateien ein und gibt Zeilen weiter an Verwaltungsklassen
  *
  * @author Philip
- * @version (a version number or a date)
  */
 public abstract class Importer {
+
+   /**
+    * the Delimiter used in the CSV files
+    */
    public static final char delimiter = ',';
 
+   /**
+    * Indices Mappings for the Angebot CSV file
+    */
    private static final int ANGEBOT_ID_INDEX = 0;
    private static final int ANGEBOT_ART_INDEX = 1;
    private static final int ANGEBOT_BEZEICHNUNG_INDEX = 2;
@@ -32,6 +38,9 @@ public abstract class Importer {
    private static final int ANGEBOT_LUFTFEUCHTIGKEIT_MIN_INDEX = 14;
    private static final int ANGEBOT_LUFTFEUCHTIGKEIT_MAX_INDEX = 15;
 
+   /**
+    * Indices Mappings for the Raum CSV file
+    */
    private static final int RAUM_ID_INDEX = 0;
    private static final int RAUM_BEZEICHNUNG_INDEX = 1;
    private static final int RAUM_LÄNGE_INDEX = 2;
@@ -43,8 +52,9 @@ public abstract class Importer {
    private static final int RAUM_TUER_WEST_INDEX = 8;
 
    /**
+    * Internal Method to read a CSV file
     * @param pfad Pfad zur Datei
-    * @return
+    * @return String[][] mit den Zeilen und Felder der Datei
     */
    public static String[][] readFile(String pfad) {
       BufferedReader bufferedReader = null;
@@ -89,6 +99,10 @@ public abstract class Importer {
       return null;
    }
 
+   /**
+    * Importiert die Räume aus der CSV Datei
+    * @param pfad Pfad zur Datei
+    */
    public static void importRaeume(String pfad) {
       for (String[] zeile : readFile(pfad)) {
          Raum neuerRaum = new Raum(
@@ -106,6 +120,11 @@ public abstract class Importer {
       }
    }
 
+   /**
+    * Importiert die Angebote aus der CSV Datei
+    * @param pfad Pfad zur Datei
+    * @throws Exception wenn das Angebot ein unbekanntes Kunstwerk beinhaltet
+    */
    public static void importAngebote(String pfad) throws Exception{
       for (String[] zeile : readFile(pfad)) {
 

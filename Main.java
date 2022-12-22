@@ -1,12 +1,17 @@
 
 /**
- * Write a description of class Main here.
+ * Entry point for the application.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Philip
  */
 public class Main
 {
+    /**
+     * Application entry point.
+     * Runs the Importer and the Exporter.
+     * Creates a Planung and performs it.
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
 
         // TODO put config somewhere nice
@@ -19,13 +24,17 @@ public class Main
         
 
         try {
+            
             Importer.importRaeume(raeumePfad);
             Importer.importAngebote(angebotePfad);
-
+            
+            // Themenauswahl
+            
             Planung planung = new Planung(new Thema("Themen werden noch nicht beruecksichtigt"));
             planung.planungDurchfuehren();
 
             Exporter.exportExample(planung.getAllAusleihen(), exportPfad);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

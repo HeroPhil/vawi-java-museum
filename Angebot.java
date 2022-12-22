@@ -1,16 +1,29 @@
 /**
- * Write a description of class Angebot here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Model class for an Angebot
+ * contains all information about an Angebot
+ * references the Ausstellungsstueck and PartnerMuseum
+ * @author Meike
  */
 public class Angebot {
-    public int id;
-    public int kosten;
-    public Ausstellungsstueck ausstellungsstueck;
-    public PartnerMuseum partnerMuseum;
+    /**
+     * the id of the Angebot
+     */
+    public final int id;
 
+    /**
+     * the kosten of the Angebot
+     */
+    public final int kosten;
 
+    /**
+     * the Ausstellungsstueck of the Angebot
+     */
+    public final Ausstellungsstueck ausstellungsstueck;
+
+    /**
+     * the PartnerMuseum of the Angebot
+     */
+    public final PartnerMuseum partnerMuseum;
 
     /**
      * Constructor for objects of class Angebot
