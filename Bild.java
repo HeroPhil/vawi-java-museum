@@ -1,6 +1,6 @@
 
 /**
- * Write a description of class Bild here.
+ * Model class for a picture
  *
  * @author Meike Ganzer
  */

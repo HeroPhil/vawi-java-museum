@@ -1,6 +1,6 @@
 
 /**
- * Write a description of class Ausstellungsstück3D here.
+ * Ausstellungsstück3D is the parent class of Kunstgegenstand and Kunstinstallation.
  *
  * @author Meike Ganzer
  */
