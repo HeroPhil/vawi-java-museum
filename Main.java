@@ -4,7 +4,7 @@
  *
  * @author Philip Herold
  */
-public class Main
+public abstract class Main
 {
     /**
      * Application entry point.
@@ -15,7 +15,8 @@ public class Main
     public static void main(String[] args) {
 
         // TODO put config somewhere nice
-        String basePfad = args[0];
+
+        String basePfad = System.getProperty("user.dir");
 
         String raeumePfad = basePfad + "/input/datensatz_01/raeume.csv";
         String angebotePfad = basePfad + "/input/datensatz_01/kunstwerke.csv";
@@ -25,14 +26,27 @@ public class Main
 
         try {
             
+            // 1 Import
             Importer.importRaeume(raeumePfad);
             Importer.importAngebote(angebotePfad);
+
+
+            // 1b DEBUG
             
-            // Themenauswahl
+            // Beispiel für Raumverwalter:
+            System.out.print(RaumVerwalter.getInstance().getRaumByID(1).bezeichnung);
+            // ...
+
+            //
             
+            
+            // 2 Themenauswahl
             Planung planung = new Planung(new Thema("Themen werden noch nicht beruecksichtigt"));
+
+            // 3 Planung
             planung.planungDurchfuehren();
 
+            // 4 Export
             Exporter.exportExample(planung.getAllAusleihen(), exportPfad);
             
         } catch (Exception e) {
