@@ -49,7 +49,9 @@ public class Bild extends Ausstellungsstueck
         this.maxFeuchtigkeit = maxFeuchtigkeit;
     }
 
-    // overwrite to string with all super attributes
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         return "Bild [minTemp=" + minTemp + ", minFeuchtigkeit=" + minFeuchtigkeit + ", maxTemp=" + maxTemp
