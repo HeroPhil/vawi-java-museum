@@ -49,4 +49,13 @@ public class Bild extends Ausstellungsstueck
         this.maxFeuchtigkeit = maxFeuchtigkeit;
     }
 
+    // overwrite to string with all super attributes
+    @Override
+    public String toString() {
+        return "Bild [minTemp=" + minTemp + ", minFeuchtigkeit=" + minFeuchtigkeit + ", maxTemp=" + maxTemp
+                + ", maxFeuchtigkeit=" + maxFeuchtigkeit + ", bezeichnung=" + bezeichnung + ", kuenstler=" + kuenstler
+                + ", jahr=" + jahr + ", thema=" + thema + ", attraktivität=" + attraktivität + ", hoehe=" + hoehe
+                + ", breite=" + breite + ", eId=" + eId + "]";
+    }
+
 }
