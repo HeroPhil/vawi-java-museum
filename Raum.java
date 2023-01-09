@@ -62,6 +62,7 @@ public class Raum
     
     /**
      * Constructor for objects of class Raum
+     * zweite Zeile
      */
     public Raum(int id, String bezeichnung, int laenge, int breite, int hoehe, int tuerNord, int tuerOst, int tuerSued,
             int tuerWest) {
