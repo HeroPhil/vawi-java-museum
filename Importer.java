@@ -86,10 +86,12 @@ public abstract class Importer {
          result = lines.toArray(result);
          return result;
       } catch (IOException e) {
+         System.out.println(e);
          e.printStackTrace();
       } finally {
          if (bufferedReader != null) {
             try {
+               if (bufferedReader != null)
                bufferedReader.close();
             } catch (IOException e) {
                // ignore

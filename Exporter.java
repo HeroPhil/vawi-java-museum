@@ -19,7 +19,8 @@ public abstract class Exporter
         FileWriter fileWriter = null;
         try {
             File file = new File(pfad);
-            file.createNewFile(); // ensure file exists
+            file.delete(); // delete old file
+            file.createNewFile(); // create new file
 
             fileWriter = new FileWriter(file);
 
@@ -43,8 +44,11 @@ public abstract class Exporter
 
         } catch (Exception e) {
             // TODO: handle exception
+            System.out.println(e);
+            e.printStackTrace();
         } finally {
             try {
+                if (fileWriter != null)
                 fileWriter.close();
             } catch (IOException e) {
                 // ignore
@@ -68,14 +72,17 @@ public abstract class Exporter
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
         // Kopfzeile
-        zeilen.add(new String[]{"Raum_Name", "Ausstellungsstueck_Name", "Kosten"});
+        zeilen.add(new String[]{"Raum_Name", "Position", "Ausstellungsstueck_Name", "Thema", "Kosten", "Attraktivität"});
 
         for (Ausleihe ausleihe : ausleihen) {
 
             String[] zeile = new String[]{
                 ausleihe.raum.bezeichnung,
+                ausleihe.position.label,
                 ausleihe.angebot.ausstellungsstueck.bezeichnung,
+                ausleihe.angebot.ausstellungsstueck.thema.bezeichnung,
                 Integer.toString(ausleihe.angebot.kosten),
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivität)
             };
 
             zeilen.add(zeile);
