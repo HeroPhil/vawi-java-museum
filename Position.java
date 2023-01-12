@@ -11,10 +11,26 @@
  */
 public enum Position
 {
-    NORD,
-    OST,
-    SUED,
-    WEST,
-    MITTIG
+    NORD("Nord"),
+    OST("Ost"),
+    SUED("Sued"),
+    WEST("West"),
+    BODEN("Boden"),
+    VOLLKOMMEN("Vollkommen")
+    ;
+
+    public final String label;
+
+    private Position(String label) {
+        this.label = label;
+    }
+
+    // return all positions except mittig
+    public static Position[] getWandPositionen() {
+        // TODO randomize order
+        return new Position[]{NORD, OST, SUED, WEST};
+    }
+
+
 }
 
