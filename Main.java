@@ -41,7 +41,7 @@ public abstract class Main
             
             
             // 2 Themenauswahl
-            Planung planung = new Planung(new Thema("Themen werden noch nicht beruecksichtigt"));
+            Planung planung = new Planung(ThemenVerwalter.getInstance().getAllThemen()[0]);
 
             // 3 Planung
             planung.planungDurchfuehren();
