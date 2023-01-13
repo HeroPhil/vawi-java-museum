@@ -125,6 +125,10 @@ public class Planung
             Bild bild = (Bild) angebot.ausstellungsstueck;
 
             // teste raum
+            if (! checkIfAirRequirementIsMet(bild, getCurrentAirRequirementForRoom(raum)) ) {
+                // if not met, skip the image
+                return passt;
+            }
 
             // teste alle waende
             for (Position position : Position.getWandPositionen()) {
@@ -173,6 +177,42 @@ public class Planung
         // check if there is any ausleihe with raum ans position vollkommen
         return ausleihen.stream().anyMatch(ausleihe -> ausleihe.raum == raum
                 && ausleihe.position == Position.VOLLKOMMEN);
+    }
+
+    private Ausleihe[] getAllAusleihenForRoom(Raum raum) {
+        return ausleihen.stream().filter(ausleihe -> ausleihe.raum == raum).toArray(Ausleihe[]::new);
+    }
+
+    private Ausleihe[] getAllBilderForRoom(Raum raum) {
+        return Arrays.asList(getAllAusleihenForRoom(raum)).stream().filter(ausleihe -> ausleihe.angebot.ausstellungsstueck instanceof Bild).toArray(Ausleihe[]::new);
+    }
+
+    private double[] getCurrentAirRequirementForRoom(Raum raum) {
+        double minTemp = 0;
+        double maxTemp = Double.MAX_VALUE;
+        double minFeuchtigkeit = 0;
+        double maxFeuchtigkeit = Double.MAX_VALUE;
+
+        Ausleihe[] ausleihen = getAllBilderForRoom(raum);
+        for (Ausleihe ausleihe : ausleihen) {
+            Bild bild = (Bild) ausleihe.angebot.ausstellungsstueck;
+            minTemp = Math.max(minTemp, bild.minTemp);
+            maxTemp = Math.min(maxTemp, bild.maxTemp);
+            minFeuchtigkeit = Math.max(minFeuchtigkeit, bild.minFeuchtigkeit);
+            maxFeuchtigkeit = Math.min(maxFeuchtigkeit, bild.maxFeuchtigkeit);
+        }
+
+        return new double[] { minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit };
+    }
+
+    private boolean checkIfAirRequirementIsMet(Bild bild, double[] airRequirement) {
+        double minTemp = airRequirement[0];
+        double maxTemp = airRequirement[1];
+        double minFeuchtigkeit = airRequirement[2];
+        double maxFeuchtigkeit = airRequirement[3];
+
+        return bild.minTemp >= minTemp && bild.maxTemp <= maxTemp && bild.minFeuchtigkeit >= minFeuchtigkeit
+                && bild.maxFeuchtigkeit <= maxFeuchtigkeit;
     }
 
 }
