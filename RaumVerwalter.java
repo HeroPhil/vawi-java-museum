@@ -56,13 +56,6 @@ public class RaumVerwalter
         return null;
     }
     
-    /**
-     * get all raeume with at least half of all raeume
-     * @return all raeume with at least half of all raeume
-     */
-    public Raum[] getRaeumeWithAtLeastHalfOfAllRaeume() {
-        return null;
-    }
     
     /**
      * add a raum
