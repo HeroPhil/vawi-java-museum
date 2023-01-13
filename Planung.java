@@ -8,8 +8,7 @@ import java.util.stream.Collectors;
  *
  * @author Philip Herold
  */
-public class Planung
-{
+public class Planung {
 
     /**
      * The thema to plan for.
@@ -88,7 +87,7 @@ public class Planung
                 ;
             }
 
-            if (erfolgreichGefuellteRaeume >= raeume.length / 2) {
+            if (erfolgreichGefuellteRaeume >= raeume.length / 2.0) {
                 break;
             }
             // TODO throw error / warning if after all rooms were tried no half of the rooms
@@ -125,21 +124,29 @@ public class Planung
             Bild bild = (Bild) angebot.ausstellungsstueck;
 
             // teste raum
-            if (! checkIfAirRequirementIsMet(bild, getCurrentAirRequirementForRoom(raum)) ) {
+            if (!checkIfAirRequirementIsMet(bild, getCurrentAirRequirementForRoom(raum))) {
                 // if not met, skip the image
+                System.out.println(
+                        "Bild Id: " + angebot.id + " passt nicht in Raum: " + raum.id + " wegen Luftanforderung");
                 return passt;
             }
 
-            Bild[] bestehendeBilder = Arrays.asList(getAllAusleihenWithBilderForRoom(raum)).stream().map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Bild[]::new);
+            Ausleihe[] alleAusleihenVonBilderImRaum = getAllAusleihenWithBilderForRoom(raum);
 
             // teste alle waende
             for (Position position : Position.getWandPositionen()) {
+
+                Bild[] bestehendeBilder = Arrays.asList(alleAusleihenVonBilderImRaum).stream()
+                .filter(ausleihen -> ausleihen.position == position)
+                .map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Bild[]::new);
 
                 if (RaumVerwalter.checkIfBildFitsToWall(raum, position, bild, bestehendeBilder)) {
                     addAusleihe(angebot, raum, position);
                     passt = true;
                     break;
                 }
+                System.out.println(
+                        "Bild Id: " + angebot.id + " passt nicht in Raum: " + raum.id + " an Wand: " + position.label);
             }
 
             // wenn es ein Kunstgegenstand ist, dann pruefe ob dieser in den Raum passt.
@@ -150,6 +157,7 @@ public class Planung
                 addAusleihe(angebot, raum, Position.BODEN);
                 passt = true;
             }
+            System.out.println("Kunstgegenstand Id: " + angebot.id + " passt nicht in Raum: " + raum.id);
 
             // wenn es eine Kunstinstallation ist, dann pruefe ob diese in den Raum passt
         } else if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
@@ -159,6 +167,7 @@ public class Planung
                 addAusleihe(angebot, raum, Position.VOLLKOMMEN);
                 passt = true;
             }
+            System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id);
         }
 
         return passt;
@@ -214,8 +223,20 @@ public class Planung
         double minFeuchtigkeit = airRequirement[2];
         double maxFeuchtigkeit = airRequirement[3];
 
-        return bild.minTemp >= minTemp && bild.maxTemp <= maxTemp && bild.minFeuchtigkeit >= minFeuchtigkeit
-                && bild.maxFeuchtigkeit <= maxFeuchtigkeit;
+        boolean result =
+            (bild.minTemp <= maxTemp
+            || bild.maxTemp >= minTemp)
+            && (bild.minFeuchtigkeit <= maxFeuchtigkeit
+            || bild.maxFeuchtigkeit >= minFeuchtigkeit);
+
+         if (!result) {
+            System.out.println("Bild: " + bild.minTemp + " - " + bild.maxTemp
+                    + "\nRaum: " + minTemp + " - " + maxTemp);
+            System.out.println("Bild: " + bild.minFeuchtigkeit + " - " + bild.maxFeuchtigkeit
+                    + "\nRaum: " + minFeuchtigkeit + " - " + maxFeuchtigkeit);
+             
+         }
+         return result;
     }
 
 }
