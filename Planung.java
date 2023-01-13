@@ -130,10 +130,12 @@ public class Planung
                 return passt;
             }
 
+            Bild[] bestehendeBilder = Arrays.asList(getAllAusleihenWithBilderForRoom(raum)).stream().map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Bild[]::new);
+
             // teste alle waende
             for (Position position : Position.getWandPositionen()) {
 
-                if (true) { // TODO prüfe Bild passt an die Wand
+                if (RaumVerwalter.checkIfBildFitsToWall(raum, position, bild, bestehendeBilder)) {
                     addAusleihe(angebot, raum, position);
                     passt = true;
                     break;
@@ -183,8 +185,9 @@ public class Planung
         return ausleihen.stream().filter(ausleihe -> ausleihe.raum == raum).toArray(Ausleihe[]::new);
     }
 
-    private Ausleihe[] getAllBilderForRoom(Raum raum) {
-        return Arrays.asList(getAllAusleihenForRoom(raum)).stream().filter(ausleihe -> ausleihe.angebot.ausstellungsstueck instanceof Bild).toArray(Ausleihe[]::new);
+    private Ausleihe[] getAllAusleihenWithBilderForRoom(Raum raum) {
+        return Arrays.asList(getAllAusleihenForRoom(raum)).stream()
+                .filter(ausleihe -> ausleihe.angebot.ausstellungsstueck instanceof Bild).toArray(Ausleihe[]::new);
     }
 
     private double[] getCurrentAirRequirementForRoom(Raum raum) {
@@ -193,7 +196,7 @@ public class Planung
         double minFeuchtigkeit = 0;
         double maxFeuchtigkeit = Double.MAX_VALUE;
 
-        Ausleihe[] ausleihen = getAllBilderForRoom(raum);
+        Ausleihe[] ausleihen = getAllAusleihenWithBilderForRoom(raum);
         for (Ausleihe ausleihe : ausleihen) {
             Bild bild = (Bild) ausleihe.angebot.ausstellungsstueck;
             minTemp = Math.max(minTemp, bild.minTemp);

@@ -19,12 +19,14 @@ public class Raum
 
     /**
      * the laenge of the Raum
+     * (Nord-Sued)
      * in cm
      */
     public final int laenge;
 
     /**
      * the breite of the Raum
+     * (Ost-West)
      * in cm
      */
     public final int breite;
@@ -81,8 +83,8 @@ public class Raum
      * Berechnet die Wandlaenge abzueglich der tuerbreite zurueck.
      * @return die Wandlaenge abzueglich der tuerbreite
      */
-    public Integer getNettoWandLaenge() {
-        return null;
+    public int getNettoWandLaenge(Position position) {
+       return 0; // TODO
     }
 
 }
