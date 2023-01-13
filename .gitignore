@@ -4,4 +4,5 @@ team.defs
 bluej.pkh
 backup
 *.DS_Store
+output/
 
