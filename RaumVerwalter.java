@@ -24,7 +24,55 @@ public class RaumVerwalter
     }
 
     public static boolean checkIfBildFitsToWall(Raum raum, Position position, Bild bild, Bild[] bestehendeBilder) {
-       return false;
+        return result;
+    }
+
+    public static boolean checkIfGegenstandFitsOnFloor(Raum raum, Ausstellungsstueck3D ausstellungsstueck,
+            Ausstellungsstueck3D[] bestehendeAusstellungsstuecke) {
+
+        // 1 check height
+        if (ausstellungsstueck.hoehe > raum.hoehe) {
+            System.out.println("Ausstellungsstueck " + ausstellungsstueck.hoehe + " passt nicht in Raum wegen Hoehe " + raum.hoehe);
+            return false;
+        }
+
+        // 2 add ausstellungsstueck to bestehendeAusstellungsstuecke in new arraylist
+        ArrayList<Ausstellungsstueck3D> ausstellungsstuecke = new ArrayList<Ausstellungsstueck3D>();
+        for (Ausstellungsstueck3D a : bestehendeAusstellungsstuecke) {
+            ausstellungsstuecke.add(a);
+        }
+        ausstellungsstuecke.add(ausstellungsstueck);
+
+        // 3 implement rectangle packing algorithm using breite and laenge. consider minium spacing of Ausstellungsstueck3D.MINDEST_ABSTAND
+        // 3.1 sort by breite
+        ausstellungsstuecke.sort((Ausstellungsstueck3D a1, Ausstellungsstueck3D a2) -> {
+            return Double.compare(a1.breite, a2.breite);
+        });
+
+        // 3.2 sort by laenge
+        ausstellungsstuecke.sort((Ausstellungsstueck3D a1, Ausstellungsstueck3D a2) -> {
+            return Double.compare(a1.laenge, a2.laenge);
+        });
+
+        // 3.3 pack rectangles
+        double x = 0;
+        double y = 0;
+        double maxY = 0;
+        for (Ausstellungsstueck3D a : ausstellungsstuecke) {
+            if (x + a.breite + Ausstellungsstueck3D.MINDEST_ABSTAND > raum.breite) {
+                x = 0;
+                y = maxY;
+            }
+            if (y + a.laenge + Ausstellungsstueck3D.MINDEST_ABSTAND > raum.laenge) {
+                System.out.println("Ausstellungsstueck " + ausstellungsstueck.breite + " passt nicht in Raum wegen Laenge " + raum.laenge);
+                return false;
+            }
+            x += a.breite + Ausstellungsstueck3D.MINDEST_ABSTAND;
+            maxY = Math.max(maxY, y + a.laenge + Ausstellungsstueck3D.MINDEST_ABSTAND);
+        }
+
+        // if nor error occured, everything should fit
+        return true;
     }
 
     /**

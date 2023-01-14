@@ -131,7 +131,7 @@ public class Planung {
                 return passt;
             }
 
-            Ausleihe[] alleAusleihenVonBilderImRaum = getAllAusleihenWithBilderForRoom(raum);
+            Ausleihe[] alleAusleihenVonBilderImRaum = getAllAusleihenWithAusstellungsstueckForRoom(Bild.class, raum);
 
             // teste alle waende
             for (Position position : Position.getWandPositionen()) {
@@ -153,7 +153,11 @@ public class Planung {
         } else if (angebot.ausstellungsstueck instanceof Kunstgegenstand) {
             Kunstgegenstand kunstgegenstand = (Kunstgegenstand) angebot.ausstellungsstueck;
 
-            if (true) { // TODO prüfe Kunstgegenstand passt in den Raum
+            Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenWithAusstellungsstueckForRoom(Kunstgegenstand.class, raum);
+            Kunstgegenstand[] bestehendeKunstgegenstaende = Arrays.asList(bestehendeAusleihenVonKunstgegenstaende).stream()
+                    .map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Kunstgegenstand[]::new);
+
+            if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstgegenstand, bestehendeKunstgegenstaende)) { 
                 addAusleihe(angebot, raum, Position.BODEN);
                 passt = true;
             }
@@ -194,9 +198,9 @@ public class Planung {
         return ausleihen.stream().filter(ausleihe -> ausleihe.raum == raum).toArray(Ausleihe[]::new);
     }
 
-    private Ausleihe[] getAllAusleihenWithBilderForRoom(Raum raum) {
+    private Ausleihe[] getAllAusleihenWithAusstellungsstueckForRoom(Class<? extends Ausstellungsstueck> ausstellungsstueckClass, Raum raum) {
         return Arrays.asList(getAllAusleihenForRoom(raum)).stream()
-                .filter(ausleihe -> ausleihe.angebot.ausstellungsstueck instanceof Bild).toArray(Ausleihe[]::new);
+                .filter(ausleihe -> ausstellungsstueckClass.isInstance(ausleihe.angebot.ausstellungsstueck)).toArray(Ausleihe[]::new);
     }
 
     private double[] getCurrentAirRequirementForRoom(Raum raum) {
@@ -205,7 +209,7 @@ public class Planung {
         double minFeuchtigkeit = 0;
         double maxFeuchtigkeit = Double.MAX_VALUE;
 
-        Ausleihe[] ausleihen = getAllAusleihenWithBilderForRoom(raum);
+        Ausleihe[] ausleihen = getAllAusleihenWithAusstellungsstueckForRoom(Bild.class, raum);
         for (Ausleihe ausleihe : ausleihen) {
             Bild bild = (Bild) ausleihe.angebot.ausstellungsstueck;
             minTemp = Math.max(minTemp, bild.minTemp);
