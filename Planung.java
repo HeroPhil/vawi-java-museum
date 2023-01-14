@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -67,57 +69,94 @@ public class Planung {
 
         Raum[] raeume = RaumVerwalter.getInstance().getAllRaeume();
 
-        // 2 Go through all rooms, until half are at least filled with one exhibit which
-        // satisfies the thema
-        int erfolgreichGefuellteRaeume = 0;
-        for (int i = 0; i < raeume.length; i++) {
+        // 2 Go through all rooms and fill them with aussstellungsstuecke
+        // overall:
+        int raeumeMitMindestThemenAnforderungErfuellt = 0;
+        // per room
+        Set<Thema> verwendeteThemen;
+        // per setup;
+        Thema[] themaFilter;
+        raumLoop: for (int i = 0; i < raeume.length; i++) {
             Raum raum = raeume[i];
 
-            // 2.1 Find an exhibit which satisfies the thema
-            Thema[] themaFilter = new Thema[] { thema };
-            Angebot[] alleAngebote = AngebotVerwalter.getInstance()
-                    .getAngeboteSortedByAttraktivitaetAndFiltered(themaFilter);
-            ArrayList<Angebot> moeglicheAngebote = filterGebrauchteAngebote(alleAngebote);
-
-            for (Angebot angebot : moeglicheAngebote) {
-                if (versucheAusstellungsstueckZuPlatzieren(raum, angebot)) {
-                    erfolgreichGefuellteRaeume++;
-                    break;
-                }
-                ;
-            }
-
-            if (erfolgreichGefuellteRaeume >= raeume.length / 2.0) {
-                break;
-            }
-            // TODO throw error / warning if after all rooms were tried no half of the rooms
-            // are filled
-        }
-
-        // 3 Go through all rooms, try to fit as many ausstellungsstuecke as possible
-        Angebot[] alleAngebote = AngebotVerwalter.getInstance().getAllAngeboteSortedByAttraktivitaet();
-        ArrayList<Angebot> moeglicheAngebote = filterGebrauchteAngebote(alleAngebote);
-
-        for (Raum raum : raeume) {
-
+            // ! no check here, but if there is already anything in here then do not look for kunstinstallationen
             if (checkIfRaumIsFilledWithKunstinstallation(raum)) {
-                continue;
+                continue raumLoop;
             }
 
-            for (int i = moeglicheAngebote.size() - 1; i >= 0; i--) {
-                Angebot angebot = moeglicheAngebote.get(i);
-                if (versucheAusstellungsstueckZuPlatzieren(raum, angebot)) {
-                    moeglicheAngebote.remove(angebot);
+            // 2.0 Reset for new Room
+            themaFilter = ThemenVerwalter.getInstance().getAllThemen();
+            verwendeteThemen = new HashSet<Thema>();
 
-                    // if the room is filled with a Kunstinstallation, then no other exhibit can be added
-                    if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
+            // there are 3 setups:
+            // 0: mindestanforderung
+            // 1: all themen
+            // 2: only used themen
+            setupLoop: for (int setup = 0; setup < 3; setup++) {
+
+                // 2.1 update setup
+                switch (setup) {
+                    case 0:
+                        // if there are still rooms which require the specific thema, then only use this
+                        if (raeumeMitMindestThemenAnforderungErfuellt < raeume.length / 2.0) {
+                            themaFilter = new Thema[] { thema };
+                            break;
+                        }
+                        continue setupLoop; // next setup;
+                    case 1:
+                        themaFilter = ThemenVerwalter.getInstance().getAllThemen();
                         break;
+                    // use only used themen
+                    case 2:
+                        themaFilter = verwendeteThemen.toArray(new Thema[verwendeteThemen.size()]);
+                        break;
+
+                }
+                // 2.2 get angebote
+                Angebot[] alleAngebote = AngebotVerwalter.getInstance()
+                        .getAngeboteSortedByAttraktivitaetAndFiltered(themaFilter);
+                ArrayList<Angebot> moeglicheAngebote = filterGebrauchteAngebote(alleAngebote);
+
+                // 2.3 try to place as many as possible
+                for (Angebot angebot : moeglicheAngebote) {
+                    if (versucheAusstellungsstueckZuPlatzieren(raum, angebot)) { // if successfully placed
+                        verwendeteThemen.add(angebot.ausstellungsstueck.thema); // remember used thema
+                        // do we need to continue with next setup? or are we done with the room?
+                        boolean continueWithNextSetup = false;
+                        boolean continueWithNextRaum = false;
+                        switch (setup) {
+                            case 0:
+                            raeumeMitMindestThemenAnforderungErfuellt++;
+                            continueWithNextSetup = true;
+                            // no break because we also might to continue with next raum
+                            case 1:
+                            // check if three different Themen are already used > continue to next setup and
+                            // only use them
+                            if (verwendeteThemen.size() >= 3) {
+                                continueWithNextSetup = true;
+                            }
+                            default:
+                            // ensure that only one Kunstinstallation is placed in a room alone
+                            if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
+                                continueWithNextRaum = true;
+                                break; // dont need to remember used thema if raum is done
+                            }
+                        }
+                        if (continueWithNextRaum) {
+                            continue raumLoop;
+                        }
+                        if (continueWithNextSetup) {
+                            continue setupLoop;
+                        }
                     }
                 }
+
             }
+
         }
 
         this.geplant = true;
+        // TODO print warning if mindestanforderung is not met
     }
 
     private boolean versucheAusstellungsstueckZuPlatzieren(Raum raum, Angebot angebot) {
@@ -142,8 +181,8 @@ public class Planung {
             for (Position position : Position.getWandPositionen()) {
 
                 Bild[] bestehendeBilder = Arrays.asList(alleAusleihenVonBilderImRaum).stream()
-                .filter(ausleihen -> ausleihen.position == position)
-                .map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Bild[]::new);
+                        .filter(ausleihen -> ausleihen.position == position)
+                        .map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Bild[]::new);
 
                 if (RaumVerwalter.checkIfBildFitsToWall(raum, position, bild, bestehendeBilder)) {
                     addAusleihe(angebot, raum, position);
@@ -158,11 +197,13 @@ public class Planung {
         } else if (angebot.ausstellungsstueck instanceof Kunstgegenstand) {
             Kunstgegenstand kunstgegenstand = (Kunstgegenstand) angebot.ausstellungsstueck;
 
-            Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenWithAusstellungsstueckForRoom(Kunstgegenstand.class, raum);
-            Kunstgegenstand[] bestehendeKunstgegenstaende = Arrays.asList(bestehendeAusleihenVonKunstgegenstaende).stream()
+            Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenWithAusstellungsstueckForRoom(
+                    Kunstgegenstand.class, raum);
+            Kunstgegenstand[] bestehendeKunstgegenstaende = Arrays.asList(bestehendeAusleihenVonKunstgegenstaende)
+                    .stream()
                     .map(ausleihe -> ausleihe.angebot.ausstellungsstueck).toArray(Kunstgegenstand[]::new);
 
-            if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstgegenstand, bestehendeKunstgegenstaende)) { 
+            if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstgegenstand, bestehendeKunstgegenstaende)) {
                 addAusleihe(angebot, raum, Position.BODEN);
                 passt = true;
             }
@@ -174,11 +215,12 @@ public class Planung {
 
             Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenForRoom(raum);
             if (bestehendeAusleihenVonKunstgegenstaende.length > 0) {
-                System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id + " weil Raum schon belegt ist");
+                System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id
+                        + " weil Raum schon belegt ist");
                 return passt;
             }
 
-            if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstinstallation, new Ausstellungsstueck3D[]{})) {
+            if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstinstallation, new Ausstellungsstueck3D[] {})) {
                 addAusleihe(angebot, raum, Position.VOLLKOMMEN);
                 passt = true;
             }
@@ -209,9 +251,11 @@ public class Planung {
         return ausleihen.stream().filter(ausleihe -> ausleihe.raum == raum).toArray(Ausleihe[]::new);
     }
 
-    private Ausleihe[] getAllAusleihenWithAusstellungsstueckForRoom(Class<? extends Ausstellungsstueck> ausstellungsstueckClass, Raum raum) {
+    private Ausleihe[] getAllAusleihenWithAusstellungsstueckForRoom(
+            Class<? extends Ausstellungsstueck> ausstellungsstueckClass, Raum raum) {
         return Arrays.asList(getAllAusleihenForRoom(raum)).stream()
-                .filter(ausleihe -> ausstellungsstueckClass.isInstance(ausleihe.angebot.ausstellungsstueck)).toArray(Ausleihe[]::new);
+                .filter(ausleihe -> ausstellungsstueckClass.isInstance(ausleihe.angebot.ausstellungsstueck))
+                .toArray(Ausleihe[]::new);
     }
 
     private double[] getCurrentAirRequirementForRoom(Raum raum) {
@@ -241,17 +285,17 @@ public class Planung {
         boolean tempCheck = bild.minTemp <= maxTemp && bild.maxTemp >= minTemp;
         boolean feuchtigkeitCheck = bild.minFeuchtigkeit <= maxFeuchtigkeit && bild.maxFeuchtigkeit >= minFeuchtigkeit;
 
-         if (!tempCheck) {
+        if (!tempCheck) {
             System.out.println("Bild: " + bild.minTemp + " - " + bild.maxTemp
                     + "\nRaum: " + minTemp + " - " + maxTemp);
-         }
-         if (!feuchtigkeitCheck) {
+        }
+        if (!feuchtigkeitCheck) {
             System.out.println("Bild: " + bild.minFeuchtigkeit + " - " + bild.maxFeuchtigkeit
                     + "\nRaum: " + minFeuchtigkeit + " - " + maxFeuchtigkeit);
-             
-         }
 
-         return tempCheck && feuchtigkeitCheck;
+        }
+
+        return tempCheck && feuchtigkeitCheck;
     }
 
 }
