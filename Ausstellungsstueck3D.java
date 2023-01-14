@@ -6,6 +6,13 @@
  */
 public abstract class Ausstellungsstueck3D extends Ausstellungsstueck
 {
+
+    /**
+     * minimum space between 3D Ausstellungsstücke
+     * in cm
+     */
+    final static double MINDEST_ABSTAND = 200;
+
     /**
      * the laenge of the Ausstellungsstück3D
      * in cm
