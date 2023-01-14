@@ -108,6 +108,11 @@ public class Planung {
                 Angebot angebot = moeglicheAngebote.get(i);
                 if (versucheAusstellungsstueckZuPlatzieren(raum, angebot)) {
                     moeglicheAngebote.remove(angebot);
+
+                    // if the room is filled with a Kunstinstallation, then no other exhibit can be added
+                    if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
+                        break;
+                    }
                 }
             }
         }
