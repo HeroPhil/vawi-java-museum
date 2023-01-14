@@ -167,7 +167,13 @@ public class Planung {
         } else if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
             Kunstinstallation kunstinstallation = (Kunstinstallation) angebot.ausstellungsstueck;
 
-            if (true) { // TODO prüfe Kunstinstallation passt in den Raum
+            Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenForRoom(raum);
+            if (bestehendeAusleihenVonKunstgegenstaende.length > 0) {
+                System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id + " weil Raum schon belegt ist");
+                return passt;
+            }
+
+            if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstinstallation, new Ausstellungsstueck3D[]{})) {
                 addAusleihe(angebot, raum, Position.VOLLKOMMEN);
                 passt = true;
             }
