@@ -223,20 +223,20 @@ public class Planung {
         double minFeuchtigkeit = airRequirement[2];
         double maxFeuchtigkeit = airRequirement[3];
 
-        boolean result =
-            (bild.minTemp <= maxTemp
-            || bild.maxTemp >= minTemp)
-            && (bild.minFeuchtigkeit <= maxFeuchtigkeit
-            || bild.maxFeuchtigkeit >= minFeuchtigkeit);
+        boolean tempCheck = bild.minTemp <= maxTemp && bild.maxTemp >= minTemp;
+        boolean feuchtigkeitCheck = bild.minFeuchtigkeit <= maxFeuchtigkeit && bild.maxFeuchtigkeit >= minFeuchtigkeit;
 
-         if (!result) {
+         if (!tempCheck) {
             System.out.println("Bild: " + bild.minTemp + " - " + bild.maxTemp
                     + "\nRaum: " + minTemp + " - " + maxTemp);
+         }
+         if (!feuchtigkeitCheck) {
             System.out.println("Bild: " + bild.minFeuchtigkeit + " - " + bild.maxFeuchtigkeit
                     + "\nRaum: " + minFeuchtigkeit + " - " + maxFeuchtigkeit);
              
          }
-         return result;
+
+         return tempCheck && feuchtigkeitCheck;
     }
 
 }
