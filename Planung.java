@@ -85,7 +85,8 @@ public class Planung
             verwendeteThemen = new HashSet<Thema>();
 
             // there are 3 setups to consider in order:
-            // 0: try to satisfy all mindestanforderung (at least one for thema in half of the rooms)
+            // 0: try to satisfy all mindestanforderung (at least one for thema in half of
+            // the rooms)
             // 1: use all themen (do not filter themen)
             // 2: only used themen (do filter themen)
             setupLoop: for (int setup = 0; setup < 3; setup++) {
@@ -147,7 +148,11 @@ public class Planung
                     }
                 }
 
+                // continue with next setup
+
             }
+
+            // continue with next raum
 
         }
 
@@ -155,7 +160,17 @@ public class Planung
         // TODO print warning if mindestanforderung is not met
     }
 
+    /**
+     * Versucht das angebot in den raum zu platzieren.
+     * Fueht entsprechende Checks fuer unterschiedliche Ausstellungsstuecke durch.
+     * Bei Erfolg wird eine neue Ausleihe hinzugefuegt.
+     * 
+     * @param raum    Der Raum, in den das Ausstellungsstueck platziert werden soll.
+     * @param angebot Das Angebot, welches platziert werden soll.
+     * @return true wenn das Ausstellungsstueck erfolgreich platziert wurde.
+     */
     private boolean versucheAusstellungsstueckZuPlatzieren(Raum raum, Angebot angebot) {
+        // TODO subject to optimization and code cleanup
 
         boolean passt = false;
 
@@ -209,7 +224,8 @@ public class Planung
         } else if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
             Kunstinstallation kunstinstallation = (Kunstinstallation) angebot.ausstellungsstueck;
 
-            // ? might be more efficient to check this outside of this method (filter for anything but Kunstinstallation)
+            // ? might be more efficient to check this outside of this method (filter for
+            // anything but Kunstinstallation)
             Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenForRoom(raum);
             if (bestehendeAusleihenVonKunstgegenstaende.length > 0) {
                 System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id
@@ -227,10 +243,24 @@ public class Planung
         return passt;
     }
 
+    /**
+     * Filter das angegebene Array von Angeboten, sodass nur noch die Angebote
+     * uebrigbleiben, die noch nicht ausgeliehen wurden.
+     * 
+     * @param angebote Array von Angeboten
+     * @return gefilterte Liste von Angeboten
+     */
     private ArrayList<Angebot> filterGebrauchteAngebote(Angebot[] angebote) {
         return filterGebrauchteAngebote(new ArrayList<Angebot>(Arrays.asList(angebote)));
     }
 
+    /**
+     * Filter das angegebene Array von Angeboten, sodass nur noch die Angebote
+     * uebrigbleiben, die noch nicht ausgeliehen wurden.
+     * 
+     * @param angebote Array von Angeboten
+     * @return gefiltertes Array von Angeboten
+     */
     private ArrayList<Angebot> filterGebrauchteAngebote(ArrayList<Angebot> angebote) {
         List<Angebot> gebrauchteAngebote = ausleihen.stream().map(ausleihe -> ausleihe.angebot)
                 .collect(Collectors.toList());
@@ -238,16 +268,35 @@ public class Planung
         return angebote;
     }
 
+
+    /**
+     * Prueft, ob sich eine Kunstinstallation bereits in einem Raum befindet.
+     * @param raum Raum, in dem die Kunstinstallation ausgeliehen werden soll
+     * @return true, wenn der Raum bereits mit einer Kunstinstallation belegt ist
+     */
+    @Deprecated
     private boolean checkIfRaumIsFilledWithKunstinstallation(Raum raum) {
         // check if there is any ausleihe with raum ans position vollkommen
         return ausleihen.stream().anyMatch(ausleihe -> ausleihe.raum == raum
                 && ausleihe.position == Position.VOLLKOMMEN);
     }
 
+    /**
+     * Lieft alle Ausleihen, die sich in dem angegebenen Raum befinden.
+     * @param raum Raum, in dem sich die Ausleihen befinden sollen
+     * @return Array von Ausleihen
+     */
     private Ausleihe[] getAllAusleihenForRoom(Raum raum) {
         return ausleihen.stream().filter(ausleihe -> ausleihe.raum == raum).toArray(Ausleihe[]::new);
     }
 
+    /**
+     * Lieft alle Ausleihen, die sich in dem angegebenen Raum befinden und ein
+     * Ausstellungsstueck der angegebenen Klasse sind.
+     * @param ausstellungsstueckClass Klasse des Ausstellungsstuecks (z.B. Kunstinstallation.class, Bild.class, Kunstgegenstand.class)
+     * @param raum Raum, in dem sich die Ausleihen befinden sollen
+     * @return Array von Ausleihen
+     */
     private Ausleihe[] getAllAusleihenWithAusstellungsstueckForRoom(
             Class<? extends Ausstellungsstueck> ausstellungsstueckClass, Raum raum) {
         return Arrays.asList(getAllAusleihenForRoom(raum)).stream()
@@ -255,6 +304,12 @@ public class Planung
                 .toArray(Ausleihe[]::new);
     }
 
+    /**
+     * Gibt die aktuelle Luftbeduerfnisse fuer den angegebenen Raum zurueck.
+     * Diese werden aus den Beduerfnissen der Ausleihen berechnet.
+     * @param raum Raum, fuer den die Luftbeduerfnisse berechnet werden sollen
+     * @return Array mit den Luftbeduerfnissen fuer den Raum im Format {minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
+     */
     private double[] getCurrentAirRequirementForRoom(Raum raum) {
         double minTemp = 0;
         double maxTemp = Double.MAX_VALUE;
@@ -273,6 +328,12 @@ public class Planung
         return new double[] { minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit };
     }
 
+    /**
+     * Prueft, ob die Luftbeduerfnisse fuer den angegebenen Raum erfuellt sind.
+     * @param bild Bild, fuer das die Luftbeduerfnisse geprueft werden sollen
+     * @param airRequirement Array mit den Luftbeduerfnissen fuer den Raum im Format {minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
+     * @return true, wenn die Luftbeduerfnisse erfuellt sind
+     */
     private boolean checkIfAirRequirementIsMet(Bild bild, double[] airRequirement) {
         double minTemp = airRequirement[0];
         double maxTemp = airRequirement[1];

@@ -23,10 +23,26 @@ public class RaumVerwalter
         return INSTANCE;
     }
 
+    /**
+     * check if a bild fits to a wall
+     * considering the size of the bild and raum, as well as bestehendeBilder
+     * @param raum the raum, in which the bild should be placed
+     * @param position the position (wall), on which the bild should be placed
+     * @param bild the bild to be placed
+     * @param bestehendeBilder the other bilder, which are already placed in the raum
+     * @return true, if all the bilder fit to the wall, false otherwise
+     */
     public static boolean checkIfBildFitsToWall(Raum raum, Position position, Bild bild, Bild[] bestehendeBilder) {
-        return result;
+        return false; // TODO
     }
 
+    /**
+     * check if a Kunstgegenstand or Kunstinstallation fits on the floor
+     * @param raum the raum, in which the Kunstgegenstand or Kunstinstallation should be placed
+     * @param ausstellungsstueck the Kunstgegenstand or Kunstinstallation to be placed
+     * @param bestehendeAusstellungsstuecke the other Kunstgegenstaende or Kunstinstallationen, which are already placed in the raum
+     * @return true, if all the Kunstgegenstaende or Kunstinstallationen fit on the floor, false otherwise
+     */
     public static boolean checkIfGegenstandFitsOnFloor(Raum raum, Ausstellungsstueck3D ausstellungsstueck,
             Ausstellungsstueck3D[] bestehendeAusstellungsstuecke) {
 

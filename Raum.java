@@ -80,7 +80,8 @@ public class Raum
     }
 
     /**
-     * Berechnet die Wandlaenge abzueglich der tuerbreite zurueck.
+     * Berechnet die Wandlaenge abzueglich der tuerbreite fuer eine bestimmte Wand.
+     * @param position welche Position / Wand
      * @return die Wandlaenge abzueglich der tuerbreite
      */
     public int getNettoWandLaenge(Position position) {
