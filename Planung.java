@@ -158,6 +158,8 @@ public class Planung
 
         this.geplant = true;
         // TODO print warning if mindestanforderung is not met
+
+        // TODO add costcheck
     }
 
     /**
