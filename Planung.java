@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
  *
  * @author Philip Herold
  */
-public class Planung {
+public class Planung
+{
 
     /**
      * The thema to plan for.
@@ -79,19 +80,14 @@ public class Planung {
         raumLoop: for (int i = 0; i < raeume.length; i++) {
             Raum raum = raeume[i];
 
-            // ! no check here, but if there is already anything in here then do not look for kunstinstallationen
-            if (checkIfRaumIsFilledWithKunstinstallation(raum)) {
-                continue raumLoop;
-            }
-
             // 2.0 Reset for new Room
             themaFilter = ThemenVerwalter.getInstance().getAllThemen();
             verwendeteThemen = new HashSet<Thema>();
 
-            // there are 3 setups:
-            // 0: mindestanforderung
-            // 1: all themen
-            // 2: only used themen
+            // there are 3 setups to consider in order:
+            // 0: try to satisfy all mindestanforderung (at least one for thema in half of the rooms)
+            // 1: use all themen (do not filter themen)
+            // 2: only used themen (do filter themen)
             setupLoop: for (int setup = 0; setup < 3; setup++) {
 
                 // 2.1 update setup
@@ -126,21 +122,21 @@ public class Planung {
                         boolean continueWithNextRaum = false;
                         switch (setup) {
                             case 0:
-                            raeumeMitMindestThemenAnforderungErfuellt++;
-                            continueWithNextSetup = true;
-                            // no break because we also might to continue with next raum
-                            case 1:
-                            // check if three different Themen are already used > continue to next setup and
-                            // only use them
-                            if (verwendeteThemen.size() >= 3) {
+                                raeumeMitMindestThemenAnforderungErfuellt++;
                                 continueWithNextSetup = true;
-                            }
+                                // no break because we also might to continue with next raum
+                            case 1:
+                                // check if three different Themen are already used > continue to next setup and
+                                // only use them
+                                if (verwendeteThemen.size() >= 3) {
+                                    continueWithNextSetup = true;
+                                }
                             default:
-                            // ensure that only one Kunstinstallation is placed in a room alone
-                            if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
-                                continueWithNextRaum = true;
-                                break; // dont need to remember used thema if raum is done
-                            }
+                                // ensure that only one Kunstinstallation is placed in a room alone
+                                if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
+                                    continueWithNextRaum = true;
+                                    break; // dont need to remember used thema if raum is done
+                                }
                         }
                         if (continueWithNextRaum) {
                             continue raumLoop;
@@ -213,6 +209,7 @@ public class Planung {
         } else if (angebot.ausstellungsstueck instanceof Kunstinstallation) {
             Kunstinstallation kunstinstallation = (Kunstinstallation) angebot.ausstellungsstueck;
 
+            // ? might be more efficient to check this outside of this method (filter for anything but Kunstinstallation)
             Ausleihe[] bestehendeAusleihenVonKunstgegenstaende = getAllAusleihenForRoom(raum);
             if (bestehendeAusleihenVonKunstgegenstaende.length > 0) {
                 System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id
