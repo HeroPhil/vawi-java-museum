@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,9 +20,19 @@ public class Planung
     public final Thema thema;
 
     /**
+     * The maximum costs for the planung.
+     */
+    public final int kostenGrenze;
+
+    /**
      * Flag if the planung is already done.
      */
     public boolean geplant;
+
+    /**
+     * The displayname of the planung.
+     */
+    public final String bezeichnung;
 
     /**
      * The list of all ausleihen.
@@ -36,8 +47,13 @@ public class Planung
      * 
      * @param thema the thema to plan for
      */
-    public Planung(Thema thema) {
+    public Planung(String bezeichnung, Thema thema, int kostenGrenze) {
+        if (bezeichnung == "") {
+            bezeichnung = new Date().toString();
+        }
+        this.bezeichnung = bezeichnung;
         this.thema = thema;
+        this.kostenGrenze = kostenGrenze;
         this.geplant = false;
         this.ausleihen = new ArrayList<Ausleihe>();
     }
