@@ -1,27 +1,27 @@
 /**
  * Model class for an Angebot
- * contains all information about an Angebot
- * references the Ausstellungsstueck and PartnerMuseum
+ * Beinhaltet alle Informationen eines Angebots
+ * Referenziert Ausstellungsstueck und PartnerMuseum
  * @author Meike Ganzer
  */
 public class Angebot {
     /**
-     * the id of the Angebot
+     * ID des Angebots
      */
     public final int id;
 
     /**
-     * the kosten of the Angebot
+     * Ausleihkosten für das Ausstellungsstueck
      */
     public final int kosten;
 
     /**
-     * the Ausstellungsstueck of the Angebot
+     * Ausstellungsstueck des Angebots
      */
     public final Ausstellungsstueck ausstellungsstueck;
 
     /**
-     * the PartnerMuseum of the Angebot
+     * PartnerMuseum des Angebots
      */
     public final PartnerMuseum partnerMuseum;
 
@@ -33,6 +33,15 @@ public class Angebot {
         this.kosten = kosten;
         this.ausstellungsstueck = ausstellungsstueck;
         this.partnerMuseum = partnerMuseum;
+    }
+    /**
+     * Ausgabe der Angebote als Text
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "Angebot [id=" + id + ", kosten=" + kosten +", Ausstellungsstueck=" + ausstellungsstueck +", PartnerMuseum=" + partnerMuseum +"]";
     }
 
 }

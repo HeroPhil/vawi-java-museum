@@ -15,4 +15,16 @@ public class Kunstgegenstand extends Ausstellungsstueck3D
         super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId, laenge, gewicht);
     }
 
+
+
+/**
+ * Beschreibung des Kunstgegenstands (Text)
+ * 
+ * @return Beschreibung
+ */
+@Override
+    public String toString() 
+    { 
+        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivität+", Höhe: "+hoehe+", Breite: "+breite+", ID: "+bezeichnung+", Länge: "+laenge+", Gewicht: "+gewicht;
+    }
 }
