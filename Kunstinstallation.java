@@ -7,20 +7,20 @@ public class Kunstinstallation extends Ausstellungsstueck3D
 {
 
 /**
-    * Constructor for objects of class Kunstinstallation
-    */
-    public Kunstinstallation(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
-            double hoehe, double breite, int eId, double laenge, double gewicht) {
-        super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId, laenge, gewicht);
-    }
+* Constructor for objects of class Kunstinstallation
+*/
+public Kunstinstallation(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
+     double hoehe, double breite, int eId, double laenge, double gewicht) {
+    super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId, laenge, gewicht);
+}
     
-    /**
-     * Beschreibung des Kunstgegenstands (Text)
-     * 
-     * @return Beschreibung
- */
+/**
+* Beschreibung des Kunstgegenstands (Text)
+* 
+* @return Beschreibung
+*/
 @Override
-    public String toString() 
+public String toString() 
     { 
         return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivität+", Höhe: "+hoehe+", Breite: "+breite+", externe ID: "+eId+", Länge: "+laenge+", Gewicht: "+gewicht;
     }
