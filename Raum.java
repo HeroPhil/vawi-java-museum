@@ -85,7 +85,18 @@ public class Raum
      * @return die Wandlaenge abzueglich der tuerbreite
      */
     public int getNettoWandLaenge(Position position) {
-       return 0; // TODO
+        switch (position){
+            case NORD:
+                return this.laenge - this.tuerNord;
+            case SUED:
+                return this.laenge - this.tuerSued;
+            case WEST:
+                return this.breite - this.tuerWest;
+            case OST:
+                return this.breite - this.tuerOst;
+            default:
+                return 0;      
+        }  
     }
 
 }
