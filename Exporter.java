@@ -60,10 +60,10 @@ public abstract class Exporter
     /**
      * Export the given Ausleihe[] to a CSV file
      * this is only an example format
-     * @param ausleihen Ausleihe[] 
+     * @param Planung Planung mit Ausleihe[] 
      * @param pfad String
      */
-    static void exportExample(Ausleihe[] ausleihen, String pfad) {
+    static void exportExample(Planung planung, String pfad) {
 
         // TODO add sorting comparators to Ausleihe
         // ...
@@ -74,7 +74,7 @@ public abstract class Exporter
         // Kopfzeile
         zeilen.add(new String[]{"Raum_Name", "Position", "Ausstellungsstueck_Name", "Thema", "Kosten", "Attraktivität"});
 
-        for (Ausleihe ausleihe : ausleihen) {
+        for (Ausleihe ausleihe : planung.getAllAusleihen()) {
 
             String[] zeile = new String[]{
                 ausleihe.raum.bezeichnung,
@@ -97,30 +97,30 @@ public abstract class Exporter
     /**
      * Export the given Ausleihe[] to a CSV file
      * this produces the "Museumsfuehrer" format
-     * @param ausleihen Ausleihe[]
+     * @param planung Planung mit Ausleihe[]
      * @param pfad String
      */
-    static void exportMuseumsFuehrer(Ausleihe[] ausleihen, String pfad) {
+    static void exportMuseumsFuehrer(Planung planung, String pfad) {
         
     }
 
     /**
      * Export the given Ausleihe[] to a CSV file
      * this produces the "Logistikuebersicht" format
-     * @param ausleihen Ausleihe[]  
+     * @param planung Planung mit Ausleihe[]  
      * @param pfad String
      */
-    static void exportLogistikUebersicht(Ausleihe[] ausleihen, String pfad) {
+    static void exportLogistikUebersicht(Planung planung, String pfad) {
         
     }
 
     /**
      * Export the given Ausleihe[] to a CSV file
      * this produces the "Ausleihuebersicht" format
-     * @param ausleihen
-     * @param pfad
+     * @param planung Planung mit Ausleihe[]
+     * @param pfad String
      */
-    static void exportAusleihUebersicht(Ausleihe[] ausleihen, String pfad) {
+    static void exportAusleihUebersicht(Planung planung, String pfad) {
         
     }
 }
