@@ -57,7 +57,7 @@ public abstract class Main
 
     public static void runExport(Planung planung) {
         try {
-            Exporter.exportExample(planung.getAllAusleihen(), exportPfad + "example.csv");
+            Exporter.exportExample(planung, exportPfad + "example.csv");
         } catch (Exception e) {
             //TODO UI error message
             e.printStackTrace();
@@ -128,7 +128,7 @@ public abstract class Main
         planung.planungDurchfuehren();
     
         // 4 Export
-        Exporter.exportExample(planung.getAllAusleihen(), exportPfad);
+        Exporter.exportExample(planung, exportPfad);
         
     }
 }

@@ -51,7 +51,10 @@ public class AngebotVerwalter {
      * @return all angebote sorted by Attraktivität
      */
     public Angebot[] getAllAngeboteSortedByAttraktivitaet() {
-        return null;
+        // sort by attraktivität
+        angebote.sort((a, b) -> b.ausstellungsstueck.attraktivität - a.ausstellungsstueck.attraktivität);
+        return angebote.toArray(new Angebot[angebote.size()]);
+        
     }
 
     /**
@@ -61,7 +64,24 @@ public class AngebotVerwalter {
      * @return
      */
     public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen) {
-        return null;
+        // use internal method to get angebote sorted and filtered by a comparator and a predicate
+        return getAngeboteSortedAndFiltered(
+                // use a comparator to sort by attraktivität
+                (a, b) -> b.ausstellungsstueck.attraktivität - a.ausstellungsstueck.attraktivität,
+                // use a predicate to filter by thema
+                new Predicate<Angebot>() {
+                    @Override
+                    public boolean test(Angebot angebot) {
+                        for (Thema thema : themen) {
+                            if (angebot.ausstellungsstueck.thema == thema) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                }
+        );
+
     }
     
     /**
@@ -73,7 +93,27 @@ public class AngebotVerwalter {
      * @return a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
      */
     public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen, Class<? extends Ausstellungsstueck>[] ausstellungsstueckArten) {
-        return null;
+        // use internal method to get angebote sorted and filtered by a comparator and a predicate
+        return getAngeboteSortedAndFiltered(
+                // use a comparator to sort by attraktivität
+                (a, b) -> b.ausstellungsstueck.attraktivität - a.ausstellungsstueck.attraktivität
+                ,
+                // use a predicate to filter by themen and klassen
+                angebot -> {
+                    // check if angebot.ausstellungsstueck is instance of a member of klassen
+                    for (Class<? extends Ausstellungsstueck> klass : ausstellungsstueckArten) {
+                        if (klass.isInstance(angebot.ausstellungsstueck)) {
+                            // check if angebot.ausstellungsstueck.thema is a member of themen
+                            for (Thema thema : themen) {
+                                if (thema == angebot.ausstellungsstueck.thema) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                }
+        );
     }
 
     /**
@@ -83,7 +123,11 @@ public class AngebotVerwalter {
      * @return angebote sorted and filtered by a comparator and a predicate
      */
     private Angebot[] getAngeboteSortedAndFiltered(Comparator<Angebot> comp, Predicate<Angebot> filter) {
-        return null;
+        // perform sorting and filtering using a stream
+        return angebote.stream()
+                .filter(filter)
+                .sorted(comp)
+                .toArray(Angebot[]::new);
     }
 
     /**
