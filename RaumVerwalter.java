@@ -33,34 +33,7 @@ public class RaumVerwalter
      * @return true, if all the bilder fit to the wall, false otherwise
      */
     public static boolean checkIfBildFitsToWall(Raum raum, Position position, Bild bild, Bild[] bestehendeBilder) {
-        // use netto raum size
-
-        // 1 check height
-        if (bild.hoehe > raum.hoehe) {
-            System.out.println("Bild " + bild.hoehe + " passt nicht in Raum wegen Hoehe " + raum.hoehe);
-            return false;
-        }
-
-        // 2 get available width
-        int verfuegbareLaenge = raum.getNettoWandLaenge(position);
-        verfuegbareLaenge -= Bild.MINDEST_ABSTAND; // Abstand zur Wand Links
-
-        // 3 remove existing Bilder (consider Abstand)
-        for (Bild b : bestehendeBilder) {
-            verfuegbareLaenge -= b.breite;
-            verfuegbareLaenge -= Bild.MINDEST_ABSTAND;
-        }
-
-        verfuegbareLaenge -= Bild.MINDEST_ABSTAND; // Abstand zur Wand Rechts
-
-        // 4 check if Bild fits
-        boolean result = bild.breite <= verfuegbareLaenge;
-
-        if (!result) {
-            System.out.println("Bild " + bild.breite + " passt nicht in Raum wegen Breite " + verfuegbareLaenge);
-        }
-
-        return result;
+        return false; // TODO
     }
 
     /**
