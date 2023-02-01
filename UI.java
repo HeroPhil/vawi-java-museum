@@ -1,24 +1,29 @@
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+
 
 /**
  * Write a description of class UI here.
@@ -147,21 +152,26 @@ public abstract class UI {
         planungThemenPanel.add(planungThemenComboBox);
         planungPanel.add(planungThemenPanel);
 
-        // add a input spinner with a label to input the cost limit
         // set the cost limit in main
         JPanel planungCostLimitPanel = new JPanel();
         planungCostLimitPanel.setLayout(new BoxLayout(planungCostLimitPanel, BoxLayout.X_AXIS));
         JLabel planungCostLimitLabel = new JLabel("Kosten Limit:");
         planungCostLimitPanel.add(planungCostLimitLabel);
-        SpinnerModel planungCostSpinnerModel = new SpinnerNumberModel(1000, 1, Integer.MAX_VALUE, 1);
-        JSpinner planungCostSpinner = new JSpinner(planungCostSpinnerModel);
-        planungCostSpinner.addChangeListener(new ChangeListener() {
+        // add text field with int only input
+        JTextField planungCostLimitTextField = new JTextField();
+        // set input filter to only allow numbers using key adapter
+        planungCostLimitTextField.addKeyListener(new KeyAdapter() {
             @Override
-            public void stateChanged(ChangeEvent e) {
-                Main.setKostenGrenze((int) planungCostSpinner.getValue());
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+                    e.consume();
+                    Main.setKostenGrenze(Integer.parseInt(planungCostLimitTextField.getText()));
+                }
             }
         });
-        planungCostLimitPanel.add(planungCostSpinner);
+        planungCostLimitPanel.add(planungCostLimitTextField);
+
         // add simple label with € sign
         JLabel planungCostLimitEuroLabel = new JLabel("€");
         planungCostLimitPanel.add(planungCostLimitEuroLabel);
@@ -250,10 +260,6 @@ public abstract class UI {
 
     private static void toggleWithSubComponents(Component c) {
         c.setEnabled(!c.isEnabled());
-        // TODO aint working
-        // if (c instanceof JSpinner) {
-        // ((JSpinner)c).getEditor().setEnabled(!((JSpinner)c).getEditor().isEnabled());
-        // }
         if (c instanceof Container) {
             for (Component child : ((Container) c).getComponents()) {
                 toggleWithSubComponents(child);

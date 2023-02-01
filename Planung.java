@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +42,8 @@ public class Planung
      * This represents the result of the planung.
      */
     private final ArrayList<Ausleihe> ausleihen;
+
+    private Ausleihe entbehrlicheAusleihe;
 
     /**
      * Constructor
@@ -180,7 +183,11 @@ public class Planung
         this.geplant = true;
         // TODO print warning if mindestanforderung is not met
 
-        // TODO add costcheck
+        // 3 Reduziere die Koste, falls noetig
+        if (reduceCost()) {
+            System.out.println("Kosten wurden reduziert");
+        }
+
     }
 
     /**
@@ -376,6 +383,54 @@ public class Planung
         }
 
         return tempCheck && feuchtigkeitCheck;
+    }
+
+    /**
+     * Berechent die gesamten Kosten aller Ausleihen.
+     * @return Gesamtkosten.
+     */
+    public int calcTotalCost() {
+        int totalCost = 0;
+        for (Ausleihe ausleihe : ausleihen) {
+            totalCost += ausleihe.angebot.kosten;
+        }
+        return totalCost;
+    }
+
+
+    /**
+     * Reduziert die Kosten, wenn diese über dem Limit sind, indem die teuersten Ausleihen entfernt werden, welche nicht das Fokusthema haben.
+     * @return true, wenn die Kosten reduziert werden mussten.
+     */
+    private boolean reduceCost() {
+        int overshoot = calcTotalCost() - kostenGrenze;
+
+        if (overshoot <= 0) {
+            return false;
+        }
+
+        // create a copy "entbehrlicheAusleihen" by filter ausleihen welche nicht das Thema haben und sortiere absteigend nach Kosten
+        List<Ausleihe> entbehrlicheAusleihen = ausleihen.stream()
+                .filter(ausleihe -> ausleihe.angebot.ausstellungsstueck.thema != thema)
+                .sorted(Comparator.comparing((Ausleihe ausleihe) -> ausleihe.angebot.kosten).reversed())
+                .collect(Collectors.toList());        
+
+        while(overshoot > 0) {
+            Ausleihe entbehrlicheAusleihe = entbehrlicheAusleihen.get(0);
+
+            ausleihen.remove(entbehrlicheAusleihe);
+
+            overshoot -= entbehrlicheAusleihe.angebot.kosten;
+            entbehrlicheAusleihen.remove(0);
+
+            if (entbehrlicheAusleihen.size() > 0) {
+                continue;
+            }
+            System.out.println("Kostenueberschuss konnte nicht weiter reduziert werden.\nBetragsueberschuss: " + overshoot);
+            break;
+        }
+
+        return true;
     }
 
 }
