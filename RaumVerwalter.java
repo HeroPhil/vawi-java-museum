@@ -33,7 +33,36 @@ public class RaumVerwalter
      * @return true, if all the bilder fit to the wall, false otherwise
      */
     public static boolean checkIfBildFitsToWall(Raum raum, Position position, Bild bild, Bild[] bestehendeBilder) {
-        return false; // TODO
+        // 0 Pruefe ob Bildhoehe kleiner gleich Raumhoehe
+        if (raum.hoehe <= bild.hoehe){
+            //Fehlermeldung
+            System.out.println("Achtung: Das Bild ist für den Raum zu hoch.");
+            return false;
+        }
+        
+        
+        // 1 Berechnung Restwandlaenge (bei bestehenden Bildern)
+        public int Restwandlaenge (Position position) {
+            switch (position){
+                case NORD:
+                    return raum.getNettoWandLaenge(Position.NORD) - bestehendeBilder(Bild.NORD);
+                case SUED:
+                    return raum.getNettoWandLaenge(Position.SUED) - bestehendeBilder(Bild.SUED);
+                case WEST:
+                return raum.getNettoWandLaenge(Position.WEST) - bestehendeBilder(Bild.WEST);
+                case OST:
+                return raum.getNettoWandLaenge(Position.OST) - bestehendeBilder(Bild.OST);
+                default:
+                    return 0;      
+            }  
+        }
+
+
+
+        // 2 Vergleich Restwandlaenge mit Breite von neuem Bild
+        // 2a unter Beruecksichtigung Mindestabstand Bilder untereinander und zur Ecke/Tuer
+        
+        return false;
     }
 
     /**
