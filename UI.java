@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.Container;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -134,7 +135,7 @@ public abstract class UI {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Thema) {
                     Thema thema = (Thema) value;
-                    setText(thema.bezeichnung);
+                    setText(thema.bezeichnung + " (" + ThemenVerwalter.getInstance().getCountForThema(thema) + ")" );
                 }
                 return this;
             }
@@ -169,6 +170,10 @@ public abstract class UI {
         // add a button to the planung section to call planungDurchfuehren
         JButton planungDurchfuehrenButton = new JButton("Planung durchführen");
         planungDurchfuehrenButton.addActionListener(e -> {
+            // if bezeichnung combo box is empty, set value to current datetime
+            if (planungBezeichnungTextField.getText().isEmpty()) {
+                planungBezeichnungTextField.setText(LocalDateTime.now().toString());
+            }
             Main.runPlanung(planungBezeichnungTextField.getText());
             nextStage(2);
         });
@@ -189,14 +194,14 @@ public abstract class UI {
         JLabel exportPathLabel = new JLabel("Export Pfad:");
         exportPathPanel.add(exportPathLabel);
         JLabel exportPathTextField = new JLabel();
-        exportPathTextField.setText(Main.getExportPfad());
+        exportPathTextField.setText(Main.getExportDirPfad());
         exportPathPanel.add(exportPathTextField);
         JButton exportPathButton = new JButton("...");
         exportPathButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser(Main.getExportPfad());
+            JFileChooser fileChooser = new JFileChooser(Main.getExportDirPfad());
             fileChooser.showOpenDialog(frame);
-            Main.setExportPfad(fileChooser.getSelectedFile().getAbsolutePath());
-            exportPathTextField.setText(Main.getExportPfad());
+            Main.setExportDirPfad(fileChooser.getSelectedFile().getAbsolutePath());
+            exportPathTextField.setText(Main.getExportDirPfad());
         });
         exportPathPanel.add(exportPathButton);
         exportPanel.add(exportPathPanel);
@@ -268,7 +273,9 @@ public abstract class UI {
                 target.add(exportPanel);
                 break;
             case 0:
-                planungThemenComboBox.setModel(new DefaultComboBoxModel<Thema>(ThemenVerwalter.getInstance().getAllThemen()));
+                Thema[] themen = ThemenVerwalter.getInstance().getAllThemen();
+                planungThemenComboBox.setModel(new DefaultComboBoxModel<Thema>(themen));
+                planungThemenComboBox.setSelectedIndex(0);
                 target.add(planungPanel);
                 break;
             case 1:

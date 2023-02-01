@@ -1,5 +1,7 @@
+import java.io.File;
 import java.lang.management.PlatformManagedObject;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Entry point for the application.
@@ -10,8 +12,8 @@ public abstract class Main
 {
     private static final String basePfad = System.getProperty("user.dir");
 
-    private static String raeumePfad = basePfad + "/input/datensatz_01/raeume.csv";
-    private static String angebotePfad = basePfad + "/input/datensatz_01/kunstwerke.csv";
+    private static String raeumePfad = basePfad + "/input/Datensatz 1/raeume.csv";
+    private static String angebotePfad = basePfad + "/input/Datensatz 1/kunstwerke.csv";
 
     private static Thema fokusThema;
     
@@ -19,7 +21,7 @@ public abstract class Main
 
     private static final ArrayList<Planung> planungen = new ArrayList<Planung>();
 
-    private static String exportPfad = basePfad + "/output/";
+    private static String exportDirPfad = basePfad + "/output/";
 
     /**
      * Application entry point.
@@ -57,6 +59,8 @@ public abstract class Main
 
     public static void runExport(Planung planung) {
         try {
+            String exportPfad = exportDirPfad + "/" + planung.bezeichnung + "/";
+            new File(exportPfad).mkdirs();
             Exporter.exportExample(planung, exportPfad + "example.csv");
         } catch (Exception e) {
             //TODO UI error message
@@ -82,12 +86,12 @@ public abstract class Main
         System.out.println("Angebote Pfad updated: " + angebotePfad);
     }
     
-    public static String getExportPfad() {
-        return exportPfad;
+    public static String getExportDirPfad() {
+        return exportDirPfad;
     }
     
-    public static void setExportPfad(String exportPfad) {
-        Main.exportPfad = exportPfad;
+    public static void setExportDirPfad(String exportPfad) {
+        Main.exportDirPfad = exportPfad;
         System.out.println("Export Pfad updated: " + exportPfad);
     }
     
@@ -128,7 +132,7 @@ public abstract class Main
         planung.planungDurchfuehren();
     
         // 4 Export
-        Exporter.exportExample(planung, exportPfad);
+        Exporter.exportExample(planung, exportDirPfad);
         
     }
 }

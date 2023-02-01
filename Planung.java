@@ -81,6 +81,8 @@ public class Planung
      */
     public void planungDurchfuehren() {
 
+        System.out.println("Starte Planung (" + bezeichnung + ") für Thema " + thema + " mit Kosten Grenze " + kostenGrenze + "€");
+
         // 1 Ensure all rooms are empty
         ausleihen.clear();
 
@@ -132,7 +134,10 @@ public class Planung
 
                 // 2.3 try to place as many as possible
                 for (Angebot angebot : moeglicheAngebote) {
+                    System.out.println("Try to place " + angebot.id + "(" + angebot.ausstellungsstueck.getClass().getName() + " ; " + angebot.ausstellungsstueck.thema.bezeichnung + ") in "
+                            + raum.id + " with setup " + setup);
                     if (versucheAusstellungsstueckZuPlatzieren(raum, angebot)) { // if successfully placed
+                        System.out.println("SUCCESS");
                         verwendeteThemen.add(angebot.ausstellungsstueck.thema); // remember used thema
                         // do we need to continue with next setup? or are we done with the room?
                         boolean continueWithNextSetup = false;
@@ -190,7 +195,7 @@ public class Planung
     private boolean versucheAusstellungsstueckZuPlatzieren(Raum raum, Angebot angebot) {
         // TODO subject to optimization and code cleanup
 
-        boolean passt = false;
+        //boolean passt = false;
 
         // wenn es ein Bild ist, dann teste alle waende ob es passt
         if (angebot.ausstellungsstueck instanceof Bild) {
@@ -201,7 +206,7 @@ public class Planung
                 // if not met, skip the image
                 System.out.println(
                         "Bild Id: " + angebot.id + " passt nicht in Raum: " + raum.id + " wegen Luftanforderung");
-                return passt;
+                return false;
             }
 
             Ausleihe[] alleAusleihenVonBilderImRaum = getAllAusleihenWithAusstellungsstueckForRoom(Bild.class, raum);
@@ -215,8 +220,7 @@ public class Planung
 
                 if (RaumVerwalter.checkIfBildFitsToWall(raum, position, bild, bestehendeBilder)) {
                     addAusleihe(angebot, raum, position);
-                    passt = true;
-                    break;
+                    return true;
                 }
                 System.out.println(
                         "Bild Id: " + angebot.id + " passt nicht in Raum: " + raum.id + " an Wand: " + position.label);
@@ -234,7 +238,7 @@ public class Planung
 
             if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstgegenstand, bestehendeKunstgegenstaende)) {
                 addAusleihe(angebot, raum, Position.BODEN);
-                passt = true;
+                return true;
             }
             System.out.println("Kunstgegenstand Id: " + angebot.id + " passt nicht in Raum: " + raum.id);
 
@@ -248,17 +252,17 @@ public class Planung
             if (bestehendeAusleihenVonKunstgegenstaende.length > 0) {
                 System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id
                         + " weil Raum schon belegt ist");
-                return passt;
+                return false;
             }
 
             if (RaumVerwalter.checkIfGegenstandFitsOnFloor(raum, kunstinstallation, new Ausstellungsstueck3D[] {})) {
                 addAusleihe(angebot, raum, Position.VOLLKOMMEN);
-                passt = true;
+                return true;
             }
             System.out.println("Kunstinstallation Id: " + angebot.id + " passt nicht in Raum: " + raum.id);
         }
 
-        return passt;
+        return false;
     }
 
     /**
