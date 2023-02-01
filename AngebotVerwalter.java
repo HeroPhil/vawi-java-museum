@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
+import java.util.Arrays;
 
 /**
  * This VerwalterClass is used to manage all angebote.
@@ -44,14 +45,21 @@ public class AngebotVerwalter {
     public Angebot[] getAllAngebote() {
         return angebote.toArray(new Angebot[angebote.size()]);
     }
-
+    
     /**
      * return all angebote sorted by Attraktivität
      * sort by attraktivität
      * @return all angebote sorted by Attraktivität
      */
     public Angebot[] getAllAngeboteSortedByAttraktivitaet() {
-        return null;
+        angebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
+        return angebote.toArray(new Angebot[angebote.size()]);
+        
+        //lambdas
+
+        //streams, prädikat zu lambdas
+        
+        
     }
 
     /**
@@ -61,7 +69,25 @@ public class AngebotVerwalter {
      * @return
      */
     public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen) {
-        return null;
+        ArrayList<Angebot> themengefilterteAngebote = new ArrayList<Angebot>(); 
+        
+        for (Angebot angebot : angebote){
+            for (Thema thema : themen ) {
+                if (thema.equals(angebot.ausstellungsstueck.thema)) {
+                    themengefilterteAngebote.add(angebot);
+                }
+            }
+        }
+        
+        return themengefilterteAngebote.toArray(new Angebot[themengefilterteAngebote.size()]) ;
+        
+        
+        //angebote.stream().filter(angebotefilter -> angebotefilter.ausstellungsstueck.thema.equals(themen) );
+        //Angebot[] angebots = (Angebot[]) angebote.stream().filter(angebot -> Arrays.stream(themen).anyMatch(thema -> angebot.ausstellungsstueck.thema == thema)).toArray();
+
+
+        
+
     }
     
     /**
@@ -98,13 +124,18 @@ public class AngebotVerwalter {
         }
         return null;
     }
-
+    
     /**
      * add an angebot to the angebote.
      * supposed to be used by the importer.
      * @param Angebot the angebot to add
      */
-    public void addAngebot(Angebot Angebot) {
-        angebote.add(Angebot);
+    public void addAngebot(Angebot angebot) {
+        angebote.add(angebot);
     }
+
+    
+     
 }
+
+

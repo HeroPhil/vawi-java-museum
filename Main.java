@@ -120,20 +120,27 @@ public abstract class Main
         // 1b DEBUG
         
         // Beispiel für Raumverwalter:
-        System.out.print(RaumVerwalter.getInstance().getRaumByID(1).bezeichnung);
+        //System.out.print(RaumVerwalter.getInstance().getRaumByID(1).bezeichnung);
         // ...
-    
+        //Angebot [] test = AngebotVerwalter.getInstance().getAllAngeboteSortedByAttraktivitaet();
+        //for(Angebot testangebot : test){
+        //        System.out.println(testangebot.toString());
+
+        //}
         //
-        
-        
+        Thema[] testThemaArray = new Thema[] {ThemenVerwalter.getInstance().getAllThemen()[3]};
+        Angebot [] filterTest = AngebotVerwalter.getInstance().getAngeboteSortedByAttraktivitaetAndFiltered(testThemaArray);
+        for(Angebot testangebot : filterTest){
+            System.out.println(testangebot.toString());
+        }
         // 2 Themenauswahl
-        Planung planung = new Planung("DEBUG", ThemenVerwalter.getInstance().getAllThemen()[0], kostenGrenze);
+        //Planung planung = new Planung("DEBUG", ThemenVerwalter.getInstance().getAllThemen()[0], kostenGrenze);
     
         // 3 Planung
-        planung.planungDurchfuehren();
+        //planung.planungDurchfuehren();
     
         // 4 Export
-        Exporter.exportExample(planung, exportDirPfad);
+        //Exporter.exportExample(planung, exportDirPfad);
         
     }
 }

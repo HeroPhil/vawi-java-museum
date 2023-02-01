@@ -63,6 +63,12 @@ public class PartnerMuseum
             return false;
         return true;
     }
+
+
+    @Override
+    public String toString() {
+        return "PartnerMuseum [name=" + name + ", anschrift=" + anschrift + "]";
+    }
     
     
 }

@@ -33,7 +33,7 @@ public class RaumVerwalter
      * @return true, if all the bilder fit to the wall, false otherwise
      */
     public static boolean checkIfBildFitsToWall(Raum raum, Position position, Bild bild, Bild[] bestehendeBilder) {
-        // 0 Pruefe ob Bildhoehe kleiner gleich Raumhoehe
+        /* 0 Pruefe ob Bildhoehe kleiner gleich Raumhoehe
         if (raum.hoehe <= bild.hoehe){
             //Fehlermeldung
             System.out.println("Achtung: Das Bild ist für den Raum zu hoch.");
@@ -61,8 +61,9 @@ public class RaumVerwalter
 
         // 2 Vergleich Restwandlaenge mit Breite von neuem Bild
         // 2a unter Beruecksichtigung Mindestabstand Bilder untereinander und zur Ecke/Tuer
-        
+        */
         return false;
+        
     }
 
     /**
