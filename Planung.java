@@ -84,7 +84,7 @@ public class Planung
      */
     public void planungDurchfuehren() {
 
-        System.out.println("Starte Planung (" + bezeichnung + ") für Thema " + thema + " mit Kosten Grenze " + kostenGrenze + "€");
+        System.out.println("Starte Planung (" + bezeichnung + ") für Thema " + thema.bezeichnung + " mit Kosten Grenze " + kostenGrenze + "€");
 
         // 1 Ensure all rooms are empty
         ausleihen.clear();
