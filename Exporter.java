@@ -82,7 +82,7 @@ public abstract class Exporter
                 ausleihe.angebot.ausstellungsstueck.bezeichnung,
                 ausleihe.angebot.ausstellungsstueck.thema.bezeichnung,
                 Integer.toString(ausleihe.angebot.kosten),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivität)
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivitaet)
             };
 
             zeilen.add(zeile);

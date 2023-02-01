@@ -30,7 +30,7 @@ public abstract class Ausstellungsstueck {
      * the attraktivität of the Ausstellungsstück
      * valued betweeen 0 and 100
      */
-    public final int attraktivität;
+    public final int attraktivitaet;
 
     /**
      * the hoehe of the Ausstellungsstück
@@ -60,7 +60,7 @@ public abstract class Ausstellungsstueck {
         this.kuenstler = kuenstler;
         this.jahr = jahr;
         this.thema = thema;
-        this.attraktivität = attraktivität;
+        this.attraktivitaet = attraktivität;
         this.hoehe = hoehe;
         this.breite = breite;
         this.eId = eId;

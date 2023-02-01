@@ -16,6 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -184,7 +185,10 @@ public abstract class UI {
             if (planungBezeichnungTextField.getText().isEmpty()) {
                 planungBezeichnungTextField.setText(LocalDateTime.now().toString());
             }
-            Main.runPlanung(planungBezeichnungTextField.getText());
+            Planung ergebnis = Main.runPlanung(planungBezeichnungTextField.getText());
+            // Show a popup with the ergebnis Bezeichnung, count of ausliehen, total cost and attraktivitaet in a nice table layout
+            JOptionPane.showMessageDialog(null, new JLabel("<html><table><tr><td>Bezeichnung:</td><td>" + ergebnis.bezeichnung + "</td></tr><tr><td>Ausgeliehen:</td><td>" + ergebnis.getAllAusleihen().length + "</td></tr><tr><td>Kosten:</td><td>" + ergebnis.calcTotalCost() + "</td></tr><tr><td>Attraktivität:</td><td>" + ergebnis.calcAvgAttraktivitaet() + "</td></tr></table></html>"), "Ergebnis", JOptionPane.INFORMATION_MESSAGE);
+
             nextStage(2);
         });
         planungPanel.add(planungDurchfuehrenButton);

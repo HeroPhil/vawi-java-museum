@@ -22,7 +22,7 @@ public Kunstinstallation(String bezeichnung, String kuenstler, String jahr, Them
 @Override
 public String toString() 
     { 
-        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivität+", Höhe: "+hoehe+", Breite: "+breite+", externe ID: "+eId+", Länge: "+laenge+", Gewicht: "+gewicht;
+        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivitaet+", Höhe: "+hoehe+", Breite: "+breite+", externe ID: "+eId+", Länge: "+laenge+", Gewicht: "+gewicht;
     }
 }
 

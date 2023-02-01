@@ -47,10 +47,11 @@ public abstract class Main
         }
     }
 
-    public static void runPlanung(String bezeichnung) {
+    public static Planung runPlanung(String bezeichnung) {
         Planung planung = new Planung(bezeichnung, fokusThema, kostenGrenze);
         planung.planungDurchfuehren();
         planungen.add(planung);
+        return planung;
     }
 
     public static void runExport() {

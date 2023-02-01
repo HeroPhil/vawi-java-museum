@@ -25,6 +25,6 @@ public class Kunstgegenstand extends Ausstellungsstueck3D
 @Override
     public String toString() 
     { 
-        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivität+", Höhe: "+hoehe+", Breite: "+breite+", ID: "+bezeichnung+", Länge: "+laenge+", Gewicht: "+gewicht;
+        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivitaet+", Höhe: "+hoehe+", Breite: "+breite+", ID: "+bezeichnung+", Länge: "+laenge+", Gewicht: "+gewicht;
     }
 }

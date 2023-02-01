@@ -56,7 +56,7 @@ public class Bild extends Ausstellungsstueck
     public String toString() {
         return "Bild [minTemp=" + minTemp + ", minFeuchtigkeit=" + minFeuchtigkeit + ", maxTemp=" + maxTemp
                 + ", maxFeuchtigkeit=" + maxFeuchtigkeit + ", bezeichnung=" + bezeichnung + ", kuenstler=" + kuenstler
-                + ", jahr=" + jahr + ", thema=" + thema + ", attraktivität=" + attraktivität + ", hoehe=" + hoehe
+                + ", jahr=" + jahr + ", thema=" + thema + ", attraktivität=" + attraktivitaet + ", hoehe=" + hoehe
                 + ", breite=" + breite + ", eId=" + eId + "]";
     }
 

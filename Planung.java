@@ -386,6 +386,18 @@ public class Planung
     }
 
     /**
+     * Berechnet die Attraktivitaet des Museums.
+     * @return Attraktivitaet des Museums
+     */
+    public double calcAvgAttraktivitaet() {
+        double totalAttraktivitaet = 0;
+        for (Ausleihe ausleihe : ausleihen) {
+            totalAttraktivitaet += ausleihe.angebot.ausstellungsstueck.attraktivitaet;
+        }
+        return totalAttraktivitaet / ausleihen.size();
+    }
+
+    /**
      * Berechent die gesamten Kosten aller Ausleihen.
      * @return Gesamtkosten.
      */
