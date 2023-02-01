@@ -259,6 +259,12 @@ public abstract class UI {
     }
 
     public static void update() {
+        Thema[] themen = ThemenVerwalter.getInstance().getAllThemen();
+        planungThemenComboBox.setModel(new DefaultComboBoxModel<Thema>(themen));
+        planungThemenComboBox.setSelectedIndex(0);
+
+        exportPlanungComboBox.setModel(new DefaultComboBoxModel<Planung>(Main.getAllPlanungen()));
+
         frame.invalidate();
     }
 
@@ -283,13 +289,9 @@ public abstract class UI {
                 target.add(exportPanel);
                 break;
             case 0:
-                Thema[] themen = ThemenVerwalter.getInstance().getAllThemen();
-                planungThemenComboBox.setModel(new DefaultComboBoxModel<Thema>(themen));
-                planungThemenComboBox.setSelectedIndex(0);
                 target.add(planungPanel);
                 break;
             case 1:
-                exportPlanungComboBox.setModel(new DefaultComboBoxModel<Planung>(Main.getAllPlanungen()));
                 target.add(exportPanel);
                 break;
         }
