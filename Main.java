@@ -122,17 +122,24 @@ public abstract class Main
         // Beispiel für Raumverwalter:
         //System.out.print(RaumVerwalter.getInstance().getRaumByID(1).bezeichnung);
         // ...
-        //Angebot [] test = AngebotVerwalter.getInstance().getAllAngeboteSortedByAttraktivitaet();
-        //for(Angebot testangebot : test){
-        //        System.out.println(testangebot.toString());
 
-        //}
-        //
+        /* Code fürs testen, bitte nicht löschen (Sven)
+
+        Angebot [] test = AngebotVerwalter.getInstance().getAllAngeboteSortedByAttraktivitaet();
+        for(Angebot testangebot : test){
+                System.out.println(testangebot.toString());
+
+        }
+        */
         Thema[] testThemaArray = new Thema[] {ThemenVerwalter.getInstance().getAllThemen()[3]};
-        Angebot [] filterTest = AngebotVerwalter.getInstance().getAngeboteSortedByAttraktivitaetAndFiltered(testThemaArray);
+        Angebot [] filterTest = AngebotVerwalter.getInstance().getAngeboteSortedByAttraktivitaetAndFilteredbyThema(testThemaArray);
         for(Angebot testangebot : filterTest){
             System.out.println(testangebot.toString());
         }
+
+        /**/
+        
+        
         // 2 Themenauswahl
         //Planung planung = new Planung("DEBUG", ThemenVerwalter.getInstance().getAllThemen()[0], kostenGrenze);
     

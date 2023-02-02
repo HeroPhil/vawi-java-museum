@@ -132,7 +132,7 @@ public class Planung
                 }
                 // 2.2 get angebote
                 Angebot[] alleAngebote = AngebotVerwalter.getInstance()
-                        .getAngeboteSortedByAttraktivitaetAndFiltered(themaFilter);
+                        .getAngeboteSortedByAttraktivitaetAndFilteredbyThema(themaFilter);
                 ArrayList<Angebot> moeglicheAngebote = filterGebrauchteAngebote(alleAngebote);
 
                 // 2.3 try to place as many as possible

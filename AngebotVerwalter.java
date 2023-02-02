@@ -68,7 +68,7 @@ public class AngebotVerwalter {
      * @param themen the themen to filter by
      * @return
      */
-    public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen) {
+    public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThema(Thema[] themen) {
         ArrayList<Angebot> themengefilterteAngebote = new ArrayList<Angebot>(); 
         
         for (Angebot angebot : angebote){
@@ -78,6 +78,8 @@ public class AngebotVerwalter {
                 }
             }
         }
+
+        themengefilterteAngebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
         
         return themengefilterteAngebote.toArray(new Angebot[themengefilterteAngebote.size()]) ;
         
@@ -98,9 +100,34 @@ public class AngebotVerwalter {
      * @param klassen the classes to filter by
      * @return a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
      */
-    public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen, Class<? extends Ausstellungsstueck>[] ausstellungsstueckArten) {
-        return null;
-    }
+    public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThemaandWerk(Thema[] themen, Ausstellungsstueck[] ausstellungsstueckArten) {
+        
+        ArrayList<Angebot> themaundwerkgefilterteAngebote = new ArrayList<Angebot>(); 
+        
+        //Dritte for Schleife, die aus einer
+        for (Angebot angebot : angebote){
+            for (Thema thema : themen ) {
+                //for (Ausstellungsstueck ausstellungsstueck : ausstellungsstueckArten){
+                
+                    if (thema.equals(angebot.ausstellungsstueck.thema)) {
+
+                       // if(ausstellungsstueck.equals(angebot.ausstellungsstueck))
+                        themaundwerkgefilterteAngebote.add(angebot);
+                    }
+                
+
+
+
+
+            //    }
+            }
+        }
+
+        themaundwerkgefilterteAngebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
+        
+        return themaundwerkgefilterteAngebote.toArray(new Angebot[themaundwerkgefilterteAngebote.size()]) ;
+        
+        }
 
     /**
      * internal method to get angebote sorted and filtered by a comparator and a predicate
