@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * This class is used to export data to multiple different CSV file
  *
- * @author Philip Herold
+ * @author Meike Ganzer
  */
 public abstract class Exporter
 {
@@ -101,6 +101,31 @@ public abstract class Exporter
      * @param pfad String
      */
     static void exportMuseumsFuehrer(Planung planung, String pfad) {
+    
+        ArrayList<String[]> zeilen = new ArrayList<String[]>();
+
+        // Kopfzeile
+        zeilen.add(new String[]{"Raum_Name", "Position", "Ausstellungsstueck_Name", "Thema", "Kosten", "Attraktivität"});
+
+        for (Ausleihe ausleihe : planung.getAllAusleihen()) {
+
+            String[] zeile = new String[]{
+                ausleihe.raum.bezeichnung,
+                ausleihe.position.label,
+                ausleihe.angebot.ausstellungsstueck.bezeichnung,
+                ausleihe.angebot.ausstellungsstueck.thema.bezeichnung,
+                Integer.toString(ausleihe.angebot.kosten),
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivitaet)
+            };
+
+            zeilen.add(zeile);
+        }
+
+
+        // write to output file
+        writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+
+    
         
     }
 
@@ -111,8 +136,8 @@ public abstract class Exporter
      * @param pfad String
      */
     static void exportLogistikUebersicht(Planung planung, String pfad) {
-        
-    }
+            
+        }
 
     /**
      * Export the given Ausleihe[] to a CSV file

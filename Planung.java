@@ -43,8 +43,6 @@ public class Planung
      */
     private final ArrayList<Ausleihe> ausleihen;
 
-    private Ausleihe entbehrlicheAusleihe;
-
     /**
      * Constructor
      * 
