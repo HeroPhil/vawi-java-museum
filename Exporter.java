@@ -151,17 +151,19 @@ public abstract class Exporter
                 ausleihe.position.label,
                 ausleihe.angebot.ausstellungsstueck.bezeichnung,
                 Character.toString(ausleihe.angebot.ausstellungsstueck.art),
-                Integer.toString(ausleihe.angebot.bild.minTemp),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivitaet)
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxTemp),
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxFeuchtigkeit),
                 };
 
             zeilen.add(zeile);
             }
-        }
 
         // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
     }
+    
 
 
 
@@ -173,5 +175,23 @@ public abstract class Exporter
      */
     static void exportAusleihUebersicht(Planung planung, String pfad) {
         
+        ArrayList<String[]> zeilen = new ArrayList<String[]>();
+
+        // Kopfzeile
+        zeilen.add(new String[]{"Leihgabe von", "Bezeichnung des Kunstwerks", "Ausleihkosten"});
+        for (Ausleihe ausleihe : planung.getAllAusleihen()) {
+            String[] zeile = new String[]{
+                ausleihe.angebot.partnerMuseum.name,
+                ausleihe.angebot.ausstellungsstueck.bezeichnung,
+                Integer.toString(ausleihe.angebot.kosten),
+                };
+
+            zeilen.add(zeile);
+            }
+
+        // write to output file
+        writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
     }
+
 }
+
