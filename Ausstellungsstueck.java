@@ -59,8 +59,9 @@ public abstract class Ausstellungsstueck {
     /**
      * Constructor for objects of class Ausstellungsstück
      */
-    public Ausstellungsstueck(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
+    public Ausstellungsstueck(char art, String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
             double hoehe, double breite, int eId) {
+        this.art = art;
         this.bezeichnung = bezeichnung;
         this.kuenstler = kuenstler;
         this.jahr = jahr;
