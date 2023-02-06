@@ -58,7 +58,7 @@ public abstract class Exporter
     }
 
     /**
-     * Export the given Ausleihe[] to a CSV file
+     * Exports the given Ausleihe[] to a CSV file
      * this is only an example format
      * @param Planung Planung mit Ausleihe[] 
      * @param pfad String
@@ -96,7 +96,7 @@ public abstract class Exporter
 
     /**
      * Export the given Ausleihe[] to a CSV file
-     * this produces the "Museumsfuehrer" format
+     * This produces the "Museumsfuehrer" format: Overview of the rooms with the most important works of art located in them 
      * @param planung Planung mit Ausleihe[]
      * @param pfad String
      */
@@ -105,17 +105,18 @@ public abstract class Exporter
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
         // Kopfzeile
-        zeilen.add(new String[]{"Raum_Name", "Position", "Ausstellungsstueck_Name", "Thema", "Kosten", "Attraktivität"});
+        zeilen.add(new String[]{"Raumbezeichnung", "Bezeichnung des Kunstwerks", "Jahr", "Künstlername", "Leihgabe von"});
+
+        //To-do: Attraktivität (= Wichtigkeit) definieren und als Selektionskriterium verwenden
 
         for (Ausleihe ausleihe : planung.getAllAusleihen()) {
 
             String[] zeile = new String[]{
                 ausleihe.raum.bezeichnung,
-                ausleihe.position.label,
                 ausleihe.angebot.ausstellungsstueck.bezeichnung,
-                ausleihe.angebot.ausstellungsstueck.thema.bezeichnung,
-                Integer.toString(ausleihe.angebot.kosten),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivitaet)
+                ausleihe.angebot.ausstellungsstueck.jahr,
+                ausleihe.angebot.ausstellungsstueck.kuenstler,
+                ausleihe.angebot.partnerMuseum.name,
             };
 
             zeilen.add(zeile);
@@ -131,17 +132,42 @@ public abstract class Exporter
 
     /**
      * Export the given Ausleihe[] to a CSV file
-     * this produces the "Logistikuebersicht" format
+     * This produces the "Logistikuebersicht" format: Room and place of installation of the artwork with information on room temperature and humidity 
      * @param planung Planung mit Ausleihe[]  
      * @param pfad String
      */
     static void exportLogistikUebersicht(Planung planung, String pfad) {
-            
+                
+        ArrayList<String[]> zeilen = new ArrayList<String[]>();
+
+        // Kopfzeile
+        zeilen.add(new String[]{"Raumbezeichnung", "Position", "Bezeichnung des Kunstwerks", "Art des Kunstwerks", "Minimaltemperatur", "Maximaltemperatur", "Minimale Luftfeuchtigkeit", "Maximale Luftfeuchtigkeit"});
+        
+        //To-do: Temperatur und Luftfeuchtigkeit nur für Bilder
+
+        for (Ausleihe ausleihe : planung.getAllAusleihen()) {
+            String[] zeile = new String[]{
+                ausleihe.raum.bezeichnung,
+                ausleihe.position.label,
+                ausleihe.angebot.ausstellungsstueck.bezeichnung,
+                Character.toString(ausleihe.angebot.ausstellungsstueck.art),
+                Integer.toString(ausleihe.angebot.bild.minTemp),
+                Integer.toString(ausleihe.angebot.ausstellungsstueck.attraktivitaet)
+                };
+
+            zeilen.add(zeile);
+            }
         }
+
+        // write to output file
+        writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+    }
+
+
 
     /**
      * Export the given Ausleihe[] to a CSV file
-     * this produces the "Ausleihuebersicht" format
+     * This produces the "Ausleihuebersicht" format: Sorted by source: Which artworks are borrowed where, what are the costs.
      * @param planung Planung mit Ausleihe[]
      * @param pfad String
      */

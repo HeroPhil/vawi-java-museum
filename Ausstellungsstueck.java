@@ -5,6 +5,11 @@
  * @author Meike Ganzer
  */
 public abstract class Ausstellungsstueck {
+    /** 
+     * the art of the Ausstellungsstück
+     */
+    public final char art;
+
     /**
      * the bezeichnung of the Ausstellungsstück
      */
