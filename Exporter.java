@@ -147,14 +147,14 @@ public abstract class Exporter
 
         for (Ausleihe ausleihe : planung.getAllAusleihen()) {
             String[] zeile = new String[]{
-                ausleihe.raum.bezeichnung,
-                ausleihe.position.label,
-                ausleihe.angebot.ausstellungsstueck.bezeichnung,
-                Character.toString(ausleihe.angebot.ausstellungsstueck.art),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxTemp),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
-                Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxFeuchtigkeit),
+                "", //ausleihe.raum.bezeichnung,
+                "", //ausleihe.position.label,
+                "", //ausleihe.angebot.ausstellungsstueck.bezeichnung,
+                "", //Character.toString(ausleihe.angebot.ausstellungsstueck.art),
+                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
+                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxTemp),
+                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
+                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxFeuchtigkeit),
                 };
 
             zeilen.add(zeile);
