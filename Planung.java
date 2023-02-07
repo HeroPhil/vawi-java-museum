@@ -313,7 +313,7 @@ public class Planung
      * @param raum Raum, in dem sich die Ausleihen befinden sollen
      * @return Array von Ausleihen
      */
-    private Ausleihe[] getAllAusleihenForRoom(Raum raum) {
+    public Ausleihe[] getAllAusleihenForRoom(Raum raum) {
         return ausleihen.stream().filter(ausleihe -> ausleihe.raum == raum).toArray(Ausleihe[]::new);
     }
 

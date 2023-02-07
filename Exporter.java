@@ -101,33 +101,41 @@ public abstract class Exporter
      * @param pfad String
      */
     static void exportMuseumsFuehrer(Planung planung, String pfad) {
-    
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
         // Kopfzeile
         zeilen.add(new String[]{"Raumbezeichnung", "Bezeichnung des Kunstwerks", "Jahr", "Künstlername", "Leihgabe von"});
 
-        //To-do: Attraktivität (= Wichtigkeit) definieren und als Selektionskriterium verwenden
 
-        for (Ausleihe ausleihe : planung.getAllAusleihen()) {
+        for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) {
+            Ausleihe[] ausleihenImRaum = planung.getAllAusleihenForRoom(raum);
 
-            String[] zeile = new String[]{
-                ausleihe.raum.bezeichnung,
-                ausleihe.angebot.ausstellungsstueck.bezeichnung,
-                ausleihe.angebot.ausstellungsstueck.jahr,
-                ausleihe.angebot.ausstellungsstueck.kuenstler,
-                ausleihe.angebot.partnerMuseum.name,
-            };
+            // sort ausleihenImRaum by attraktivitaet by using an arraylist
+            ArrayList<Ausleihe> ausleihenImRaumList = new ArrayList<Ausleihe>();
+            for (Ausleihe ausleihe : ausleihenImRaum) {
+                ausleihenImRaumList.add(ausleihe);
+            }
+            ausleihenImRaumList.sort((Ausleihe a1, Ausleihe a2) -> a2.angebot.ausstellungsstueck.attraktivitaet - a1.angebot.ausstellungsstueck.attraktivitaet);
 
-            zeilen.add(zeile);
+            for (int i = 0; i < Math.min(2, ausleihenImRaumList.size()); i++) {
+                Ausleihe ausleihe = ausleihenImRaumList.get(i);
+    
+                String[] zeile = new String[]{
+                    ausleihe.raum.bezeichnung,
+                    ausleihe.angebot.ausstellungsstueck.bezeichnung,
+                    ausleihe.angebot.ausstellungsstueck.jahr,
+                    ausleihe.angebot.ausstellungsstueck.kuenstler,
+                    ausleihe.angebot.partnerMuseum.name,
+                };
+    
+                zeilen.add(zeile);
+            }
+            
         }
-
 
         // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
 
-    
-        
     }
 
     /**
@@ -162,6 +170,8 @@ public abstract class Exporter
 
         // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+
+        // TODO add tempurterature and humidity for pictures
     }
     
 
