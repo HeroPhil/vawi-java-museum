@@ -261,7 +261,11 @@ public abstract class UI {
     public static void update() {
         Thema[] themen = ThemenVerwalter.getInstance().getAllThemen();
         planungThemenComboBox.setModel(new DefaultComboBoxModel<Thema>(themen));
-        planungThemenComboBox.setSelectedIndex(0);
+        try {
+            planungThemenComboBox.setSelectedIndex(0);
+        } catch (Exception e) {
+            System.out.println("No themen yet for dropdown");
+        }
 
         exportPlanungComboBox.setModel(new DefaultComboBoxModel<Planung>(Main.getAllPlanungen()));
 
