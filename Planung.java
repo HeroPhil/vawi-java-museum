@@ -337,7 +337,7 @@ public class Planung
      * @param raum Raum, fuer den die Luftbeduerfnisse berechnet werden sollen
      * @return Array mit den Luftbeduerfnissen fuer den Raum im Format {minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
      */
-    private double[] getCurrentAirRequirementForRoom(Raum raum) {
+    public double[] getCurrentAirRequirementForRoom(Raum raum) {
         double minTemp = 0;
         double maxTemp = Double.MAX_VALUE;
         double minFeuchtigkeit = 0;
