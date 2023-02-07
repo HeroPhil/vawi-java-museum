@@ -100,6 +100,7 @@ public class AngebotVerwalter {
      * @param klassen the classes to filter by
      * @return a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
      */
+    @Deprecated()
     public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThemaandWerk(Thema[] themen, Ausstellungsstueck[] ausstellungsstueckArten) {
         
         ArrayList<Angebot> themaundwerkgefilterteAngebote = new ArrayList<Angebot>(); 
