@@ -50,4 +50,11 @@ public class Thema
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Thema [bezeichnung=" + bezeichnung + "]";
+    }
+
+    
+
 }

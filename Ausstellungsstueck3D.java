@@ -28,9 +28,9 @@ public abstract class Ausstellungsstueck3D extends Ausstellungsstueck
     /**
      * Constructor for objects of class Ausstellungsstück3D
      */
-    public Ausstellungsstueck3D(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
+    public Ausstellungsstueck3D(char art, String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
             double hoehe, double breite, int eId, double laenge, double gewicht) {
-        super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId);
+        super(art, bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId);
         this.laenge = laenge;
         this.gewicht = gewicht;
     }

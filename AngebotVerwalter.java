@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
+import java.util.Arrays;
 
 /**
  * This VerwalterClass is used to manage all angebote.
@@ -44,14 +45,21 @@ public class AngebotVerwalter {
     public Angebot[] getAllAngebote() {
         return angebote.toArray(new Angebot[angebote.size()]);
     }
-
+    
     /**
      * return all angebote sorted by Attraktivität
      * sort by attraktivität
      * @return all angebote sorted by Attraktivität
      */
     public Angebot[] getAllAngeboteSortedByAttraktivitaet() {
-        return null;
+        angebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
+        return angebote.toArray(new Angebot[angebote.size()]);
+        
+        //lambdas
+
+        //streams, prädikat zu lambdas
+        
+        
     }
 
     /**
@@ -60,8 +68,28 @@ public class AngebotVerwalter {
      * @param themen the themen to filter by
      * @return
      */
-    public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen) {
-        return null;
+    public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThema(Thema[] themen) {
+        ArrayList<Angebot> themengefilterteAngebote = new ArrayList<Angebot>(); 
+        
+        for (Angebot angebot : angebote){
+            for (Thema thema : themen ) {
+                if (thema.equals(angebot.ausstellungsstueck.thema)) {
+                    themengefilterteAngebote.add(angebot);
+                }
+            }
+        }
+
+        themengefilterteAngebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
+        
+        return themengefilterteAngebote.toArray(new Angebot[themengefilterteAngebote.size()]) ;
+        
+        
+        //angebote.stream().filter(angebotefilter -> angebotefilter.ausstellungsstueck.thema.equals(themen) );
+        //Angebot[] angebots = (Angebot[]) angebote.stream().filter(angebot -> Arrays.stream(themen).anyMatch(thema -> angebot.ausstellungsstueck.thema == thema)).toArray();
+
+
+        
+
     }
     
     /**
@@ -72,9 +100,34 @@ public class AngebotVerwalter {
      * @param klassen the classes to filter by
      * @return a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
      */
-    public Angebot[] getAngeboteSortedByAttraktivitaetAndFiltered(Thema[] themen, Class<? extends Ausstellungsstueck>[] ausstellungsstueckArten) {
-        return null;
-    }
+    public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThemaandWerk(Thema[] themen, Ausstellungsstueck[] ausstellungsstueckArten) {
+        
+        ArrayList<Angebot> themaundwerkgefilterteAngebote = new ArrayList<Angebot>(); 
+        
+        //Dritte for Schleife, die aus einer
+        for (Angebot angebot : angebote){
+            for (Thema thema : themen ) {
+                //for (Ausstellungsstueck ausstellungsstueck : ausstellungsstueckArten){
+                
+                    if (thema.equals(angebot.ausstellungsstueck.thema)) {
+
+                       // if(ausstellungsstueck.equals(angebot.ausstellungsstueck))
+                        themaundwerkgefilterteAngebote.add(angebot);
+                    }
+                
+
+
+
+
+            //    }
+            }
+        }
+
+        themaundwerkgefilterteAngebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
+        
+        return themaundwerkgefilterteAngebote.toArray(new Angebot[themaundwerkgefilterteAngebote.size()]) ;
+        
+        }
 
     /**
      * internal method to get angebote sorted and filtered by a comparator and a predicate
@@ -98,13 +151,18 @@ public class AngebotVerwalter {
         }
         return null;
     }
-
+    
     /**
      * add an angebot to the angebote.
      * supposed to be used by the importer.
      * @param Angebot the angebot to add
      */
-    public void addAngebot(Angebot Angebot) {
-        angebote.add(Angebot);
+    public void addAngebot(Angebot angebot) {
+        angebote.add(angebot);
     }
+
+    
+     
 }
+
+

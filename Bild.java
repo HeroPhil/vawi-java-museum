@@ -40,9 +40,9 @@ public class Bild extends Ausstellungsstueck
     /**
      * Constructor for objects of class Bild
      */
-    public Bild(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität, int hoehe,
+    public Bild(char art, String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität, int hoehe,
     int breite, int eId, int minTemp, int minFeuchtigkeit, int maxTemp, int maxFeuchtigkeit) {
-        super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId);
+        super(art, bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId);
         this.minTemp = minTemp;
         this.minFeuchtigkeit = minFeuchtigkeit;
         this.maxTemp = maxTemp;

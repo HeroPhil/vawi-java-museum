@@ -6,3 +6,4 @@ backup
 *.DS_Store
 output/
 
+package.bluej
