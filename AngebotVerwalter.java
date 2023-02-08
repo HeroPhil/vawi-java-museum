@@ -101,29 +101,22 @@ public class AngebotVerwalter {
      * @return a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
      */
     @Deprecated()
-    public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThemaandWerk(Thema[] themen, Ausstellungsstueck[] ausstellungsstueckArten) {
+    public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThemaandWerk(Thema[] themen, Class<? extends Ausstellungsstueck>[] ausstellungsstueckArten) {
         
         ArrayList<Angebot> themaundwerkgefilterteAngebote = new ArrayList<Angebot>(); 
         
-        //Dritte for Schleife, die aus einer
         for (Angebot angebot : angebote){
-            for (Thema thema : themen ) {
-                //for (Ausstellungsstueck ausstellungsstueck : ausstellungsstueckArten){
-                
-                    if (thema.equals(angebot.ausstellungsstueck.thema)) {
-
-                       // if(ausstellungsstueck.equals(angebot.ausstellungsstueck))
+            for (Class<? extends Ausstellungsstueck> ausstellungsstueck : ausstellungsstueckArten){
+                if(ausstellungsstueck.isInstance(angebot.ausstellungsstueck))
+                    for (Thema thema : themen ) {
+                        if (thema.equals(angebot.ausstellungsstueck.thema)) {
+                    
                         themaundwerkgefilterteAngebote.add(angebot);
                     }
-                
-
-
-
-
-            //    }
+              
+                }
             }
         }
-
         themaundwerkgefilterteAngebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
         
         return themaundwerkgefilterteAngebote.toArray(new Angebot[themaundwerkgefilterteAngebote.size()]) ;
