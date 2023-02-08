@@ -1,29 +1,38 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File; //Import der Java-Standardklasse "File" aus dem Paket "java.io". "io" ist ein Unterpaket des Pakets "java" 
+import java.io.FileWriter; //Java-Standardklasse, die Daten in eine Datei schreibt ("Stift")
+import java.io.IOException; //Ausnahme für alle Einlese- und Ausgabefehler
+import java.util.ArrayList; //Arraylist = Sammlung von Elementen ohne Definition der Anzahl von
+                            //Elementen. Nachdem die Klasse "ArrayList" importiert worden ist,
+                            //können eigene Listen erstellt werden.
 
 /**
- * This class is used to export data to multiple different CSV file
+ * Die Klasse "Exporter" ist für den Export von CSV-Dateien (Museumsführer, Logistikübersicht und Ausleihübersicht) zuständig. 
+ * Die Methode "writeFile" schreibt die Daten in eine Datei an einem definierten Ort (Pfad).
+ * Die Methode "export*" definiert, welche Daten in die Datei geschrieben werden.
  *
  * @author Meike Ganzer
  */
-public abstract class Exporter
+public abstract class Exporter //Öffentliche, abstrakte Klasse Exporter, von der keine Objekte erstellt werden können.
+
 {
     /**
-     * Internal Method to write a CSV file
-     * @param pfad String the path to the file
-     * @param zeilen String[][] the lines to write
+     * Diese Methode schreibt in eine CSV-Datei.
+     * @param pfad String Dateipfad     //Eingabeparameter
+     * @param zeilen String[][] Zu schreibende Zeilen (zweidimensionales Array)   //Eingabeparameter
      */
-    private static void writeFile(String pfad, String[][] zeilen) {
-        FileWriter fileWriter = null;
+    private static void writeFile(String pfad, String[][] zeilen) { 
+        //Diese Methode ist private, sie kann nicht von einem anderen Objekt aufgerufen werden.
+        //Diese Methode ist statisch, sie bezieht sich nicht auf ein Objekt und wird aus der Klasse aufgerufen.
+
+        FileWriter fileWriter = null; //Hier ist der filewriter nur deklariert, noch nicht initialisiert.
         try {
-            File file = new File(pfad);
-            file.delete(); // delete old file
-            file.createNewFile(); // create new file
+            File file = new File(pfad); //Hier wird ein neues Objekt erzeugt ("new").
+            file.delete(); // Die alte Datei wird gelöscht.
+            file.createNewFile(); // Eine neue Datei wird erstellt.
 
-            fileWriter = new FileWriter(file);
-
+            fileWriter = new FileWriter(file); 
+            //Hier wird ein FileWriter-Objekt erzeugt und jede Zeile des Arrays mit den Spalten in die Datei geschrieben. 
+            
             String[] zeile;
             String spalte;
             for (int i = 0; i < zeilen.length; i++) {
@@ -40,7 +49,7 @@ public abstract class Exporter
 
             }
 
-            fileWriter.flush();
+            fileWriter.flush(); //Der Puffer geflusht und die Datei geschlossen.
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -159,11 +168,8 @@ public abstract class Exporter
                 "", //ausleihe.position.label,
                 "", //ausleihe.angebot.ausstellungsstueck.bezeichnung,
                 "", //Character.toString(ausleihe.angebot.ausstellungsstueck.art),
-                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
-                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxTemp),
-                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.minFeuchtigkeit),
-                "", //Integer.toString(ausleihe.angebot.ausstellungsstueck.bild.maxFeuchtigkeit),
-                };
+                                             
+               };
 
             zeilen.add(zeile);
             }
@@ -171,7 +177,7 @@ public abstract class Exporter
         // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
 
-        // TODO add tempurterature and humidity for pictures
+        // TODO add temparature and humidity for pictures
     }
     
 
