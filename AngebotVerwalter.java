@@ -4,18 +4,22 @@ import java.util.function.Predicate;
 import java.util.Arrays;
 
 /**
- * This VerwalterClass is used to manage all angebote.
+ * Die Klasse AngebotVerwalter fungiert als Verwaltungsklasse für Objekte der Klasse Angebot. 
  *
  * @author Sven Brüggenbrock
  */
 public class AngebotVerwalter {
+    
     /**
-     * the singleton instance
+     * Deklarierung einer Singleton Instanz mit der Funktion, dass nur ein Objekt der Klasse
+     * AngebotVerwalter existieren kann. 
      */
     private static AngebotVerwalter INSTANCE;
 
     /**
-     * @return the singleton instance
+     *  hier wird geprüft, ob bereits eine Instanz und damit ein Objekt der Klasse AngebotVerwalter
+     * existiert. Falls es noch keine Instanz gibt, wird eine neue Instanz erzeugt.
+     * @return die Singleton Instanz
      */
     public static AngebotVerwalter getInstance() {
         if (INSTANCE == null) {
@@ -26,20 +30,22 @@ public class AngebotVerwalter {
     }
 
     /**
-     * the list of angebote
+     * Deklarierung einer ArrayList, die als Elemente Objekte der Klasse Angebote aufnehmen kann. 
      */
     private final ArrayList<Angebot> angebote;
 
     /**
-     * private constructor to prevent instantiation outside of this class
-     * only the singleton instance can be used
+     * Konstruktor der Klasse AngebotVerwalter. Dieser ist privat, damit diese nicht von "außen"
+     * aufgerufen werden kann und verhindert dadurch eine mehrfache Instanzierung. Es soll lediglich die Singleton Instanz 
+     * genutzt werden. Die ArrayList angebote wird erzeugt. 
      */
     private AngebotVerwalter() {
         angebote = new ArrayList<Angebot>();
     }
 
     /**
-     * get all angebote
+     * Funktion zur Rückgabe sämtlicher Angebote in der ArrayList angebote. Die Ausgabe erfolgt in einem Array, welcher die 
+     * Länge der ArrayList angebote hat. 
      * @return all angebote
      */
     public Angebot[] getAllAngebote() {
@@ -47,26 +53,26 @@ public class AngebotVerwalter {
     }
     
     /**
-     * return all angebote sorted by Attraktivität
-     * sort by attraktivität
-     * @return all angebote sorted by Attraktivität
+     * Funktion zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angebote nach dem Wert der Attraktivität
+     * sortiert werden. Dies erfolgt mit Hilfe der .sort() Methode der Klasse ArrayList und unter Nutzung eines Lambda Ausdrucks. Hierdurch
+     * wird vermieden eine innere anonyme Klasse lediglich fürs sortieren zu schreiben. 
+     * @return Alle Angebote sortiert nach dem Wert der Attraktivität
      */
     public Angebot[] getAllAngeboteSortedByAttraktivitaet() {
         angebote.sort((Angebot angebotA, Angebot angebotB) -> angebotB.ausstellungsstueck.attraktivitaet - angebotA.ausstellungsstueck.attraktivitaet);
-        return angebote.toArray(new Angebot[angebote.size()]);
-        
-        //lambdas
-
-        //streams, prädikat zu lambdas
-        
-        
+        return angebote.toArray(new Angebot[angebote.size()]);       
     }
 
     /**
-     * produces a subset of angebote where angebote.ausstellungsstueck.thema is a member of themen
-     * sort by attraktivität
-     * @param themen the themen to filter by
-     * @return
+     * Funktion zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angeobte nach dem Wert der Attraktivität
+     * sortiert sind und gleichzeitig nach Themen, die über das Array themen vorgegeben werden, gefiltert werden. Hier werden for und if 
+     * Schleifen genutzt. Zuerst wird eine neue ArrayList themengefilterteAngebote, mit Elementen der Klasse Angebot, deklariert 
+     * und erzeugt. Über die for Schleifen werden alle Angebote aus der ArrayList angebote und alle Themen aus der ArrayList themen 
+     * durchgegangen und für den Fall, dass das Thema aus themen gleich mit dem Thema des Angebots bzw. hierinterstehenden
+     * Ausstellungsstücks ist, zu der ArrayList themengefilterteAngebote hinzugefügt. Anschließend wird die ArrayList wie oben auch nach 
+     * Attraktivität sortiert und als Array zurückgegeben. 
+     * @param themen Die Themen nach denen gefiltert werden soll.
+     * @return Array mit den Angeboten gefiltert nach Themen und sortiert nach Attraktivität. 
      */
     public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThema(Thema[] themen) {
         ArrayList<Angebot> themengefilterteAngebote = new ArrayList<Angebot>(); 
@@ -83,22 +89,22 @@ public class AngebotVerwalter {
         
         return themengefilterteAngebote.toArray(new Angebot[themengefilterteAngebote.size()]) ;
         
-        
-        //angebote.stream().filter(angebotefilter -> angebotefilter.ausstellungsstueck.thema.equals(themen) );
-        //Angebot[] angebots = (Angebot[]) angebote.stream().filter(angebot -> Arrays.stream(themen).anyMatch(thema -> angebot.ausstellungsstueck.thema == thema)).toArray();
-
-
-        
-
     }
     
     /**
-     * produces a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
-     * and angebote.ausstellungsstueck.thema is a member of themen
-     * sort by attraktivität
-     * @param themen the themen to filter by
-     * @param klassen the classes to filter by
-     * @return a subset of angebote where angebote.ausstellungsstueck is instance of a member of klassen
+     * Funktion zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angebote nach dem Wert der Attraktivität
+     * sortiert sind und gleichzeitig nach Themen und Art des Kunstwerks gefiltert werden. Hier werden for und if 
+     * Schleifen genutzt. Zuerst wird eine neue ArrayList themaundwerkgefilterteAngebote, mit Elementen der Klasse Angebot, deklariert 
+     * und erzeugt. Über die for Schleifen werden alle Angebote aus der ArrayList angebote und Ausstellungsstückarten aus dem Array 
+     * ausstellungsstueckArten durchgegangen. Besonderheit hier, dass ausstellungsstueckArten ein Array mit Klassen, die child-Klassen
+     * der Klasse Ausstellungsstueck sind, als Elemente enthält.
+     * Danach werden alle Themen aus der ArrayList themen durchgegangen und für den Fall, dass das Thema aus themen gleich mit dem Thema
+     * des Angebots bzw. hierinterstehenden Ausstellungsstücks ist, zu der ArrayList themengefilterteAngebote hinzugefügt. 
+     * Anschließend wird die ArrayList wie oben auch nach Attraktivität sortiert und als Array zurückgegeben. 
+     * @param themen Die Themen nach denen gefiltert werden soll
+     * @param klassen Die Klassen nach denen gefiltert werden soll. 
+     * @return Array mit den Angeboten gefiltert nach Themen und Ausstellungsstückarten bzw. deren Klassen und sortiert nach Attraktivität. 
+     * ausstellungsstueck is instance of a member of klassen
      */
     @Deprecated()
     public Angebot[] getAngeboteSortedByAttraktivitaetAndFilteredbyThemaandWerk(Thema[] themen, Class<? extends Ausstellungsstueck>[] ausstellungsstueckArten) {
