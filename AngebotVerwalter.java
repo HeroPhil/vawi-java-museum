@@ -1,18 +1,18 @@
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.function.Predicate;
-import java.util.Arrays;
+//import java.util.Comparator;
+//import java.util.function.Predicate;
+//import java.util.Arrays;
 
 /**
  * Die Klasse AngebotVerwalter fungiert als Verwaltungsklasse für Objekte der Klasse Angebot. 
  *
  * @author Sven Brüggenbrock
  */
+
 public class AngebotVerwalter {
     
     /**
-     * Deklarierung einer Singleton Instanz mit der Funktion, dass nur ein Objekt der Klasse
-     * AngebotVerwalter existieren kann. 
+     * Deklaration einer Singleton Instanz mit der Funktion, dass nur ein Objekt der Klasse AngebotVerwalter existieren kann. 
      */
     private static AngebotVerwalter INSTANCE;
 
@@ -30,7 +30,7 @@ public class AngebotVerwalter {
     }
 
     /**
-     * Deklarierung einer ArrayList, die als Elemente Objekte der Klasse Angebote aufnehmen kann. 
+     * Deklaration einer ArrayList, die als Elemente Objekte der Klasse Angebote aufnehmen kann. 
      */
     private final ArrayList<Angebot> angebote;
 
@@ -44,7 +44,7 @@ public class AngebotVerwalter {
     }
 
     /**
-     * Funktion zur Rückgabe sämtlicher Angebote in der ArrayList angebote. Die Ausgabe erfolgt in einem Array, welcher die 
+     * Methode zur Rückgabe sämtlicher Angebote in der ArrayList angebote. Die Ausgabe erfolgt in einem Array, welcher die 
      * Länge der ArrayList angebote hat. 
      * @return all angebote
      */
@@ -53,7 +53,7 @@ public class AngebotVerwalter {
     }
     
     /**
-     * Funktion zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angebote nach dem Wert der Attraktivität
+     * Methode zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angebote nach dem Wert der Attraktivität
      * sortiert werden. Dies erfolgt mit Hilfe der .sort() Methode der Klasse ArrayList und unter Nutzung eines Lambda Ausdrucks. Hierdurch
      * wird vermieden eine innere anonyme Klasse lediglich fürs sortieren zu schreiben. 
      * @return Alle Angebote sortiert nach dem Wert der Attraktivität
@@ -64,7 +64,7 @@ public class AngebotVerwalter {
     }
 
     /**
-     * Funktion zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angeobte nach dem Wert der Attraktivität
+     * Methode zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angeobte nach dem Wert der Attraktivität
      * sortiert sind und gleichzeitig nach Themen, die über das Array themen vorgegeben werden, gefiltert werden. Hier werden for und if 
      * Schleifen genutzt. Zuerst wird eine neue ArrayList themengefilterteAngebote, mit Elementen der Klasse Angebot, deklariert 
      * und erzeugt. Über die for Schleifen werden alle Angebote aus der ArrayList angebote und alle Themen aus der ArrayList themen 
@@ -92,7 +92,7 @@ public class AngebotVerwalter {
     }
     
     /**
-     * Funktion zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angebote nach dem Wert der Attraktivität
+     * Methode zur Rückgabe eines Arrays, in dem sämtliche Angebote aus der ArrayList angebote nach dem Wert der Attraktivität
      * sortiert sind und gleichzeitig nach Themen und Art des Kunstwerks gefiltert werden. Hier werden for und if 
      * Schleifen genutzt. Zuerst wird eine neue ArrayList themaundwerkgefilterteAngebote, mit Elementen der Klasse Angebot, deklariert 
      * und erzeugt. Über die for Schleifen werden alle Angebote aus der ArrayList angebote und Ausstellungsstückarten aus dem Array 
@@ -130,19 +130,24 @@ public class AngebotVerwalter {
         }
 
     /**
+     * RAUSWERFEN?
      * internal method to get angebote sorted and filtered by a comparator and a predicate
      * @param comp
      * @param filter
      * @return angebote sorted and filtered by a comparator and a predicate
-     */
+     
     private Angebot[] getAngeboteSortedAndFiltered(Comparator<Angebot> comp, Predicate<Angebot> filter) {
         return null;
     }
-
+    */
     /**
-     * use this method to get an angebot by an id
-     * @param id the id of the angebot
-     * @return the angebot with the given id
+     * Methode zur Rückgabe eines Angebots anhand einer eindeutigen ID. Mit der for Schleife wird die ArrayList angebote durchgegangen.
+     * Mit der if Methode wird geprüft, ob das derzeit in der Schleife befindliche Angebot die gleiche ID hat wie die als 
+     * Eingabeparameter gegebene ID. Wenn die ID gleich ist wird das treffende Angebot zurückgegeben. Wenn die ganze for Schleife über die
+     * Angebote in der ArrayList angebote durchgelaufen ist und keine Angebots-ID mit der des Eingabeparameters übereinstimmt wird 
+     * null zurückgegeben. 
+     * @param id Die ID des Angebots
+     * @return Das Angebot mit der gegebenen ID. 
      */
     public Angebot getAngebotByID(int id) {
         for (Angebot a : angebote) {
@@ -153,9 +158,8 @@ public class AngebotVerwalter {
     }
     
     /**
-     * add an angebot to the angebote.
-     * supposed to be used by the importer.
-     * @param Angebot the angebot to add
+     * Mit dieser Methode werden Angebote zu der ArrayList angebote hinzugefügt. 
+     * @param Angebot Das Angebot, welches zu der ArrayList angebote hinzugefügt werden soll. 
      */
     public void addAngebot(Angebot angebot) {
         angebote.add(angebot);

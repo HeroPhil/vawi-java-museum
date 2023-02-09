@@ -5,20 +5,23 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A VerwalterClass for Themen
- * Themen are unique by bezeichnung
+ * Die Klasse Themenverwalter fungiert als Verwaltungsklasse für Objekte der Klasse Thema. 
+ * Objekte der Klasse Themen sind einzigartig durch bezeichnung.
  *
  * @author Sven Brüggenbrock
  */
 public class ThemenVerwalter
 {
     /**
-     * the singleton instance
+     * Deklaration einer Singleton Instanz mit der Funktion, dass nur ein Objekt der Klasse ThemenVerwalter existieren kann.
      */
+
     private static ThemenVerwalter INSTANCE;
 
     /**
-     * @return the singleton instance
+     * Hier wird geprüft, ob bereits eine Instanz und damit ein Objekt der Klasse ThemenVerwalter
+     * existiert. Falls es noch keine Instanz gibt, wird eine neue Instanz erzeugt.
+     * @return die Singleton Instanz
      */
     public static ThemenVerwalter getInstance() {
         if (INSTANCE == null) {
@@ -29,13 +32,14 @@ public class ThemenVerwalter
     }
 
     /**
-     * the set of themen
+     * Deklaration einer Map, welche als Elemente Objekte der Klasse Thema und Integer aufnehmen kann.
      */
     private final Map<Thema, Integer> themen;
 
     /**
-     * private constructor to prevent instantiation outside of this class
-     * only the singleton instance can be used
+     * Konstruktor der Klasse ThemenVerwalter. Dieser ist privat, damit diese nicht von "außen"
+     * aufgerufen werden kann und verhindert dadurch eine mehrfache Instanzierung. Es soll lediglich die Singleton Instanz 
+     * genutzt werden. Die Map themen wird als HashMap erzeugt.
      */
     private ThemenVerwalter() {
         themen = new HashMap<Thema, Integer>();
