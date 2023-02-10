@@ -62,7 +62,11 @@ public abstract class Main
         try {
             String exportPfad = exportDirPfad + "/" + planung.bezeichnung + "/";
             new File(exportPfad).mkdirs();
-            Exporter.exportExample(planung, exportPfad + "example.csv");
+
+            Exporter.exportAusleihUebersicht(planung, exportPfad + "/ausleihuebersicht.csv");
+            Exporter.exportLogistikUebersicht(planung, exportPfad + "/logistikuebersicht.csv");
+            Exporter.exportMuseumsFuehrer(planung, exportPfad + "/museumsfuehrer.csv");
+
         } catch (Exception e) {
             //TODO UI error message
             e.printStackTrace();
