@@ -25,7 +25,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-
 /**
  * Write a description of class UI here.
  *
@@ -124,7 +123,7 @@ public abstract class UI {
         JTextField planungBezeichnungTextField = new JTextField();
         planungBezeichnungPanel.add(planungBezeichnungTextField);
         planungPanel.add(planungBezeichnungPanel);
-              
+
         // add a Dropdown with a label to select a Themen Schwerpunkt
         // using all available Themen from ThemenVerwalter.getAllThemen()
         JPanel planungThemenPanel = new JPanel();
@@ -133,15 +132,15 @@ public abstract class UI {
         planungThemenPanel.add(planungThemenLabel);
         Thema[] themen = ThemenVerwalter.getInstance().getAllThemen();
         planungThemenComboBox = new JComboBox<Thema>(themen);
-         // set item labels
-         planungThemenComboBox.setRenderer(new DefaultListCellRenderer() {
+        // set item labels
+        planungThemenComboBox.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index,
                     boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Thema) {
                     Thema thema = (Thema) value;
-                    setText(thema.bezeichnung + " (" + ThemenVerwalter.getInstance().getCountForThema(thema) + ")" );
+                    setText(thema.bezeichnung + " (" + ThemenVerwalter.getInstance().getCountForThema(thema) + ")");
                 }
                 return this;
             }
@@ -167,7 +166,7 @@ public abstract class UI {
                 char c = e.getKeyChar();
                 if (!(Character.isDigit(c) || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
                     e.consume();
-                    Main.setKostenGrenze(Integer.parseInt(planungCostLimitTextField.getText()));
+                    return;
                 }
             }
         });
@@ -181,13 +180,26 @@ public abstract class UI {
         // add a button to the planung section to call planungDurchfuehren
         JButton planungDurchfuehrenButton = new JButton("Planung durchführen");
         planungDurchfuehrenButton.addActionListener(e -> {
-            // if bezeichnung combo box is empty, set value to current datetime
-            if (planungBezeichnungTextField.getText().isEmpty()) {
-                planungBezeichnungTextField.setText(LocalDateTime.now().toString());
+            String bezeichnung = planungBezeichnungTextField.getText();
+            if (bezeichnung.isEmpty()) {
+                bezeichnung = LocalDateTime.now().toString();
             }
-            Planung ergebnis = Main.runPlanung(planungBezeichnungTextField.getText());
-            // Show a popup with the ergebnis Bezeichnung, count of ausliehen, total cost and attraktivitaet in a nice table layout
-            JOptionPane.showMessageDialog(null, new JLabel("<html><table><tr><td>Bezeichnung:</td><td>" + ergebnis.bezeichnung + "</td></tr><tr><td>Ausgeliehen:</td><td>" + ergebnis.getAllAusleihen().length + "</td></tr><tr><td>Kosten:</td><td>" + ergebnis.calcTotalCost() + "</td></tr><tr><td>Attraktivität:</td><td>" + ergebnis.calcAvgAttraktivitaet() + "</td></tr></table></html>"), "Ergebnis", JOptionPane.INFORMATION_MESSAGE);
+
+            int kostenGrenze = planungCostLimitTextField.getText().isEmpty() ? Integer.MAX_VALUE
+                    : Integer.parseInt(planungCostLimitTextField.getText());
+            Main.setKostenGrenze(kostenGrenze);
+
+            Planung ergebnis = Main.runPlanung(bezeichnung);
+
+            // Show a popup with the ergebnis Bezeichnung, count of ausliehen, total cost
+            // and attraktivitaet in a nice table layout
+            JOptionPane.showMessageDialog(null,
+                    new JLabel("<html><table><tr><td>Bezeichnung:</td><td>" + ergebnis.bezeichnung
+                            + "</td></tr><tr><td>Ausgeliehen:</td><td>" + ergebnis.getAllAusleihen().length
+                            + "</td></tr><tr><td>Kosten:</td><td>" + ergebnis.calcTotalCost()
+                            + "</td></tr><tr><td>Attraktivität:</td><td>" + ergebnis.calcAvgAttraktivitaet()
+                            + "</td></tr></table></html>"),
+                    "Ergebnis", JOptionPane.INFORMATION_MESSAGE);
 
             nextStage(2);
         });
@@ -243,12 +255,11 @@ public abstract class UI {
         exportPlanungPanel.add(exportPlanungComboBox);
         exportPanel.add(exportPlanungPanel);
 
-
         // add a button to the export section to first open a file picker and then
         // export the PLANUNG using Exporter.exportExample
         JButton exportButton = new JButton("Exportieren");
         exportButton.addActionListener(e -> {
-            Main.runExport((Planung)exportPlanungComboBox.getSelectedItem());
+            Main.runExport((Planung) exportPlanungComboBox.getSelectedItem());
         });
         exportPanel.add(exportButton);
 
@@ -261,10 +272,8 @@ public abstract class UI {
     public static void update() {
         Thema[] themen = ThemenVerwalter.getInstance().getAllThemen();
         planungThemenComboBox.setModel(new DefaultComboBoxModel<Thema>(themen));
-        try {
+        if (planungThemenComboBox.getSelectedIndex() < 0 && planungThemenComboBox.getItemCount() > 0) {
             planungThemenComboBox.setSelectedIndex(0);
-        } catch (Exception e) {
-            System.out.println("No themen yet for dropdown");
         }
 
         exportPlanungComboBox.setModel(new DefaultComboBoxModel<Planung>(Main.getAllPlanungen()));

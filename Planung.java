@@ -12,8 +12,7 @@ import java.util.stream.Collectors;
  *
  * @author Philip Herold
  */
-public class Planung
-{
+public class Planung {
 
     /**
      * The thema to plan for.
@@ -82,7 +81,8 @@ public class Planung
      */
     public void planungDurchfuehren() {
 
-        System.out.println("Starte Planung (" + bezeichnung + ") für Thema " + thema.bezeichnung + " mit Kosten Grenze " + kostenGrenze + "€");
+        System.out.println("Starte Planung (" + bezeichnung + ") für Thema " + thema.bezeichnung + " mit Kosten Grenze "
+                + kostenGrenze + "€");
 
         // 1 Ensure all rooms are empty
         ausleihen.clear();
@@ -135,8 +135,10 @@ public class Planung
 
                 // 2.3 try to place as many as possible
                 for (Angebot angebot : moeglicheAngebote) {
-                    System.out.println("Try to place " + angebot.id + "(" + angebot.ausstellungsstueck.getClass().getName() + " ; " + angebot.ausstellungsstueck.thema.bezeichnung + ") in "
-                            + raum.id + " with setup " + setup);
+                    System.out.println(
+                            "Try to place " + angebot.id + "(" + angebot.ausstellungsstueck.getClass().getName() + " ; "
+                                    + angebot.ausstellungsstueck.thema.bezeichnung + ") in "
+                                    + raum.id + " with setup " + setup);
                     if (versucheAusstellungsstueckZuPlatzieren(raum, angebot)) { // if successfully placed
                         System.out.println("SUCCESS");
                         verwendeteThemen.add(angebot.ausstellungsstueck.thema); // remember used thema
@@ -182,10 +184,8 @@ public class Planung
         // TODO print warning if mindestanforderung is not met
 
         // 3 Reduziere die Koste, falls noetig
-        if (reduceCost()) {
-            System.out.println("Kosten wurden reduziert");
-        }
-
+        System.out.println("Kosten: " + calcTotalCost() + "€. Kosten Grenze: " + kostenGrenze + "€");
+        reduceCost();
     }
 
     /**
@@ -200,7 +200,7 @@ public class Planung
     private boolean versucheAusstellungsstueckZuPlatzieren(Raum raum, Angebot angebot) {
         // TODO subject to optimization and code cleanup
 
-        //boolean passt = false;
+        // boolean passt = false;
 
         // wenn es ein Bild ist, dann teste alle waende ob es passt
         if (angebot.ausstellungsstueck instanceof Bild) {
@@ -295,9 +295,9 @@ public class Planung
         return angebote;
     }
 
-
     /**
      * Prueft, ob sich eine Kunstinstallation bereits in einem Raum befindet.
+     * 
      * @param raum Raum, in dem die Kunstinstallation ausgeliehen werden soll
      * @return true, wenn der Raum bereits mit einer Kunstinstallation belegt ist
      */
@@ -310,6 +310,7 @@ public class Planung
 
     /**
      * Lieft alle Ausleihen, die sich in dem angegebenen Raum befinden.
+     * 
      * @param raum Raum, in dem sich die Ausleihen befinden sollen
      * @return Array von Ausleihen
      */
@@ -320,8 +321,12 @@ public class Planung
     /**
      * Lieft alle Ausleihen, die sich in dem angegebenen Raum befinden und ein
      * Ausstellungsstueck der angegebenen Klasse sind.
-     * @param ausstellungsstueckClass Klasse des Ausstellungsstuecks (z.B. Kunstinstallation.class, Bild.class, Kunstgegenstand.class)
-     * @param raum Raum, in dem sich die Ausleihen befinden sollen
+     * 
+     * @param ausstellungsstueckClass Klasse des Ausstellungsstuecks (z.B.
+     *                                Kunstinstallation.class, Bild.class,
+     *                                Kunstgegenstand.class)
+     * @param raum                    Raum, in dem sich die Ausleihen befinden
+     *                                sollen
      * @return Array von Ausleihen
      */
     private Ausleihe[] getAllAusleihenWithAusstellungsstueckForRoom(
@@ -334,8 +339,10 @@ public class Planung
     /**
      * Gibt die aktuelle Luftbeduerfnisse fuer den angegebenen Raum zurueck.
      * Diese werden aus den Beduerfnissen der Ausleihen berechnet.
+     * 
      * @param raum Raum, fuer den die Luftbeduerfnisse berechnet werden sollen
-     * @return Array mit den Luftbeduerfnissen fuer den Raum im Format {minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
+     * @return Array mit den Luftbeduerfnissen fuer den Raum im Format {minTemp,
+     *         maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
      */
     public double[] getCurrentAirRequirementForRoom(Raum raum) {
         double minTemp = 0;
@@ -357,8 +364,11 @@ public class Planung
 
     /**
      * Prueft, ob die Luftbeduerfnisse fuer den angegebenen Raum erfuellt sind.
-     * @param bild Bild, fuer das die Luftbeduerfnisse geprueft werden sollen
-     * @param airRequirement Array mit den Luftbeduerfnissen fuer den Raum im Format {minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
+     * 
+     * @param bild           Bild, fuer das die Luftbeduerfnisse geprueft werden
+     *                       sollen
+     * @param airRequirement Array mit den Luftbeduerfnissen fuer den Raum im Format
+     *                       {minTemp, maxTemp, minFeuchtigkeit, maxFeuchtigkeit}
      * @return true, wenn die Luftbeduerfnisse erfuellt sind
      */
     private boolean checkIfAirRequirementIsMet(Bild bild, double[] airRequirement) {
@@ -385,6 +395,7 @@ public class Planung
 
     /**
      * Berechnet die Attraktivitaet des Museums.
+     * 
      * @return Attraktivitaet des Museums
      */
     public double calcAvgAttraktivitaet() {
@@ -397,6 +408,7 @@ public class Planung
 
     /**
      * Berechent die gesamten Kosten aller Ausleihen.
+     * 
      * @return Gesamtkosten.
      */
     public int calcTotalCost() {
@@ -407,40 +419,53 @@ public class Planung
         return totalCost;
     }
 
-
     /**
-     * Reduziert die Kosten, wenn diese über dem Limit sind, indem die teuersten Ausleihen entfernt werden, welche nicht das Fokusthema haben.
+     * Reduziert die Kosten, wenn diese über dem Limit sind, indem die teuersten
+     * Ausleihen entfernt werden, welche nicht das Fokusthema haben.
+     * 
      * @return true, wenn die Kosten reduziert werden mussten.
      */
-    private boolean reduceCost() {
+    private int reduceCost() {
         int overshoot = calcTotalCost() - kostenGrenze;
+        int reductionValue = 0;
+        int reductionCount = 0;
 
         if (overshoot <= 0) {
-            return false;
+            System.out.println("Die Kosten sind im Rahmen (" + overshoot + ").");
+            return reductionValue;
         }
 
-        // create a copy "entbehrlicheAusleihen" by filter ausleihen welche nicht das Thema haben und sortiere absteigend nach Kosten
+        // create a copy "entbehrlicheAusleihen" by filter ausleihen welche nicht das
+        // Thema haben und sortiere absteigend nach Kosten
         List<Ausleihe> entbehrlicheAusleihen = ausleihen.stream()
                 .filter(ausleihe -> ausleihe.angebot.ausstellungsstueck.thema != thema)
                 .sorted(Comparator.comparing((Ausleihe ausleihe) -> ausleihe.angebot.kosten).reversed())
-                .collect(Collectors.toList());        
+                .collect(Collectors.toList());
 
-        while(overshoot > 0) {
+        System.out.println(
+                "Es wurden " + entbehrlicheAusleihen.size() + " mögliche Ausleihen zur Kostenreduktion identifiziert.");
+
+        for (; overshoot > 0; reductionCount++) {
             Ausleihe entbehrlicheAusleihe = entbehrlicheAusleihen.get(0);
 
             ausleihen.remove(entbehrlicheAusleihe);
 
             overshoot -= entbehrlicheAusleihe.angebot.kosten;
+            reductionValue += entbehrlicheAusleihe.angebot.kosten;
+
             entbehrlicheAusleihen.remove(0);
 
-            if (entbehrlicheAusleihen.size() > 0) {
-                continue;
+            if (entbehrlicheAusleihen.isEmpty()) {
+                System.out.println(
+                        "Kostenueberschuss konnte nicht weiter reduziert werden. Betragsueberschuss: " + overshoot
+                                + "€");
+                break;
             }
-            System.out.println("Kostenueberschuss konnte nicht weiter reduziert werden.\nBetragsueberschuss: " + overshoot);
-            break;
         }
 
-        return true;
+        System.out.println("Kosten wurden um " + reductionValue + "€ (" + reductionCount + " Stueck) reduziert");
+
+        return reductionValue;
     }
 
 }
