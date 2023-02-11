@@ -9,65 +9,67 @@ import java.util.ArrayList; //Arraylist = Sammlung von Elementen ohne Definition
 /**
  * Die Klasse "Exporter" ist für den Export von CSV-Dateien (Museumsführer,
  * Logistikübersicht und Ausleihübersicht) zuständig.
- * Die Methode "writeFile" schreibt die Daten in eine Datei an einem definierten
- * Ort (Pfad).
- * Die Methode "export*" definiert, welche Daten in die Datei geschrieben
- * werden.
+ * 
+ * Die Methode "writeFile" schreibt die Daten in eine Datei an einem definierten Ort.
+ * 
+ * Die Methode "export*" definiert, welche Daten in die Datei geschrieben werden.
  *
  * @author Meike Ganzer
  */
-public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von der keine Objekte erstellt werden
-                               // können.
-
+public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von der keine Objekte erstellt werden können.
+                          
 {
     /**
      * Diese Methode schreibt in eine CSV-Datei.
      * 
      * @param pfad   String Dateipfad //Eingabeparameter
-     * @param zeilen String[][] Zu schreibende Zeilen (zweidimensionales Array)
-     *               //Eingabeparameter
+     * @param zeilen String[][] Zu schreibende Zeilen (zweidimensionales Array) //Eingabeparameter
      */
     private static void writeFile(String pfad, String[][] zeilen) {
-        // Diese Methode ist private, sie kann nicht von einem anderen Objekt aufgerufen
-        // werden.
-        // Diese Methode ist statisch, sie bezieht sich nicht auf ein Objekt und wird
-        // aus der Klasse aufgerufen.
+        // Diese Methode erstellt eine Datei uns speichert sie unter einem Dateipfad ab (String, der den Pfad zur Datei angibt).
+        // Diese Methode ist private, sie kann nicht von außerhalb aufgerufen werden.
+        // Diese Methode ist statisch, sie bezieht sich nicht auf ein Objekt und wird aus der Klasse aufgerufen.
 
-        FileWriter fileWriter = null; // Hier ist der filewriter nur deklariert, noch nicht initialisiert.
-        try {
-            File file = new File(pfad); // Hier wird ein neues Objekt erzeugt ("new").
-            file.delete(); // Die alte Datei wird gelöscht.
+        FileWriter fileWriter = null; // Hier ist der filewriter nur deklariert, noch nicht initialisiert. Für den Fall, dass es später ein Problem gibt, muss der Filewriter hier schon deklariert sein.
+        try { // Mit try-catch-Anweisungen werden Programmfehler (Exceptions/Ausnahmen) abgefangen. Im Try-Block steht die Anweisung, die zu Fehlern führen kann.
+            File file = new File(pfad); // Konstruktor ("new"), der ein neues Objekt mit dem Namen "file" (CSV-Datei) der Klasse "File" erzeugt.
+            file.delete(); // Die alte CSV-Datei wird an dem angebenenen Pfad gelöscht.
             file.createNewFile(); // Eine neue Datei wird erstellt.
 
             fileWriter = new FileWriter(file);
-            // Hier wird ein FileWriter-Objekt erzeugt und jede Zeile des Arrays mit den
-            // Spalten in die Datei geschrieben.
+            // Hier wird ein FileWriter-Objekt erzeugt ("Stift", jede Zeile des Arrays mit den Spalten in die Datei schreibt).
 
-            String[] zeile;
-            String spalte;
-            for (int i = 0; i < zeilen.length; i++) {
-                zeile = zeilen[i];
+            String[] zeile; // Deklaration eines String-Arrays mit dem Namen "zeile"
+            String spalte;  // Deklaration einer Variablen "spalte" vom Typ String
+            for (int i = 0; i < zeilen.length; i++) { // Äußere For-Schleife für den Zeilenindex: Zeile für Zeile wird in die Datei geschrieben. 
+                                                      // Initialisierung der Zählervariablen "i", Prüfung der Bedingung, "i" wird um 1 erhöht.
+                                                      // Wenn die Bedingung "i < Länge der Array/Gesamtanzahl der Zeilen" erfüllt ist, wird 1 addiert.
+                                                      // "length" ist ein Attribut der Klasse String, das die maximale Länge des Arrays ausgibt.
+                                                      
+                zeile = zeilen[i];                    // Speichert den Wert des Elements an der Stelle "i" im Array "zeilen" in einer Variablen namens "zeile".
 
-                for (int j = 0; j < zeile.length; j++) {
+                for (int j = 0; j < zeile.length; j++) { // Innere For-Schleife für den Spaltenindex
                     spalte = zeile[j];
 
                     if (j > 0)
-                        fileWriter.append(',');
-                    fileWriter.append(spalte);
+                        fileWriter.append(','); // Die Werte werden durch Komma getrennt. (Append: "Stift" fügt Komma ein.)
+                    fileWriter.append(spalte);    // Hier wird eine Spalte eingefügt.
                 }
 
-                fileWriter.append("\n");
+                fileWriter.append("\n"); // Am Ende jeder Zeile wird ein Zeilenumbruch eingefügt.
 
             }
 
-            fileWriter.flush(); // Der Puffer geflusht und die Datei geschlossen.
+            fileWriter.flush(); // Der Puffer (Zwischenspeicher) wird geleert und die Datei geschlossen.
 
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (Exception e) { // Exception-Ausnahme führt zum Programmabsturz
+                                // io-Exception: Beispiel: Keine Schreibrechte für Datei, Datei kann nicht gelöscht werden etc.
+                                // Im catch-block wird die Ausnahme abgefangen.
+            // TO-dO: handle exception
             System.out.println(e);
             e.printStackTrace();
-        } finally {
-            try {
+        } finally { // Der finally-Block wird auf jeden Fall ausgeführt (Aufräumarbeiten).
+            try {   // 
                 if (fileWriter != null)
                     fileWriter.close();
             } catch (IOException e) {
@@ -86,7 +88,7 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
      */
     static void exportExample(Planung planung, String pfad) {
 
-        // TODO add sorting comparators to Ausleihe
+        // TO-do: Add sorting comparators to Ausleihe
         // ...
         //
 
@@ -116,21 +118,19 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
     }
 
     /**
-     * Export the given Ausleihe[] to a CSV file
-     * This produces the "Museumsfuehrer" format: Overview of the rooms with the
-     * most important works of art located in them
+     * Diese Methode definiert, welche Daten in die CSV-Datei "Museumsfuehrer" geschrieben werden sollen. Dieser stellt eine Übersicht der Räume und den darin ausgestellten
+     * wichtigsten Kunstwerken dar. Datengrundlage ist die Planung. Die Wichtigkeit eines Kunstwerks bemisst sich an dem Grad seiner Attraktivität.
      * 
      * @param planung Planung mit Ausleihe[]
      * @param pfad    String
      */
-    static void exportMuseumsFuehrer(Planung planung, String pfad) {
-        ArrayList<String[]> zeilen = new ArrayList<String[]>();
+    public static void exportMuseumsFuehrer(Planung planung, String pfad) { 
+        ArrayList<String[]> zeilen = new ArrayList<String[]>(); //Array-List, die Strings aufnimmt.
 
-        // Kopfzeile
         zeilen.add(new String[] { "Raumbezeichnung", "Bezeichnung des Kunstwerks", "Jahr", "Künstlername",
-                "Leihgabe von" });
+                "Leihgabe von" }); // Dem Array "zeilen" wird eine Kopfzeile hinzugefügt.
 
-        for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) {
+        for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) { // Foreach-Schleife. Singleton/Einzelstück stellt sicher, dass von einer Klasse nur ein Objekt existiert.
             Ausleihe[] ausleihenImRaum = planung.getAllAusleihenForRoom(raum);
 
             // sort ausleihenImRaum by attraktivitaet by using an arraylist
@@ -175,7 +175,7 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
         exportLogistikRaumUebersicht(planung, pfad.replace(".csv", ".raum.csv"));
     }
 
-    static private void exportLogistikRaumUebersicht(Planung planung, String pfad) {
+    private static void exportLogistikRaumUebersicht(Planung planung, String pfad) {
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
         // Kopfzeile
@@ -203,7 +203,7 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
     }
 
-    static private void exportLogistikAusleihenUebersicht(Planung planung, String pfad) {
+    private static void exportLogistikAusleihenUebersicht(Planung planung, String pfad) {
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
         // Kopfzeile
