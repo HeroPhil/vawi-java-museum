@@ -1,10 +1,13 @@
 /**
  * Abstrakte Klasse "Ausstellungsstück"
+ * 
  * Parentklasse der Klassen "Bild" und "Ausstellungsstück3D"
  *
  * @author Meike Ganzer
  */
 public abstract class Ausstellungsstueck { // Abstrakte Klasse: Von dieser Klasse können (und sollen) keine Objekte erzeugt werden.
+
+    // Die Klasse Ausstellungsstück hat die nachfolgenden Attribute:
 
     /**
      * Bezeichnung des Ausstellungsstücks
@@ -57,6 +60,7 @@ public abstract class Ausstellungsstueck { // Abstrakte Klasse: Von dieser Klass
      */
     public Ausstellungsstueck(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
             double hoehe, double breite, int eId) {
+                
         this.bezeichnung = bezeichnung; // Mit "this" unterscheidet man die Namen der Parameter von den Namen der Attribute. 
                                         // Ohne "this" würde man den Parameter mit sich selbst überschreiben und das Attribut nicht ansprechen.
         this.kuenstler = kuenstler;

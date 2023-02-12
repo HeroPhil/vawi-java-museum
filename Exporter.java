@@ -8,14 +8,16 @@ import java.util.ArrayList; //Arraylist = Sammlung von Elementen ohne Definition
                             //können eigene Listen erstellt werden.
 
 /**
- * Die Klasse "Exporter" ist für den Export von CSV-Dateien (Museumsführer,
+ * Klasse "Exporter"
+ * 
+ * Die Klasse ist für den Export von CSV-Dateien (Museumsführer,
  * Logistikübersicht und Ausleihübersicht) zuständig.
  * 
  * Die Methode "writeFile" schreibt die Daten in eine Datei an einem definierten Ort.
  * 
  * Die Methode "export*" definiert, welche Daten in die Datei geschrieben werden.
  *
- * @author Meike Ganzer
+ * @author Philip Herold und Meike Ganzer
  */
 public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von der keine Objekte erstellt werden können.
                           
@@ -23,8 +25,8 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
     /**
      * Diese Methode schreibt in eine CSV-Datei.
      * 
-     * @param pfad   String Dateipfad //Eingabeparameter
-     * @param zeilen String[][] Zu schreibende Zeilen (zweidimensionales Array) //Eingabeparameter
+     * @param pfad   String Dateipfad // Eingabeparameter
+     * @param zeilen String[][] Zu schreibende Zeilen (zweidimensionales Array) // Eingabeparameter
      */
     private static void writeFile(String pfad, String[][] zeilen) {
         // Diese Methode erstellt eine Datei uns speichert sie unter einem Dateipfad ab (String, der den Pfad zur Datei angibt).
@@ -49,9 +51,6 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
                 }
               }
                                
-        
-
-
             String[] zeile; // Deklaration eines String-Arrays mit dem Namen "zeile"
             String spalte;  // Deklaration einer Variablen "spalte" vom Typ String
             for (int i = 0; i < zeilenencoded.length; i++) { // Äußere For-Schleife für den Zeilenindex: Zeile für Zeile wird in die Datei geschrieben. 
@@ -134,17 +133,25 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
      * Diese Methode definiert, welche Daten in die CSV-Datei "Museumsfuehrer" geschrieben werden sollen. Dieser stellt eine Übersicht der Räume und den darin ausgestellten
      * wichtigsten Kunstwerken dar. Datengrundlage ist die Planung. Die Wichtigkeit eines Kunstwerks bemisst sich an dem Grad seiner Attraktivität.
      * 
-     * @param planung Planung mit Ausleihe[]
+     * @param planung Planung mit Ausleihe[] // Eingabeparameter: Die Daten werden beim Methodenaufruf an die Methode übergeben.
      * @param pfad    String
      */
     public static void exportMuseumsFuehrer(Planung planung, String pfad) { 
-        ArrayList<String[]> zeilen = new ArrayList<String[]>(); //Array-List, die Strings aufnimmt.
+
+        // In der Methode "exportMuseumsFuehrer" wird eine neue ArrayList mit dem Namen "zeilen" erstellt, die eine Liste von String-Arrays enthält. 
+        // Ein neues String-Array wird erstellt und in die "zeilen"-Liste eingefügt.
+        // Dann wird eine Schleife durchlaufen, die alle Räume im "RaumVerwalter" durchläuft und für jeden Raum eine Liste der Ausleihen aus der übergebenen "Planung" erhält. 
+        // Diese Liste wird in eine ArrayList umgewandelt und nach der Attraktivität sortiert. 
+        // Für die ersten beiden Ausleihen in der sortierten Liste wird ein neues String-Array erstellt, das Informationen über den Raum, das ausgestellte Kunstwerk 
+        // und das Museum enthält, das das Kunstwerk ausleiht. Dieses String-Array wird der "zeilen"-Liste hinzugefügt.
+
+        ArrayList<String[]> zeilen = new ArrayList<String[]>(); // Array-List, die Strings aufnimmt.
 
         zeilen.add(new String[] { "Raumbezeichnung", "Bezeichnung des Kunstwerks", "Jahr", "Künstlername",
                 "Leihgabe von" }); // Dem Array "zeilen" wird eine Kopfzeile hinzugefügt.
 
-        for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) { // Foreach-Schleife. Singleton/Einzelstück stellt sicher, dass von einer Klasse nur ein Objekt existiert.
-            Ausleihe[] ausleihenImRaum = planung.getAllAusleihenForRoom(raum);
+        for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) { // Die Liste wird mit einer Foreach-Schleife durchlaufen. Singleton/Einzelstück stellt sicher, dass von einer Klasse nur ein Objekt existiert.
+            Ausleihe[] ausleihenImRaum = planung.getAllAusleihenForRoom(raum); 
 
             // sort ausleihenImRaum by attraktivitaet by using an arraylist
             ArrayList<Ausleihe> ausleihenImRaumList = new ArrayList<Ausleihe>();
@@ -165,43 +172,65 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
                         ausleihe.angebot.partnerMuseum.name,
                 };
                 
-                
-
                 zeilen.add(zeile);
             }
 
-        }
-
-        // write to output file
-        writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+        writeFile(pfad, zeilen.toArray(new String[zeilen.size()][])); }
+        // Die Methode "writeFile" schreibt die Inhalte der "zeilen"-Liste in eine Datei, die durch den "pfad"-Parameter angegeben wird.
+        
 
     }
 
     /**
-     * Export the given Ausleihe[] to a CSV file
-     * This produces the "Logistikuebersicht" format: Room and place of installation
-     * of the artwork with information on room temperature and humidity
      * 
-     * @param planung Planung mit Ausleihe[]
-     * @param pfad    String
+     * Diese Methode definiert, welche Daten in die CSV-Dateien "LogistikRaumUebersicht" und "LogistikAusleihenUebersicht" geschrieben werden sollen. 
+     * Die Logistikübersicht enthält die Räume und den Aufstellort der Ausstellungsstücke inklusive der Informationen zu Raumtemperatur und Luftfeuchtigkeit.
+     * 
+     * @param planung Planung
+     * @param pfad    Pfad zum Speicherort
      */
     static void exportLogistikUebersicht(Planung planung, String pfad) {
+
+        // Die Methode hat zwei Parameter: planung vom Typ Planung, die die Planungsdaten enthält, und pfad vom Typ String, der den Dateipfad enthält, 
+        // an dem die CSV-Datei gespeichert werden soll.
+        // In der Methode wird exportLogistikAusleihenUebersicht mit planung und einem modifizierten pfad aufgerufen, um eine Ausleihübersicht in eine separate 
+        // CSV-Datei zu exportieren. 
+        // Anschließend wird exportLogistikRaumUebersicht mit planung und einem weiteren modifizierten pfad aufgerufen, um eine Raumübersicht 
+        // in eine separate CSV-Datei zu exportieren.
+
         exportLogistikAusleihenUebersicht(planung, pfad.replace(".csv", ".ausleihen.csv"));
         exportLogistikRaumUebersicht(planung, pfad.replace(".csv", ".raum.csv"));
     }
 
+
+    /**
+     * Diese Methode definiert, welche Daten in die CSV-Datei "LogistikRaumübrsicht" geschrieben werden sollen (Raumbezeichnung, Min- und Max-Temperatur, Min- und Max-Luftfeuchtigkeit),
+     * damit die Klimatisierung der Räume passend eingestellt werden kann.
+     * 
+     * @param planung Planung
+     * @param pfad Pfad zum Speicherort
+     */
     private static void exportLogistikRaumUebersicht(Planung planung, String pfad) {
+
+        
+        // Die Methode erstellt eine ArrayList "zeilen", die später die CSV-Daten aufnehmen wird.        
+        // Dann werden die Spaltenüberschriften hinzugefügt: "Raumbezeichnung", "Minimaltemperatur", "Maximaltemperatur", "Minimale Luftfeuchtigkeit" und "Maximale Luftfeuchtigkeit"
+        // Anschließend wird eine Schleife durchlaufen, in der für jeden Raum in der Raumverwaltung die Luftanforderungen abgerufen und zusammen mit dem Raumnamen als Zeile 
+        // hinzugefügt werden.
+        
+
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
-        // Kopfzeile
+        
         zeilen.add(new String[] { "Raumbezeichnung",
                 "Minimaltemperatur", "Maximaltemperatur", "Minimale Luftfeuchtigkeit", "Maximale Luftfeuchtigkeit" });
+                // Dem Array "zeilen" wird eine Kopfzeile hinzugefügt.
 
-        // To-do: Temperatur und Luftfeuchtigkeit nur für Bilder
-
+        
         for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) {
-            // get airrequirements for current room from Planung
+            
             double[] airRequirements = planung.getCurrentAirRequirementForRoom(raum);
+            // Der Bedarf an Lufteigenschaften wird aus der aktuellen Planung geholt.
 
             String[] zeile = new String[] {
                     raum.bezeichnung,
@@ -214,15 +243,23 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
             zeilen.add(zeile);
         }
 
-        // write to output file
-        writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+            writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+            //  Die Methode "writeFile" schreibt die Inhalte der "zeilen"-Liste in eine Datei, die durch den "pfad"-Parameter angegeben wird.
     }
 
+    /**
+     * Diese Methode definiert, welche Daten in die CSV-Datei  "LogistikAusleihenUebersicht" geschrieben werden sollen (Raumbezeichnung, Position, Bezeichnung und Art des Kunstwerks), 
+     * damit die Mitarbeiter die Ausstellungsstücke in den richtigen Räumen aufstellen.
+     * 
+     * @param planung Planung
+     * @param pfad    Dateipfad zum Speicherort
+     */
     private static void exportLogistikAusleihenUebersicht(Planung planung, String pfad) {
+
         ArrayList<String[]> zeilen = new ArrayList<String[]>();
 
-        // Kopfzeile
         zeilen.add(new String[] { "Raumbezeichnung", "Position", "Bezeichnung des Kunstwerks", "Art des Kunstwerks",});
+        // Dem Array "Zeilen wird eine Kopfzeile hinzugefügt.
 
         for (Ausleihe ausleihe : planung.getAllAusleihen()) {
             String[] zeile = new String[] {
@@ -236,17 +273,15 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
             zeilen.add(zeile);
         }
 
-        // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+        //  Die Methode "writeFile" schreibt die Inhalte der "zeilen"-Liste in eine Datei, die durch den "pfad"-Parameter angegeben wird.
     }
 
     /**
-     * Export the given Ausleihe[] to a CSV file
-     * This produces the "Ausleihuebersicht" format: Sorted by source: Which
-     * artworks are borrowed where, what are the costs.
+     * Diese Methode definiert, welche Daten in die CSV-Datei  "Ausleihuebersicht" geschrieben werden sollen (Name des Partnermuseums, Bezeichnuns des Ausstellungsstücks, Kosten der Ausleihe).
      * 
-     * @param planung Planung mit Ausleihe[]
-     * @param pfad    String
+     * @param planung Planung
+     * @param pfad    Dateipfad mit Speicherort
      */
     static void exportAusleihUebersicht(Planung planung, String pfad) {
 
@@ -264,8 +299,8 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
             zeilen.add(zeile);
         }
 
-        // write to output file
         writeFile(pfad, zeilen.toArray(new String[zeilen.size()][]));
+        //  Die Methode "writeFile" schreibt die Inhalte der "zeilen"-Liste in eine Datei, die durch den "pfad"-Parameter angegeben wird.
     }
 
 }

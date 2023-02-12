@@ -1,28 +1,33 @@
 
 /**
- * Model class for a Kunstinstallation
+ * Klasse "Kunstinstallation"
+ * 
+ * Diese Klasse ist die Child-Klasse der Klasse "Ausstellungsstueck3D"
+ * 
  * @author Meike Ganzer
  */
-public class Kunstinstallation extends Ausstellungsstueck3D
+public class Kunstinstallation extends Ausstellungsstueck3D // "extends": Sorgt dafür, dass die Vererbung stattfindet.
 {
 
 /**
-* Constructor for objects of class Kunstinstallation
+* Konstruktor für Objekte der Klasse "Kunstinstallation"
 */
 public Kunstinstallation(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
      double hoehe, double breite, int eId, double laenge, double gewicht) {
-    super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId, laenge, gewicht);
+
+    super(bezeichnung, kuenstler, jahr, thema, attraktivität, hoehe, breite, eId, laenge, gewicht); // "super": Zugriff auf den Konstruktor der Parentklasse "Ausstellungsstück"
 }
     
 /**
-* Beschreibung des Kunstgegenstands (Text)
+* Ausgabe der Kunstgegenstände als Textbeschreibung des Kunstgegenstands
 * 
 * @return Beschreibung
 */
-@Override
-public String toString() 
+@Override // Es wird eine Methode aus der Klasse "Object" überschrieben.
+public String toString() // toString-Methode: vordefinierte Methode der Klasse "Object", die eine Textdarstellung zurückgibt.
+                         // Ohne diese Methode wird nur der Speicherort des Objekts (Hashcode) ausgegeben.
     { 
-        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema +", Attraktivität: "+attraktivitaet+", Höhe: "+hoehe+", Breite: "+breite+", externe ID: "+eId+", Länge: "+laenge+", Gewicht: "+gewicht;
+        return "Bezeichnung: "+bezeichnung+", Künstler: "+kuenstler+", Jahr: "+jahr +", Thema: "+ thema.bezeichnung +", Attraktivität: "+attraktivitaet+", Höhe: "+hoehe+", Breite: "+breite+", externe ID: "+eId+", Länge: "+laenge+", Gewicht: "+gewicht;
     }
 }
 
