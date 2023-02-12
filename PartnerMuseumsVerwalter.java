@@ -46,20 +46,23 @@ public class PartnerMuseumsVerwalter
         partnerMuseen = new HashSet<PartnerMuseum>();
     }
 
+    public PartnerMuseum[] getAllPartnerMuseen() {
+        return partnerMuseen.toArray(PartnerMuseum[]::new);
+    }
+
 
     /**
-     * Methode, die ein Partnermuseum zurückgibt, falls dieses bereits existiert. Andernfalls wird es erst zu dem Set
-     * partnerMuseen hinzugefügt und dann zurückgegeben. Erst wird ein neues PartnerMusuem mit den Eingabeparametern deklariert und erzeugt. 
-     * Anschließend wird mit dem negierten Ausdruck in der if Schleife geprüft, ob das Set des PartnerMueseum bereits enthält.
-     * Falls dies der Fall ist, wird druch das Set iteriert, um das Partnermuseum zu finden. Falls dieses gefunden worden ist, 
-     * wird das Partnermuseum aus dem Set partnerMuseen zurückgegeben. Andernfalls wird ein neues Partnermuseen in das HashSet 
-     * partnerMuseen hinzugefügt.
+     * Methode, die ein Partnermuseum zurückgibt, falls dieses bereits existiert. Erst wird ein neues PartnerMusuem mit den 
+     * Eingabeparametern der Methode deklariert und erzeugt. Mit dem negierten Ausdruck in der if Schleife wird zum einen geprüft, 
+     * ob das Set das PartnerMueseum bereits enthält bzw. dieses, wenn es nicht enthalten ist hinzugefügt. Die add() Methode von
+     * Sets fügt lediglich Elemente hinzu, wenn diese noch nicht enthalten sind, gibt in diesem Fall auch den Boolschen Wert True
+     * zurück, und im anderen Fall den Boolschen Wert False. Falls der Wert False ist, wird durch die Negierung der Ausdruck True und
+     * es wird druch das Set iteriert, um das Partnermuseum zu finden. Falls dieses gefunden worden ist, wird das Partnermuseum aus 
+     * dem Set partnerMuseen zurückgegeben. Andernfalls wird ein neues Partnermuseen in das HashSet partnerMuseen hinzugefügt.
      * 
-     * get a partnerMuseum by name and address if it exists
-     * otherwise add it to the set and return it
-     * @param name the name of the partnerMuseum
-     * @param anschrift the address of the partnerMuseum
-     * @return the partnerMuseum with the given name and address
+     * @param name Name des Partnermuseums
+     * @param anschrift Adresse des Partnermuseums
+     * @return Das Partnermuseum mit Namen und Adresse
      */
     public PartnerMuseum getOrAddPartnerMuseum(String name, String anschrift) {
         PartnerMuseum neuesPartnerMuseum = new PartnerMuseum(name, anschrift);
@@ -71,8 +74,6 @@ public class PartnerMuseumsVerwalter
                     return partnerMuseum;
             }
         }
-        
-        //fehlt hier nicht die add() Methode zum hinzufügen?
         return neuesPartnerMuseum;
     }
 }

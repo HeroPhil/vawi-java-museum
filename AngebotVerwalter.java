@@ -46,7 +46,7 @@ public class AngebotVerwalter {
     /**
      * Methode zur Rückgabe sämtlicher Angebote in der ArrayList angebote. Die Ausgabe erfolgt in einem Array, welcher die 
      * Länge der ArrayList angebote hat. 
-     * @return all angebote
+     * @return Alle Angebote
      */
     public Angebot[] getAllAngebote() {
         return angebote.toArray(new Angebot[angebote.size()]);

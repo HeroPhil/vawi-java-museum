@@ -1,6 +1,6 @@
 
 /**
- * Model class for a PartnerMuseum
+ * Modellklasse für ein PartnerMuseum
  *
  * @author Sven Brüggenbrock
  */
@@ -8,18 +8,18 @@ public class PartnerMuseum
 {
     
     /**
-     * the name of the PartnerMuseum
+     * Name des Partnermuseums
      */
     public final String name;
 
     /**
-     * the anschrift of the PartnerMuseum
+     * Anschrift desPartnermuseums
      */
     public final String anschrift;
 
     
     /**
-     * Constructor for objects of class PartnerMuseum
+     * Konstruktor für Objekte der Klasse PartnerMuseum. 
      */
     public PartnerMuseum(String name, String anschrift) {
         this.name = name;
@@ -27,8 +27,9 @@ public class PartnerMuseum
     }
     
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+    /* 
+     * Methode, um  einen Hashwert für Objekte zu erhalten. Der Hashwert wird anhand der Werte der Variablen
+     * name und anschrift berechnet.
      */
     @Override
     public int hashCode() {
@@ -39,8 +40,8 @@ public class PartnerMuseum
         return result;
     }
     
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
+    /* 
+     * Methode zum Abgleich, ob zwei Objekte der Klasse PartnerMuseum gleich sind.
      */
     @Override
     public boolean equals(Object obj) {
@@ -64,7 +65,9 @@ public class PartnerMuseum
         return true;
     }
 
-
+    /*
+     * Methode zur Rückgabe einer Beschreibung eines Objekt der Klasse PartnerMuseum als String.
+     */
     @Override
     public String toString() {
         return "PartnerMuseum [name=" + name + ", anschrift=" + anschrift + "]";

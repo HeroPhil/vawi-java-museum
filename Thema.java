@@ -1,6 +1,6 @@
 
 /**
- * Thema Modelclass
+ * Modellklasse für ein Thema
  *
  * @author Sven Brüggenbrock
  */
@@ -8,19 +8,20 @@ public class Thema
 {
 
     /**
-     * the bezeichnung of the Thema
+     * Die Bezeichnung des Themas
      */
     public final String bezeichnung;
 
     /**
-     * Constructor for objects of class Thema
+     * Konstruktur für Objekte der Klasse Thema
      */
     public Thema(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
+    /* 
+     * Methode, um  einen Hashwert für Objekte zu erhalten. Der Hashwert wird anhand des Werts der Variable
+     * bezeichnung berechnet.
      */
     @Override
     public int hashCode() {
@@ -30,8 +31,8 @@ public class Thema
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
+    /* 
+     * Methode zum Abgleich, ob zwei Objekte der Klasse Thema gleich sind.
      */
     @Override
     public boolean equals(Object obj) {
@@ -49,7 +50,9 @@ public class Thema
             return false;
         return true;
     }
-
+    /*
+     * Methode zur Rückgabe einer Beschreibung eines Objekt der Klasse Thema als String.
+    */
     @Override
     public String toString() {
         return "Thema [bezeichnung=" + bezeichnung + "]";
