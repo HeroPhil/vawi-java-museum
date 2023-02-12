@@ -40,33 +40,25 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
             fileWriter = new FileWriter(file);
             // Hier wird ein FileWriter-Objekt erzeugt ("Stift", jede Zeile des Arrays mit den Spalten in die Datei schreibt).
 
-            String[][] zeilenencoded = new String[zeilen.length][];
-            for (int a = 0; a < zeilen.length; a++) {
-                zeilenencoded[a] = new String[zeilen[a].length];
-                for (int b = 0; b < zeilen[b].length; b++) {
-                  byte[] bytes = zeilen[a][b].getBytes();
-                  zeilenencoded[a][b] = new String(bytes, StandardCharsets.UTF_8);
-                }
-              }
-                               
-        
-
-
+                                          
             String[] zeile; // Deklaration eines String-Arrays mit dem Namen "zeile"
             String spalte;  // Deklaration einer Variablen "spalte" vom Typ String
-            for (int i = 0; i < zeilenencoded.length; i++) { // Äußere For-Schleife für den Zeilenindex: Zeile für Zeile wird in die Datei geschrieben. 
+            for (int i = 0; i < zeilen.length; i++) { // Äußere For-Schleife für den Zeilenindex: Zeile für Zeile wird in die Datei geschrieben. 
                                                       // Initialisierung der Zählervariablen "i", Prüfung der Bedingung, "i" wird um 1 erhöht.
                                                       // Wenn die Bedingung "i < Länge der Array/Gesamtanzahl der Zeilen" erfüllt ist, wird 1 addiert.
                                                       // "length" ist ein Attribut der Klasse String, das die maximale Länge des Arrays ausgibt.
                                                       
-                zeile = zeilenencoded[i];                    // Speichert den Wert des Elements an der Stelle "i" im Array "zeilen" in einer Variablen namens "zeile".
+                zeile = zeilen[i];                    // Speichert den Wert des Elements an der Stelle "i" im Array "zeilen" in einer Variablen namens "zeile".
 
                 for (int j = 0; j < zeile.length; j++) { // Innere For-Schleife für den Spaltenindex
                     spalte = zeile[j];
+                    byte[] bytes =spalte.getBytes(); // Der String spalte wird in ein Byte Array konvertiert.
+                    String spalteencoded = new String(bytes, StandardCharsets.UTF_8);   //Es wird ein neuer String spalteencoded erzeugt, indem das Byte Array in einen String umgewandelt wird, 
+                                                                                        //der UTF-8 zur Codierung als Argument erhält. 
 
                     if (j > 0)
                         fileWriter.append(','); // Die Werte werden durch Komma getrennt. (Append: "Stift" fügt Komma ein.)
-                    fileWriter.append(spalte);    // Hier wird eine Spalte eingefügt.
+                    fileWriter.append(spalteencoded);    // Hier wird eine Spalte eingefügt.
                 }
 
                 fileWriter.append("\n"); // Am Ende jeder Zeile wird ein Zeilenumbruch eingefügt.
