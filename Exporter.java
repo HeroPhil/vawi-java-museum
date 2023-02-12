@@ -2,6 +2,7 @@ import java.io.File; //Import der Java-Standardklasse "File" aus dem Paket "java
 import java.io.FileWriter; //Java-Standardklasse, die Daten in eine Datei schreibt ("Stift")
 import java.io.IOException; //Ausnahme für alle Einlese- und Ausgabefehler
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList; //Arraylist = Sammlung von Elementen ohne Definition der Anzahl von
                             //Elementen. Nachdem die Klasse "ArrayList" importiert worden ist,
                             //können eigene Listen erstellt werden.
@@ -39,14 +40,26 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
             fileWriter = new FileWriter(file);
             // Hier wird ein FileWriter-Objekt erzeugt ("Stift", jede Zeile des Arrays mit den Spalten in die Datei schreibt).
 
+            String[][] zeilenencoded = new String[zeilen.length][];
+            for (int a = 0; a < zeilen.length; a++) {
+                zeilenencoded[a] = new String[zeilen[a].length];
+                for (int b = 0; b < zeilen[b].length; b++) {
+                  byte[] bytes = zeilen[a][b].getBytes();
+                  zeilenencoded[a][b] = new String(bytes, StandardCharsets.UTF_8);
+                }
+              }
+                               
+        
+
+
             String[] zeile; // Deklaration eines String-Arrays mit dem Namen "zeile"
             String spalte;  // Deklaration einer Variablen "spalte" vom Typ String
-            for (int i = 0; i < zeilen.length; i++) { // Äußere For-Schleife für den Zeilenindex: Zeile für Zeile wird in die Datei geschrieben. 
+            for (int i = 0; i < zeilenencoded.length; i++) { // Äußere For-Schleife für den Zeilenindex: Zeile für Zeile wird in die Datei geschrieben. 
                                                       // Initialisierung der Zählervariablen "i", Prüfung der Bedingung, "i" wird um 1 erhöht.
                                                       // Wenn die Bedingung "i < Länge der Array/Gesamtanzahl der Zeilen" erfüllt ist, wird 1 addiert.
                                                       // "length" ist ein Attribut der Klasse String, das die maximale Länge des Arrays ausgibt.
                                                       
-                zeile = zeilen[i];                    // Speichert den Wert des Elements an der Stelle "i" im Array "zeilen" in einer Variablen namens "zeile".
+                zeile = zeilenencoded[i];                    // Speichert den Wert des Elements an der Stelle "i" im Array "zeilen" in einer Variablen namens "zeile".
 
                 for (int j = 0; j < zeile.length; j++) { // Innere For-Schleife für den Spaltenindex
                     spalte = zeile[j];
@@ -151,6 +164,8 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
                         ausleihe.angebot.ausstellungsstueck.kuenstler,
                         ausleihe.angebot.partnerMuseum.name,
                 };
+                
+                
 
                 zeilen.add(zeile);
             }
