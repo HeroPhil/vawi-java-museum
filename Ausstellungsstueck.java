@@ -1,63 +1,64 @@
 /**
- * Abstract class Ausstellungsstück
- * Parent class of Bild and Ausstellungsstück3D
+ * Abstrakte Klasse "Ausstellungsstück"
+ * Parentklasse der Klassen "Bild" und "Ausstellungsstück3D"
  *
  * @author Meike Ganzer
  */
-public abstract class Ausstellungsstueck {
+public abstract class Ausstellungsstueck { // Abstrakte Klasse: Von dieser Klasse können (und sollen) keine Objekte erzeugt werden.
 
     /**
-     * the bezeichnung of the Ausstellungsstück
+     * Bezeichnung des Ausstellungsstücks
      */
-    public final String bezeichnung;
+    public final String bezeichnung; // final: Das Attribut wird nur einmal initialisiert und ist nicht mehr veränderbar (auch nicht über Getter und Setter).
 
     /**
-     * the kuenstler of the Ausstellungsstück
+     * Name des Künstlers des Ausstellungsstücks
      */
     public final String kuenstler;
 
     /**
-     * the jahr of the Ausstellungsstück
-     * just information so can remain as string (data is a mess)
+     * Das Fertigstellungsjahr des Ausstellungsstücks
+     * (dient nur der Information, daher String) 
      */
     public final String jahr;
 
     /**
-     * the thema of the Ausstellungsstück
+     * Das Thema des Ausstellungsstücks
      */
     public final Thema thema;
 
     /**
-     * the attraktivität of the Ausstellungsstück
-     * valued betweeen 0 and 100
+     * Die Attraktivität des Ausstellungsstücks (Wert zwischen 0 und 100)
+     * 
      */
-    public final int attraktivitaet;
+    public final int attraktivitaet; //Optimierungspotential: Datentyp "byte" verwenden, um Speicherplatz zu sparen.
 
     /**
-     * the hoehe of the Ausstellungsstück
+     * Höhe des Ausstellungsstücks
      * in cm
      */
     public final double hoehe;
 
     /**
-     * the breite of the Ausstellungsstück
+     * Breite des Ausstellungsstück
      * in cm
      */
     public final double breite;
 
     /**
-     * the external Id of the Ausstellungsstück
+     * Externe Id des Ausstellungsstücks
      */
     public final int eId;
 
    
 
     /**
-     * Constructor for objects of class Ausstellungsstück
+     * Konstruktor für Objekte der Klasse "Ausstellungsstück" 
      */
     public Ausstellungsstueck(String bezeichnung, String kuenstler, String jahr, Thema thema, int attraktivität,
             double hoehe, double breite, int eId) {
-        this.bezeichnung = bezeichnung;
+        this.bezeichnung = bezeichnung; // Mit "this" unterscheidet man die Namen der Parameter von den Namen der Attribute. 
+                                        // Ohne "this" würde man den Parameter mit sich selbst überschreiben und das Attribut nicht ansprechen.
         this.kuenstler = kuenstler;
         this.jahr = jahr;
         this.thema = thema;
