@@ -181,6 +181,8 @@ public abstract class UI {
                 bezeichnung = LocalDateTime.now().toString();
             }
 
+            Main.setFokusThema((Thema) planungThemenComboBox.getSelectedItem());
+
             int kostenGrenze = planungCostLimitTextField.getText().isEmpty() ? Integer.MAX_VALUE
                     : Integer.parseInt(planungCostLimitTextField.getText());
             Main.setKostenGrenze(kostenGrenze);
