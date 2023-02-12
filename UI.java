@@ -99,7 +99,12 @@ public abstract class UI {
         JButton importButton = new JButton("Importieren");
         importButton.addActionListener(e -> {
             Main.runImport();
-            // TODO handle Exception
+
+            // show a message box with the number of imported raeume and angebote
+            JOptionPane.showMessageDialog(frame, "Import erfolgreich. " + RaumVerwalter.getInstance().getAllRaeume().length + " Räume und "
+                    + AngebotVerwalter.getInstance().getAllAngebote().length + " Angebote importiert.", "Import erfolgreich",
+                    JOptionPane.INFORMATION_MESSAGE);
+
             nextStage(1);
         });
         importPanel.add(importButton);
@@ -140,10 +145,6 @@ public abstract class UI {
                 }
                 return this;
             }
-        });
-        // on new thema selected, set the new thema in main
-        planungThemenComboBox.addActionListener(e -> {
-            Main.setFokusThema((Thema) planungThemenComboBox.getSelectedItem());
         });
         planungThemenPanel.add(planungThemenComboBox);
         planungPanel.add(planungThemenPanel);
