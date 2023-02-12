@@ -142,7 +142,7 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
 
         ArrayList<String[]> zeilen = new ArrayList<String[]>(); // Array-List, die Strings aufnimmt.
 
-        zeilen.add(new String[] { "Raumbezeichnung", "Bezeichnung des Kunstwerks", "Jahr", "Künstlername",
+        zeilen.add(new String[] { "Raumbezeichnung", "Bezeichnung des Kunstwerks", "Jahr", "Kuenstlername",
                 "Leihgabe von" }); // Dem Array "zeilen" wird eine Kopfzeile hinzugefügt.
 
         for (Raum raum : RaumVerwalter.getInstance().getAllRaeume()) { // Die Liste wird mit einer Foreach-Schleife durchlaufen. Singleton/Einzelstück stellt sicher, dass von einer Klasse nur ein Objekt existiert.
@@ -179,7 +179,6 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
     /**
      * 
      * Diese Methode definiert, welche Daten in die CSV-Dateien "LogistikRaumUebersicht" und "LogistikAusleihenUebersicht" geschrieben werden sollen. 
-     * Die Logistikübersicht enthält die Räume und den Aufstellort der Ausstellungsstücke inklusive der Informationen zu Raumtemperatur und Luftfeuchtigkeit.
      * 
      * @param planung Planung
      * @param pfad    Pfad zum Speicherort
