@@ -58,9 +58,10 @@ public abstract class Main
         runExport(planungen.get(planungen.size() - 1));
     }
 
-    public static void runExport(Planung planung) {
+    public static String runExport(Planung planung) {
+        String exportPfad = null;
         try {
-            String exportPfad = exportDirPfad + "/" + planung.bezeichnung + "/";
+            exportPfad = exportDirPfad + "/" + planung.bezeichnung + "/";
             new File(exportPfad).mkdirs();
 
             Exporter.exportAusleihUebersicht(planung, exportPfad + "/ausleihuebersicht.csv");
@@ -71,6 +72,7 @@ public abstract class Main
             //TODO UI error message
             e.printStackTrace();
         }
+        return exportPfad;
     }
 
     public static String getRaeumePfad() {

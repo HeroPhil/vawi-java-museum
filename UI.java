@@ -2,6 +2,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -259,7 +262,13 @@ public abstract class UI {
         // export the PLANUNG using Exporter.exportExample
         JButton exportButton = new JButton("Exportieren");
         exportButton.addActionListener(e -> {
-            Main.runExport((Planung) exportPlanungComboBox.getSelectedItem());
+            String exportPath = Main.runExport((Planung) exportPlanungComboBox.getSelectedItem());
+            try {
+                // open the export folder after export
+                Desktop.getDesktop().open(new File(exportPath));
+            } catch (IOException ex) {
+                // ignore
+            }
         });
         exportPanel.add(exportButton);
 
