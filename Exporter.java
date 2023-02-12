@@ -190,10 +190,10 @@ public abstract class Exporter // Öffentliche, abstrakte Klasse Exporter, von d
 
             String[] zeile = new String[] {
                     raum.bezeichnung,
-                    Double.toString(airRequirements[0]),
-                    Double.toString(airRequirements[1]),
-                    Double.toString(airRequirements[2]),
-                    Double.toString(airRequirements[3])
+                    String.format("%.2f", airRequirements[0]),
+                    String.format("%.2f", Math.min(999, airRequirements[1])), // limit to 999
+                    String.format("%.2f", airRequirements[2]),
+                    String.format("%.2f", Math.min(100, airRequirements[3])) // limit to 100
             };
 
             zeilen.add(zeile);

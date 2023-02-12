@@ -200,7 +200,7 @@ public abstract class UI {
                     new JLabel("<html><table><tr><td>Bezeichnung:</td><td>" + ergebnis.bezeichnung
                             + "</td></tr><tr><td>Ausgeliehen:</td><td>" + ergebnis.getAllAusleihen().length
                             + "</td></tr><tr><td>Kosten:</td><td>" + ergebnis.calcTotalCost()
-                            + "</td></tr><tr><td>Attraktivität:</td><td>" + ergebnis.calcAvgAttraktivitaet()
+                            + "</td></tr><tr><td>Attraktivität:</td><td>" +  String.format("%.2f", ergebnis.calcAvgAttraktivitaet())
                             + "</td></tr></table></html>"),
                     "Ergebnis", JOptionPane.INFORMATION_MESSAGE);
 
